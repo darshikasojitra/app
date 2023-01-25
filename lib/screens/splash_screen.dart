@@ -1,5 +1,7 @@
+import 'dashboard_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:demo_splash_screen/Login_screen.dart';
+import 'Login_screen.dart';
 
 class splashScreen extends StatefulWidget {
   const splashScreen({super.key});
@@ -11,12 +13,20 @@ class splashScreen extends StatefulWidget {
 class _splashScreenState extends State<splashScreen> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     Future.delayed(const Duration(seconds: 5), () {
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => Login_screen()));
+       Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (context) => Login_screen()));
+      /*FirebaseAuth.instance.authStateChanges().listen((event) {
+        if (event != null) {
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) => dashboard_screen()));
+        } else {
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (context) => Login_screen()));
+        }
+      });*/
     });
   }
 

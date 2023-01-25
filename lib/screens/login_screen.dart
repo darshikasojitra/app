@@ -1,10 +1,11 @@
-import 'package:demo_splash_screen/signup_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'signup_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
-import 'package:demo_splash_screen/dashboard_screen.dart';
+import 'dashboard_screen.dart';
 import 'package:demo_splash_screen/auth_service.dart';
-
+import 'package:demo_splash_screen/resources/all_string.dart';
 class Login_screen extends StatefulWidget {
   const Login_screen({super.key});
   @override
@@ -27,14 +28,11 @@ class _Login_screenState extends State<Login_screen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const Text(
-                'Login',
+                AllStrings.login,
                 style: TextStyle(
                     color: Colors.teal,
                     fontSize: 35,
                     fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(
-                height: 10,
               ),
               Padding(
                 padding:
@@ -49,16 +47,18 @@ class _Login_screenState extends State<Login_screen> {
                         controller: emailController,
                         keyboardType: TextInputType.emailAddress,
                         decoration: const InputDecoration(
-                          labelText: 'Email',
+                          labelText: AllStrings.email,
                           floatingLabelStyle: TextStyle(color: Colors.teal),
-                          hintText: 'Enter Email',
+                          hintText: AllStrings.enteremail,
                           border: OutlineInputBorder(),
-                          focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.teal),),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.teal),
+                          ),
                         ),
                         validator: (email) {
                           return email != null &&
                                   !EmailValidator.validate(email)
-                              ? 'Enter valid Email'
+                              ? AllStrings.validemail
                               : null;
                         },
                       ),
@@ -70,15 +70,17 @@ class _Login_screenState extends State<Login_screen> {
                         controller: passwordController,
                         obscureText: true,
                         decoration: const InputDecoration(
-                          labelText: 'Password',
+                          labelText: AllStrings.password,
                           floatingLabelStyle: TextStyle(color: Colors.teal),
-                          hintText: 'Enter Password',
+                          hintText: AllStrings.enterpassword,
                           border: OutlineInputBorder(),
-                          focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.teal),),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.teal),
+                          ),
                         ),
                         validator: (password) {
                           return password != null && password.length < 6
-                              ? 'Enter Password atleast 6 character'
+                              ? AllStrings.validpassword
                               : null;
                         },
                       ),
@@ -96,9 +98,10 @@ class _Login_screenState extends State<Login_screen> {
                               isprocessing = true;
                             });
 
-                            User? user = await auth.signInUsingEmailPassword(
-                                email: emailController.text,
-                                password: passwordController.text);
+                            User? user = await auth
+                                .signInUsingEmailPassword(
+                                    email: emailController.text,
+                                    password: passwordController.text);
 
                             if (user != null) {
                               Navigator.push(
@@ -110,11 +113,13 @@ class _Login_screenState extends State<Login_screen> {
                               setState(() {
                                 isprocessing = false;
                               });
-                            }else{print('123');}
+                            } else {
+                              print('123');
+                            }
                           }
                         },
                         child: const Text(
-                          'Login',
+                          AllStrings.login,
                           style: TextStyle(color: Colors.white, fontSize: 25),
                         ),
                         color: Colors.teal,
@@ -125,16 +130,16 @@ class _Login_screenState extends State<Login_screen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text('Dont have an account?'),
+                         const Text(AllStrings.account),
                           TextButton(
                               onPressed: () {
-                                Navigator.pushReplacement(
+                                Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => signup_screen()));
                               },
-                              child: Text(
-                                'Sign up',
+                              child: const Text(
+                                AllStrings.signup,
                                 style:
                                     TextStyle(fontSize: 20, color: Colors.teal),
                               ))

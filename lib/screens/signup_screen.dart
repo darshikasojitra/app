@@ -1,9 +1,9 @@
-import 'package:demo_splash_screen/Login_screen.dart';
+import 'package:demo_splash_screen/resources/all_string.dart';
+import 'Login_screen.dart';
 import 'package:demo_splash_screen/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
-import 'dashboard_screen.dart';
 
 class signup_screen extends StatefulWidget {
   const signup_screen({super.key});
@@ -13,9 +13,6 @@ class signup_screen extends StatefulWidget {
 }
 
 class _signup_screenState extends State<signup_screen> {
-  String email = '';
-  String password = '';
-  String cpassword = '';
   var confirmpass;
   final AuthService auth = AuthService();
   TextEditingController emailController = TextEditingController();
@@ -36,7 +33,7 @@ class _signup_screenState extends State<signup_screen> {
               Container(
                 padding: const EdgeInsets.only(top: 200),
                 child: const Text(
-                  'Sign Up',
+                  AllStrings.signup,
                   style: TextStyle(
                     color: Colors.teal,
                     fontWeight: FontWeight.bold,
@@ -60,14 +57,14 @@ class _signup_screenState extends State<signup_screen> {
                           controller: nameController,
                           keyboardType: TextInputType.name,
                           decoration: const InputDecoration(
-                            labelText: 'Name',
+                            labelText: AllStrings.name,
                             floatingLabelStyle: TextStyle(color: Colors.teal),
-                            hintText: 'Enter Name',
+                            hintText: AllStrings.entername,
                             border: OutlineInputBorder(),
                             focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.teal),),
                           ),
                           validator: (value) {
-                            return value!.isEmpty ? 'please enter Name' : null;
+                            return value!.isEmpty ? AllStrings.entername : null;
                           },
                         ),
                         const SizedBox(
@@ -78,16 +75,16 @@ class _signup_screenState extends State<signup_screen> {
                           controller: emailController,
                           keyboardType: TextInputType.emailAddress,
                           decoration: const InputDecoration(
-                            labelText: 'Email',
+                            labelText: AllStrings.email,
                             floatingLabelStyle: TextStyle(color: Colors.teal),
-                            hintText: 'Enter Email',
+                            hintText: AllStrings.enteremail,
                             border: OutlineInputBorder(),
                             focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.teal),),
                           ),
-                          validator: (email) {
-                            return email != null &&
-                                    !EmailValidator.validate(email)
-                                ? 'Enter valid Email'
+                          validator: (value) {
+                            return value != null &&
+                                    !EmailValidator.validate(value)
+                                ? AllStrings.validemail
                                 : null;
                           },
                         ),
@@ -99,16 +96,16 @@ class _signup_screenState extends State<signup_screen> {
                           controller: passwordController,
                           obscureText: true,
                           decoration: const InputDecoration(
-                            labelText: 'Password',
+                            labelText: AllStrings.password,
                             floatingLabelStyle: TextStyle(color: Colors.teal),
-                            hintText: 'Enter Password',
+                            hintText: AllStrings.enterpassword,
                             border: OutlineInputBorder(),
                             focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.teal),),
                           ),
-                          validator: (password) {
-                            confirmpass = password;
-                            return password != null && password.length < 6
-                                ? 'enter password atleast 6 character'
+                          validator: (value) {
+                             confirmpass = value;
+                            return value != null && value.length < 6
+                                ? AllStrings.validpassword
                                 : null;
                           },
                         ),
@@ -119,16 +116,16 @@ class _signup_screenState extends State<signup_screen> {
                           autofocus: true,
                           obscureText: true,
                           decoration: const InputDecoration(
-                            labelText: 'Confirm Password',
+                            labelText: AllStrings.cpassword,
                             floatingLabelStyle: TextStyle(color: Colors.teal),
-                            hintText: 'Enter confirm Password',
+                            hintText: AllStrings.entercpassword,
                             border: OutlineInputBorder(),
                             focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.teal),),
                           ),
-                          validator: (cpassword) {
-                            return cpassword!.isEmpty &&
-                                    cpassword != confirmpass
-                                ? 'Enter confirm password'
+                          validator: (value) {
+                            return value!.isEmpty &&
+                                    value != confirmpass
+                                ? AllStrings.entercpassword
                                 : null;
                           },
                         ),
@@ -155,16 +152,16 @@ class _signup_screenState extends State<signup_screen> {
                               });
 
                               if (user != null) {
-                                Navigator.pushReplacement(
+                                Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            dashboard_screen()));
+                                            Login_screen()));
                               }
                             }
                           },
                           child: Text(
-                            'Sign up',
+                            AllStrings.signup,
                             style: TextStyle(color: Colors.white, fontSize: 25),
                           ),
                           color: Colors.teal,
@@ -172,17 +169,17 @@ class _signup_screenState extends State<signup_screen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const Text('Already have an account?'),
+                            const Text(AllStrings.alreadyaccount),
                             TextButton(
                                 onPressed: () {
-                                  Navigator.pushReplacement(
+                                  Navigator.push(
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
                                               Login_screen()));
                                 },
                                 child: const Text(
-                                  'Sign In',
+                                  AllStrings.login,
                                   style: TextStyle(
                                       fontSize: 20, color: Colors.teal),
                                 ))
