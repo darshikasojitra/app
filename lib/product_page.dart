@@ -14,7 +14,7 @@ class _Product_PageState extends State<Product_Page> {
   bool isChecked = false;
   var _itemCount = 10;
   ScrollController _controller = ScrollController();
-  TextEditingController newcontroller = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,6 +28,26 @@ class _Product_PageState extends State<Product_Page> {
       body: SingleChildScrollView(
         child: Column(
           children: [
+            Row(children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 20,top: 20,bottom: 10),
+                child: Container(
+                                    padding: EdgeInsets.only(right: 180),
+                                    child: Image.asset(
+                                      'assets/tesco.png',
+                                      fit: BoxFit.cover,
+                                      height: 20,
+                                      width: 74,
+                                    ),
+                                  ), 
+              ),//SizedBox(width: 50,),
+              Icon(Icons.arrow_drop_down,color: Color(0xff1E8040),),SizedBox(width: 5,),
+              Icon(Icons.people,color: Color(0xff1E8040),),SizedBox(width: 5,),
+              Padding(
+                padding: const EdgeInsets.only(left: 5,top: 20,bottom: 20,right: 20),
+                child: Icon(Icons.share,color: Color(0xff1E8040),),
+              )
+            ],),
             Padding(
               padding: const EdgeInsets.only(top: 8, left: 10),
               child: Row(
@@ -60,72 +80,41 @@ class _Product_PageState extends State<Product_Page> {
                         borderRadius: BorderRadius.circular(40)),
                   ),
                   SizedBox(
-                    width: 90,
+                    width: 80,
                   ),
-                  MaterialButton(color: Color(0xffF8FFEB),
+                  MaterialButton(
+                    color: Color(0xffF8FFEB),
                     onPressed: () {},
                     height: 40,
                     minWidth: 150,
                     child: Row(
                       children: [
-                        Text(
-                          'New Idea',
-                          style: TextStyle(
-                              color: Color(0xff1E8040),
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              left: 20, top: 9, bottom: 8, right: 5),
+                          child: Text(
+                            'New Idea',
+                            style: TextStyle(
+                                color: Color(0xff1E8040),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16),
+                          ),
                         ),
                         SizedBox(
                           width: 10,
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 10,top: 9,bottom: 9,right: 1),
-                          child: Icon(
-                            Icons.add_circle,
-                            size: 22,
-                            color: Color(0xff1E8040),
-                          ),
+                        Icon(
+                          Icons.add_circle,
+                          size: 22,
+                          color: Color(0xff1E8040),
                         ),
                       ],
                     ),
                     shape: RoundedRectangleBorder(
-                        side: BorderSide(color: Color(0xff1E8040), width: 1),
+                        side: const BorderSide(
+                            color: Color(0xff1E8040), width: 1),
                         borderRadius: BorderRadius.circular(40)),
                   ),
-                  /*MaterialButton(
-                    onPressed: () {},
-                    height: 30,
-                    minWidth: 90,
-                    child: Row(
-                      children: [
-                        Text(
-                          'New Idea',
-                          style: TextStyle(
-                              color: Color(0xff1E8040),
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16),
-                        ),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        MaterialButton(
-                            color: Color(0xff1E8040),
-                            onPressed: () {},
-                            shape: CircleBorder(
-                                side: BorderSide(
-                              color: Color(0xff1E8040),
-                            )),
-                            child: Icon(
-                              Icons.add,
-                              size: 10,
-                              color: Color(0xffE8FEBE),
-                            )),
-                      ],
-                    ),
-                    shape: RoundedRectangleBorder(
-                        side: BorderSide(color: Color(0xff1E8040), width: 1),
-                        borderRadius: BorderRadius.circular(30)),
-                  ),*/
                 ],
               ),
             ),
@@ -133,7 +122,8 @@ class _Product_PageState extends State<Product_Page> {
               child: ListView.separated(
                 controller: _controller,
                 shrinkWrap: true,
-                padding: EdgeInsets.only(left: 8, right: 8, bottom: 8, top: 5),
+                padding:
+                    const EdgeInsets.only(left: 8, right: 8, bottom: 8, top: 5),
                 itemCount: _itemCount,
                 itemBuilder: ((context, int index) {
                   return Slidable(
@@ -199,7 +189,8 @@ class _Product_PageState extends State<Product_Page> {
                             ),
                             child: Align(
                                 alignment: Alignment.bottomRight,
-                                child: Container(margin: EdgeInsets.all(5),
+                                child: Container(
+                                    margin: EdgeInsets.all(5),
                                     height: 20,
                                     width: 40,
                                     decoration: BoxDecoration(
@@ -207,10 +198,10 @@ class _Product_PageState extends State<Product_Page> {
                                         borderRadius:
                                             BorderRadius.circular(40)),
                                     child: Row(
-                                      children: const[
+                                      children: const [
                                         Padding(
                                             padding: EdgeInsets.only(
-                                                top: 5,  bottom: 5)),
+                                                top: 5, bottom: 5)),
                                         Icon(
                                           Icons.star,
                                           size: 15,
@@ -309,30 +300,108 @@ class _Product_PageState extends State<Product_Page> {
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
-                                    MaterialButton(
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          right: 0, bottom: 5, top: 15),
+                                      child: Container(
+                                        height: 25,
+                                        width: 110,
                                         color: Color(0xffE8FEBE),
-                                        shape: const CircleBorder(
-                                            side: BorderSide(
-                                                color: Color(0xff1E8040))),
-                                        onPressed: () {},
-                                        child: Icon(
-                                          Icons.remove,
-                                          size: 15,
-                                        )),
-                                    SizedBox(
-                                      width: 1,
+                                        /* decoration: BoxDecoration(
+                                            color: Color(0xffE8FEBE),
+                                            borderRadius:
+                                                BorderRadius.circular(40)),*/
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            Align(
+                                                alignment: Alignment.centerLeft,
+                                                child: IconButton(
+                                                  iconSize: 17,
+                                                  onPressed: () {},
+                                                  icon: const Icon(
+                                                      Icons.remove_circle,
+                                                      color: Color(0xff1E8040)),
+                                                )),
+                                            // SizedBox(width: 5,),
+                                            const Text('1'),
+                                            //SizedBox(width: 5,),
+                                            IconButton(
+                                              iconSize: 17,
+                                              onPressed: () {
+                                                showDialog(
+                                                    context: context,
+                                                    builder: ((BuildContext
+                                                        context) {
+                                                      return Align(
+                                                          alignment: Alignment
+                                                              .topCenter,
+                                                          child: Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .all(20),
+                                                            child: Stack(children: [
+                                                               Container(
+                                                                height: 80,
+                                                                width: 254,
+                                                                decoration: BoxDecoration(
+                                                                    color: const Color(
+                                                                        0xff8BC53F),
+                                                                    borderRadius:
+                                                                        BorderRadius
+                                                                            .circular(
+                                                                                15)),
+                                                                   child: Padding(
+                                                                     padding: const EdgeInsets.only(left: 10,top: 10),
+                                                                     child: Column(
+                                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                                        children: [
+                                                                          const Text(
+                                                                            'Mohmmed',
+                                                                            style: TextStyle(
+                                                                                color:
+                                                                                    Color(0xffFFFFFF),
+                                                                                fontSize: 12),
+                                                                          ),SizedBox(height: 5,),
+                                                                          const Text(
+                                                                            'Collaboration | Owner',
+                                                                            style: TextStyle(
+                                                                                color:
+                                                                                    Color(0xffE8FEBE),
+                                                                                fontSize: 9),
+                                                                          ),SizedBox(height: 10,),
+                                                                          Container(
+                                                                            child: Image
+                                                                                .asset(
+                                                                              'assets/ocado.png',
+                                                                              //color: Color(0xffE8FEBE),
+                                                                              fit: BoxFit
+                                                                                  .cover,
+                                                                              height:
+                                                                                  14,
+                                                                              width:
+                                                                                  58,
+                                                                            ),
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                   ),
+                                                              ),
+                                                              Positioned(top: 20,bottom: 20,right: 20,left: 20, child: Container(height: 46,width: 203,color: Colors.white,))
+                                                              ],
+                                                            ),
+                                                          
+                                                          ));
+                                                    }));
+                                              },
+                                              icon: Icon(Icons.add_circle,
+                                                  color: Color(0xff1E8040)),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
                                     ),
-                                    Text('1'),
-                                    MaterialButton(
-                                        color: Color(0xffE8FEBE),
-                                        onPressed: () {},
-                                        shape: CircleBorder(
-                                            side: BorderSide(
-                                                color: Color(0xff1E8040))),
-                                        child: Icon(
-                                          Icons.add,
-                                          size: 15,
-                                        )),
                                   ],
                                 ),
                               ],
@@ -352,14 +421,14 @@ class _Product_PageState extends State<Product_Page> {
         ),
       ),
       bottomSheet: Padding(
-        padding: EdgeInsets.only(left: 20, right: 20, bottom: 0),
+        padding: EdgeInsets.only(left: 30, right: 20, bottom: 10),
         child: Container(
           height: 40,
           width: 350,
           decoration: BoxDecoration(
               color: Color(0xff1E8040),
               borderRadius: BorderRadius.circular(40)),
-          child: Row(
+          child: Row(crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Padding(
@@ -418,7 +487,7 @@ class _Product_PageState extends State<Product_Page> {
                   )),
               Padding(
                 padding: const EdgeInsets.only(
-                    left: 10, top: 10, bottom: 10, right: 10),
+                    left: 10, top: 10, bottom: 10, right: 17),
                 child: Text(
                   'Buy the list',
                   style: TextStyle(
@@ -522,3 +591,35 @@ class _Product_PageState extends State<Product_Page> {
                         icon: Icons.delete,
                         onPressed: (context) {},
                       )*/
+
+                    /* Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          right: 5, bottom: 5, top: 15),
+                                      child: Container(
+                                        height: 24,
+                                        width: 124,
+                                        decoration: BoxDecoration(
+                                            color: Color(0xffE8FEBE),
+                                            borderRadius:
+                                                BorderRadius.circular(40)),
+                                        child: Row(
+                                          children:const [
+                                            Icon(Icons.remove_circle,
+                                                size: 20,
+                                                color: Color(0xff1E8040)),SizedBox(width: 38,),
+                                                Text('1'),
+                                                SizedBox(width: 38,),
+                                            Align(alignment: Alignment.centerRight,
+                                              child: Icon(Icons.add_circle,
+                                                  size: 20,
+                                                  color: Color(0xff1E8040)),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),*/
