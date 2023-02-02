@@ -11,7 +11,6 @@ class List_Screen extends StatefulWidget {
 }
 
 class _List_ScreenState extends State<List_Screen> {
-  //late String _pname;
   DatabaseReference ref = FirebaseDatabase.instance.ref("product");
   static const String _title = 'Your shopping List';
   TextEditingController textcontroller = TextEditingController();
@@ -118,21 +117,8 @@ class _List_ScreenState extends State<List_Screen> {
                         context,
                         MaterialPageRoute(
                             builder: (context) => Product_Page()));
-                  ref.push().update({'pname':textcontroller.text,'pid':1,'prize':100});
-
-                    /*   if (_pname == 'TV' ||
-                        _pname == 'ear phone' ||
-                        _pname == 'cold drink' ||
-                        _pname == 'mobile' ||
-                        _pname == 'cake') {
-                      FirebaseFirestore.instance.collection('products').add({
-                        'pname': _pname,
-                        'quantity': _quantity,
-                        'amount': _quantity * 20000
-                      });
-                    } else {
-                      print('enter valid name');
-                    }*/
+                    ref.push().update(
+                        {'pname': textcontroller.text, 'pid': 1, 'prize': 100});
                   },
                   icon: const Icon(Icons.add_circle, color: Color(0xff1E8040))),
               focusedBorder: OutlineInputBorder(
@@ -140,9 +126,6 @@ class _List_ScreenState extends State<List_Screen> {
                 borderSide: const BorderSide(color: Color(0xff1E8040)),
               ),
             ),
-            // onChanged: (value) {
-            //   _pname = value;
-            // },
           ),
         ),
       ),

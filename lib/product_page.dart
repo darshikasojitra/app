@@ -134,203 +134,218 @@ class _Product_PageState extends State<Product_Page> {
                   ),
                 ],
               ),
-              StreamBuilder(stream: ref.onValue ,builder: (context, snapshot) { 
-                Map<dynamic,dynamic> map = snapshot.data!.snapshot.value as dynamic;
-                List list=[];
-                list.clear();
-                list = map.values.toList();
-               return ListView.separated(
-                  controller: _controller,
-                  shrinkWrap: true,
-                  padding: EdgeInsets.only(top: 10.h),
-                  itemCount: listpid.length,
-                  itemBuilder: ((context, int index) {
-                    return Slidable(
-                      startActionPane:
-                          (ActionPane(motion: const DrawerMotion(), children: [
-                        SlidableAction(
-                          label: 'Check-off',
-                          backgroundColor: const Color(0xffE5E4D7),
-                          icon: Icons.check_box,
-                          foregroundColor: const Color(0xff707070),
-                          onPressed: (context) {},
-                        ),
-                      ])),
-                      endActionPane:
-                          ActionPane(motion: const DrawerMotion(), children: [
-                        SlidableAction(
-                          label: 'Swap',
-                          backgroundColor: const Color(0xffE8FEBE),
-                          icon: Icons.swap_horiz,
-                          foregroundColor: const Color(0xff1E8040),
-                          onPressed: (context) {},
-                        ),
-                        SlidableAction(
-                          label: 'Move',
-                          backgroundColor: const Color(0xffE8FEBE),
-                          icon: Icons.move_to_inbox,
-                          foregroundColor: const Color(0xff1E8040),
-                          onPressed: (context) {},
-                        ),
-                        SlidableAction(
-                          label: 'Copy',
-                          backgroundColor: const Color(0xffE8FEBE),
-                          icon: Icons.copy,
-                          foregroundColor: const Color(0xff1E8040),
-                          onPressed: (context) {},
-                        ),
-                        SlidableAction(
-                          label: 'delete',
-                          backgroundColor: const Color(0xffE8FEBE),
-                          icon: Icons.delete,
-                          foregroundColor: const Color(0xff1E8040),
-                          onPressed: (context) {},
-                        )
-                      ]),
-                      child: Card(
-                        elevation: 0,
-                        shadowColor: Color(0xff00000034),
-                        shape: const RoundedRectangleBorder(
-                          side: BorderSide(color: Color(0xff00000034), width: 1),
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                        ),
-                        child: Row(
-                          children: [
-                            Container(
-                              height: 139.h,
-                              width: 97.w,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                image: const DecorationImage(
-                                  image: NetworkImage(
-                                      'https://www.forbesindia.com/media/images/2022/Sep/img_193773_banana.jpg'),
-                                  fit: BoxFit.cover,
+              StreamBuilder(
+                  stream: ref.onValue,
+                  builder: (context, snapshot) {
+                    Map<dynamic, dynamic> map =
+                        snapshot.data!.snapshot.value as dynamic;
+                    List list = [];
+                    list.clear();
+                    list = map.values.toList();
+                    return ListView.separated(
+                      controller: _controller,
+                      shrinkWrap: true,
+                      padding: EdgeInsets.only(top: 10.h),
+                      itemCount: listpid.length,
+                      itemBuilder: ((context, int index) {
+                        return Slidable(
+                          startActionPane: (ActionPane(
+                              motion: const DrawerMotion(),
+                              children: [
+                                SlidableAction(
+                                  label: 'Check-off',
+                                  backgroundColor: const Color(0xffE5E4D7),
+                                  icon: Icons.check_box,
+                                  foregroundColor: const Color(0xff707070),
+                                  onPressed: (context) {},
                                 ),
-                              ),
-                              child: Align(
-                                  alignment: Alignment.bottomRight,
-                                  child: Container(
-                                      margin: const EdgeInsets.all(5),
-                                      height: 15.h,
-                                      width: 35.w,
-                                      decoration: BoxDecoration(
-                                          color: Colors.white.withOpacity(0.8),
-                                          borderRadius:
-                                              BorderRadius.circular(40)),
-                                      child: Row(
-                                        children: [
-                                          Padding(
-                                              padding: EdgeInsets.only(
-                                                  top: 5.h, bottom: 5.h)),
-                                          const Icon(
-                                            Icons.star,
-                                            size: 15,
-                                            color: Color(0xff1E8040),
-                                          ),
-                                          SizedBox(
-                                            width: 3.w,
-                                          ),
-                                          const Text(
-                                            '4.5',
-                                            style: TextStyle(
-                                              color: Color(0xff333333),
-                                              fontSize: 12,
-                                            ),
-                                          ),
-                                        ],
-                                      ))),
+                              ])),
+                          endActionPane: ActionPane(
+                              motion: const DrawerMotion(),
+                              children: [
+                                SlidableAction(
+                                  label: 'Swap',
+                                  backgroundColor: const Color(0xffE8FEBE),
+                                  icon: Icons.swap_horiz,
+                                  foregroundColor: const Color(0xff1E8040),
+                                  onPressed: (context) {},
+                                ),
+                                SlidableAction(
+                                  label: 'Move',
+                                  backgroundColor: const Color(0xffE8FEBE),
+                                  icon: Icons.move_to_inbox,
+                                  foregroundColor: const Color(0xff1E8040),
+                                  onPressed: (context) {},
+                                ),
+                                SlidableAction(
+                                  label: 'Copy',
+                                  backgroundColor: const Color(0xffE8FEBE),
+                                  icon: Icons.copy,
+                                  foregroundColor: const Color(0xff1E8040),
+                                  onPressed: (context) {},
+                                ),
+                                SlidableAction(
+                                  label: 'delete',
+                                  backgroundColor: const Color(0xffE8FEBE),
+                                  icon: Icons.delete,
+                                  foregroundColor: const Color(0xff1E8040),
+                                  onPressed: (context) {},
+                                )
+                              ]),
+                          child: Card(
+                            elevation: 0,
+                            shadowColor: Color(0xff00000034),
+                            shape: const RoundedRectangleBorder(
+                              side: BorderSide(
+                                  color: Color(0xff00000034), width: 1),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10)),
                             ),
-                            Padding(
-                              padding: EdgeInsets.only(left: 6.0.h),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Container(
-                                    padding:
-                                        EdgeInsets.only(right: 140.w, top: 10.h),
-                                    child: Image.asset(
-                                      'assets/tesco.png',
+                            child: Row(
+                              children: [
+                                Container(
+                                  height: 139.h,
+                                  width: 97.w,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    image: const DecorationImage(
+                                      image: NetworkImage(
+                                          'https://www.forbesindia.com/media/images/2022/Sep/img_193773_banana.jpg'),
                                       fit: BoxFit.cover,
-                                      height: 15.h,
-                                      width: 68.w,
                                     ),
                                   ),
-                                  SizedBox(
-                                    height: 8.h,
-                                  ),
-                                  Text("${listpid[index]}"),
-                                  Row(
-                                    children: [
-                                      const Text('Screen size'),
-                                      SizedBox(
-                                        width: 125.w,
-                                      ),
-                                      const Text('6 x KG')
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 6.h,
-                                  ),
-                                  Row(
-                                    children: [
-                                      const Text(
-                                        '(500 g - £5)',
-                                        style:
-                                            TextStyle(color: Color(0xff8D8D8D)),
-                                      ),
-                                      SizedBox(
-                                        width: 90.w,
-                                      ),
-                                      const Text('£ 7.90',
-                                          style: TextStyle(
-                                              fontSize: 10,
-                                              color: Color(0xff333333))),
-                                      SizedBox(
-                                        width: 6.w,
-                                      ),
-                                      const Text(
-                                        '£ 6.90',
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            color: Color(0xff1E8040),
-                                            fontWeight: FontWeight.bold),
-                                      )
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 6.h,
-                                  ),
-                                  const Text(
-                                    'Lorem Ipsum dolor....',
-                                    style: TextStyle(color: Color(0xffB11F1F)),
-                                  ),
-                                  Row(
-                                    children: [
-                                      Padding(
-                                        padding: EdgeInsets.only(
-                                            left: 130.w, bottom: 5.h, top: 10.h),
-                                        child: Container(
-                                          height: 20.h,
-                                          width: 90.w,
+                                  child: Align(
+                                      alignment: Alignment.bottomRight,
+                                      child: Container(
+                                          margin: const EdgeInsets.all(5),
+                                          height: 15.h,
+                                          width: 35.w,
                                           decoration: BoxDecoration(
-                                              color: const Color(0xffE8FEBE),
+                                              color:
+                                                  Colors.white.withOpacity(0.8),
                                               borderRadius:
                                                   BorderRadius.circular(40)),
                                           child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: const [
-                                              Icon(
-                                                Icons.remove_circle_outline,
+                                            children: [
+                                              Padding(
+                                                  padding: EdgeInsets.only(
+                                                      top: 5.h, bottom: 5.h)),
+                                              const Icon(
+                                                Icons.star,
+                                                size: 15,
                                                 color: Color(0xff1E8040),
                                               ),
-                                              Text('1'),
-                                              Icon(
-                                                Icons.add_circle_outline,
-                                                color: Color(0xff1E8040),
+                                              SizedBox(
+                                                width: 3.w,
                                               ),
-                                              /* IconButton(
+                                              const Text(
+                                                '4.5',
+                                                style: TextStyle(
+                                                  color: Color(0xff333333),
+                                                  fontSize: 12,
+                                                ),
+                                              ),
+                                            ],
+                                          ))),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(left: 6.0.h),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Container(
+                                        padding: EdgeInsets.only(
+                                            right: 140.w, top: 10.h),
+                                        child: Image.asset(
+                                          'assets/tesco.png',
+                                          fit: BoxFit.cover,
+                                          height: 15.h,
+                                          width: 68.w,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 8.h,
+                                      ),
+                                      Text("${listpid[index]}"),
+                                      Row(
+                                        children: [
+                                          const Text('Screen size'),
+                                          SizedBox(
+                                            width: 125.w,
+                                          ),
+                                          const Text('6 x KG')
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        height: 6.h,
+                                      ),
+                                      Row(
+                                        children: [
+                                          const Text(
+                                            '(500 g - £5)',
+                                            style: TextStyle(
+                                                color: Color(0xff8D8D8D)),
+                                          ),
+                                          SizedBox(
+                                            width: 90.w,
+                                          ),
+                                          const Text('£ 7.90',
+                                              style: TextStyle(
+                                                  fontSize: 10,
+                                                  color: Color(0xff333333))),
+                                          SizedBox(
+                                            width: 6.w,
+                                          ),
+                                          const Text(
+                                            '£ 6.90',
+                                            style: TextStyle(
+                                                fontSize: 16,
+                                                color: Color(0xff1E8040),
+                                                fontWeight: FontWeight.bold),
+                                          )
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        height: 6.h,
+                                      ),
+                                      const Text(
+                                        'Lorem Ipsum dolor....',
+                                        style:
+                                            TextStyle(color: Color(0xffB11F1F)),
+                                      ),
+                                      Row(
+                                        children: [
+                                          Padding(
+                                            padding: EdgeInsets.only(
+                                                left: 130.w,
+                                                bottom: 5.h,
+                                                top: 10.h),
+                                            child: Container(
+                                              height: 20.h,
+                                              width: 90.w,
+                                              decoration: BoxDecoration(
+                                                  color:
+                                                      const Color(0xffE8FEBE),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          40)),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: const [
+                                                  Icon(
+                                                    Icons.remove_circle_outline,
+                                                    color: Color(0xff1E8040),
+                                                  ),
+                                                  Text('1'),
+                                                  Icon(
+                                                    Icons.add_circle_outline,
+                                                    color: Color(0xff1E8040),
+                                                  ),
+                                                  /* IconButton(
                                                   iconSize: 20,
                                                   onPressed: () {FirebaseFirestore.instance
                                                     .collection("cart")
@@ -338,25 +353,25 @@ class _Product_PageState extends State<Product_Page> {
                                                   icon: Icon(Icons.add_circle,
                                                       color: Color(0xff1E8040)),
                                                 ),*/
-                                            ],
+                                                ],
+                                              ),
+                                            ),
                                           ),
-                                        ),
+                                        ],
                                       ),
                                     ],
                                   ),
-                                ],
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    );
-                  }),
-                  separatorBuilder: ((context, index) {
-                    return const Divider();
-                  }),
-                );//return CircularProgressIndicator();
-    }  )
+                                )
+                              ],
+                            ),
+                          ),
+                        );
+                      }),
+                      separatorBuilder: ((context, index) {
+                        return const Divider();
+                      }),
+                    ); //return CircularProgressIndicator();
+                  })
             ],
           ),
         ),
