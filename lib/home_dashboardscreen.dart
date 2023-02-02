@@ -18,11 +18,12 @@ class _Home_ScreenState extends State<Home_Screen> {
     user = _auth.getUser();
     super.initState();
   }
-
     bool _issignout = false;
 
   @override
   Widget build(BuildContext context) {
+     final  height =MediaQuery.of(context).size.height;
+   print(height);
     return Scaffold(appBar: AppBar(backgroundColor: Colors.teal,),
       drawer: Drawer(
         child: ListView( 

@@ -1,7 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:demo_splash_screen/auth_service.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 class Product_Page extends StatefulWidget {
   const Product_Page({super.key});
@@ -11,8 +12,13 @@ class Product_Page extends StatefulWidget {
 }
 
 class _Product_PageState extends State<Product_Page> {
-  bool isChecked = false;
-  var _itemCount = 10;
+  final AuthService auth = AuthService();
+  DatabaseReference ref = FirebaseDatabase.instance.ref("prduct").child("0");
+
+  List<int> listpid = [1, 2, 3, 4, 5];
+  List<String> listpname = ['TV', 'ear phone', 'mobile', 'cold drink', 'cake'];
+  List<int> listquantity = [1, 1, 1, 1, 1];
+  List<int> listamount = [20000, 100, 5000, 10, 500];
   ScrollController _controller = ScrollController();
 
   @override
@@ -26,47 +32,64 @@ class _Product_PageState extends State<Product_Page> {
         ),
       ),
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Row(children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 20,top: 20,bottom: 10),
-                child: Container(
-                                    padding: EdgeInsets.only(right: 180),
-                                    child: Image.asset(
-                                      'assets/tesco.png',
-                                      fit: BoxFit.cover,
-                                      height: 20,
-                                      width: 74,
-                                    ),
-                                  ), 
-              ),//SizedBox(width: 50,),
-              Icon(Icons.arrow_drop_down,color: Color(0xff1E8040),),SizedBox(width: 5,),
-              Icon(Icons.people,color: Color(0xff1E8040),),SizedBox(width: 5,),
-              Padding(
-                padding: const EdgeInsets.only(left: 5,top: 20,bottom: 20,right: 20),
-                child: Icon(Icons.share,color: Color(0xff1E8040),),
-              )
-            ],),
-            Padding(
-              padding: const EdgeInsets.only(top: 8, left: 10),
-              child: Row(
+        child: Padding(
+          padding: EdgeInsets.symmetric(vertical: 5.w, horizontal: 8.h),
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  Image.asset(
+                    'assets/tesco.png',
+                    fit: BoxFit.cover,
+                    height: 17.h,
+                    width: 70.w,
+                  ),
+                  const Icon(
+                    Icons.arrow_drop_down,
+                    color: Color(0xff1E8040),
+                    size: 20,
+                  ),
+                  SizedBox(
+                    width: 175.w,
+                  ),
+                  const Icon(
+                    Icons.people,
+                    color: Color(0xff1E8040),
+                  ),
+                  SizedBox(
+                    width: 12.w,
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.only(
+                        left: 5, top: 20, bottom: 20, right: 20),
+                    child: Icon(
+                      Icons.share,
+                      color: Color(0xff1E8040),
+                    ),
+                  )
+                ],
+              ),
+              Row(
                 children: [
                   MaterialButton(
                     onPressed: () {},
-                    height: 40,
-                    minWidth: 150,
+                    height: 30.h,
+                    minWidth: 157.w,
+                    shape: RoundedRectangleBorder(
+                        side: const BorderSide(
+                            color: Color(0xff1E8040), width: 1),
+                        borderRadius: BorderRadius.circular(40)),
                     child: Row(
                       children: [
-                        Icon(
+                        const Icon(
                           Icons.store,
                           size: 22,
                           color: Color(0xff1E8040),
                         ),
                         SizedBox(
-                          width: 10,
+                          width: 10.w,
                         ),
-                        Text(
+                        const Text(
                           'Go to Store',
                           style: TextStyle(
                               color: Color(0xff1E8040),
@@ -75,24 +98,25 @@ class _Product_PageState extends State<Product_Page> {
                         ),
                       ],
                     ),
-                    shape: RoundedRectangleBorder(
-                        side: BorderSide(color: Color(0xff1E8040), width: 1),
-                        borderRadius: BorderRadius.circular(40)),
                   ),
                   SizedBox(
-                    width: 80,
+                    width: 20.w,
                   ),
                   MaterialButton(
-                    color: Color(0xffF8FFEB),
+                    color: const Color(0xffF8FFEB),
                     onPressed: () {},
-                    height: 40,
-                    minWidth: 150,
+                    height: 30.h,
+                    minWidth: 157.w,
+                    shape: RoundedRectangleBorder(
+                        side: const BorderSide(
+                            color: Color(0xff1E8040), width: 1),
+                        borderRadius: BorderRadius.circular(40)),
                     child: Row(
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(
-                              left: 20, top: 9, bottom: 8, right: 5),
-                          child: Text(
+                          padding: EdgeInsets.only(
+                              left: 15.w, top: 9.h, bottom: 8.h, right: 30.w),
+                          child: const Text(
                             'New Idea',
                             style: TextStyle(
                                 color: Color(0xff1E8040),
@@ -100,237 +124,352 @@ class _Product_PageState extends State<Product_Page> {
                                 fontSize: 16),
                           ),
                         ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Icon(
+                        const Icon(
                           Icons.add_circle,
                           size: 22,
                           color: Color(0xff1E8040),
                         ),
                       ],
                     ),
-                    shape: RoundedRectangleBorder(
-                        side: const BorderSide(
-                            color: Color(0xff1E8040), width: 1),
-                        borderRadius: BorderRadius.circular(40)),
                   ),
                 ],
               ),
-            ),
-            Container(
-              child: ListView.separated(
-                controller: _controller,
-                shrinkWrap: true,
-                padding:
-                    const EdgeInsets.only(left: 8, right: 8, bottom: 8, top: 5),
-                itemCount: _itemCount,
-                itemBuilder: ((context, int index) {
-                  return Slidable(
-                    startActionPane:
-                        (ActionPane(motion: DrawerMotion(), children: [
-                      SlidableAction(
-                        label: 'Check-off',
-                        backgroundColor: Color(0xffE5E4D7),
-                        icon: Icons.check_box,
-                        foregroundColor: Color(0xff707070),
-                        onPressed: (context) {},
-                      ),
-                    ])),
-                    endActionPane:
-                        ActionPane(motion: DrawerMotion(), children: [
-                      SlidableAction(
-                        label: 'Swap',
-                        backgroundColor: Color(0xffE8FEBE),
-                        icon: Icons.swap_horiz,
-                        foregroundColor: Color(0xff1E8040),
-                        onPressed: (context) {},
-                      ),
-                      SlidableAction(
-                        label: 'Move',
-                        backgroundColor: Color(0xffE8FEBE),
-                        icon: Icons.move_to_inbox,
-                        foregroundColor: Color(0xff1E8040),
-                        onPressed: (context) {},
-                      ),
-                      SlidableAction(
-                        label: 'Copy',
-                        backgroundColor: Color(0xffE8FEBE),
-                        icon: Icons.copy,
-                        foregroundColor: Color(0xff1E8040),
-                        onPressed: (context) {},
-                      ),
-                      SlidableAction(
-                        label: 'delete',
-                        backgroundColor: Color(0xffE8FEBE),
-                        icon: Icons.delete,
-                        foregroundColor: Color(0xff1E8040),
-                        onPressed: (context) {},
-                      )
-                    ]),
-                    child: Card(
-                      elevation: 0,
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                      ),
-                      child: Row(
-                        children: [
-                          Container(
-                            height: 170,
-                            width: 110,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              image: DecorationImage(
-                                image: AssetImage(
-                                  'assets/sb.jpeg',
+              StreamBuilder(stream: ref.onValue ,builder: (context, snapshot) { 
+                Map<dynamic,dynamic> map = snapshot.data!.snapshot.value as dynamic;
+                List list=[];
+                list.clear();
+                list = map.values.toList();
+               return ListView.separated(
+                  controller: _controller,
+                  shrinkWrap: true,
+                  padding: EdgeInsets.only(top: 10.h),
+                  itemCount: listpid.length,
+                  itemBuilder: ((context, int index) {
+                    return Slidable(
+                      startActionPane:
+                          (ActionPane(motion: const DrawerMotion(), children: [
+                        SlidableAction(
+                          label: 'Check-off',
+                          backgroundColor: const Color(0xffE5E4D7),
+                          icon: Icons.check_box,
+                          foregroundColor: const Color(0xff707070),
+                          onPressed: (context) {},
+                        ),
+                      ])),
+                      endActionPane:
+                          ActionPane(motion: const DrawerMotion(), children: [
+                        SlidableAction(
+                          label: 'Swap',
+                          backgroundColor: const Color(0xffE8FEBE),
+                          icon: Icons.swap_horiz,
+                          foregroundColor: const Color(0xff1E8040),
+                          onPressed: (context) {},
+                        ),
+                        SlidableAction(
+                          label: 'Move',
+                          backgroundColor: const Color(0xffE8FEBE),
+                          icon: Icons.move_to_inbox,
+                          foregroundColor: const Color(0xff1E8040),
+                          onPressed: (context) {},
+                        ),
+                        SlidableAction(
+                          label: 'Copy',
+                          backgroundColor: const Color(0xffE8FEBE),
+                          icon: Icons.copy,
+                          foregroundColor: const Color(0xff1E8040),
+                          onPressed: (context) {},
+                        ),
+                        SlidableAction(
+                          label: 'delete',
+                          backgroundColor: const Color(0xffE8FEBE),
+                          icon: Icons.delete,
+                          foregroundColor: const Color(0xff1E8040),
+                          onPressed: (context) {},
+                        )
+                      ]),
+                      child: Card(
+                        elevation: 0,
+                        shadowColor: Color(0xff00000034),
+                        shape: const RoundedRectangleBorder(
+                          side: BorderSide(color: Color(0xff00000034), width: 1),
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                        ),
+                        child: Row(
+                          children: [
+                            Container(
+                              height: 139.h,
+                              width: 97.w,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                image: const DecorationImage(
+                                  image: NetworkImage(
+                                      'https://www.forbesindia.com/media/images/2022/Sep/img_193773_banana.jpg'),
+                                  fit: BoxFit.cover,
                                 ),
-                                fit: BoxFit.cover,
                               ),
-                            ),
-                            child: Align(
-                                alignment: Alignment.bottomRight,
-                                child: Container(
-                                    margin: EdgeInsets.all(5),
-                                    height: 20,
-                                    width: 40,
-                                    decoration: BoxDecoration(
-                                        color: Colors.white.withOpacity(0.8),
-                                        borderRadius:
-                                            BorderRadius.circular(40)),
-                                    child: Row(
-                                      children: const [
-                                        Padding(
-                                            padding: EdgeInsets.only(
-                                                top: 5, bottom: 5)),
-                                        Icon(
-                                          Icons.star,
-                                          size: 15,
-                                          color: Color(0xff1E8040),
-                                        ),
-                                        SizedBox(
-                                          width: 3,
-                                        ),
-                                        Text(
-                                          '4.5',
-                                          style: TextStyle(
-                                            color: Color(0xff333333),
-                                            fontSize: 12,
+                              child: Align(
+                                  alignment: Alignment.bottomRight,
+                                  child: Container(
+                                      margin: const EdgeInsets.all(5),
+                                      height: 15.h,
+                                      width: 35.w,
+                                      decoration: BoxDecoration(
+                                          color: Colors.white.withOpacity(0.8),
+                                          borderRadius:
+                                              BorderRadius.circular(40)),
+                                      child: Row(
+                                        children: [
+                                          Padding(
+                                              padding: EdgeInsets.only(
+                                                  top: 5.h, bottom: 5.h)),
+                                          const Icon(
+                                            Icons.star,
+                                            size: 15,
+                                            color: Color(0xff1E8040),
                                           ),
-                                        ),
-                                      ],
-                                    ))),
-                          ),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          Container(
-                            padding: EdgeInsets.only(top: 10),
-                            height: 170,
-                            width: 260,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Container(
-                                  padding: EdgeInsets.only(right: 180),
-                                  child: Image.asset(
-                                    'assets/tesco.png',
-                                    fit: BoxFit.cover,
-                                    height: 20,
-                                    width: 74,
+                                          SizedBox(
+                                            width: 3.w,
+                                          ),
+                                          const Text(
+                                            '4.5',
+                                            style: TextStyle(
+                                              color: Color(0xff333333),
+                                              fontSize: 12,
+                                            ),
+                                          ),
+                                        ],
+                                      ))),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(left: 6.0.h),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Container(
+                                    padding:
+                                        EdgeInsets.only(right: 140.w, top: 10.h),
+                                    child: Image.asset(
+                                      'assets/tesco.png',
+                                      fit: BoxFit.cover,
+                                      height: 15.h,
+                                      width: 68.w,
+                                    ),
                                   ),
-                                ),
-                                const SizedBox(
-                                  height: 8,
-                                ),
-                                Container(
-                                    padding: EdgeInsets.only(right: 180),
-                                    child: const Text('Samsung TV')),
-                                Row(
-                                  children: const [
-                                    Text('Screen size'),
-                                    SizedBox(
-                                      width: 120,
-                                    ),
-                                    Text('6 x KG')
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: 6,
-                                ),
-                                Row(
-                                  children: const [
-                                    Text(
-                                      '(500 g - £5)',
-                                      style:
-                                          TextStyle(color: Color(0xff8D8D8D)),
-                                    ),
-                                    SizedBox(
-                                      width: 90,
-                                    ),
-                                    Text('£ 7.90',
+                                  SizedBox(
+                                    height: 8.h,
+                                  ),
+                                  Text("${listpid[index]}"),
+                                  Row(
+                                    children: [
+                                      const Text('Screen size'),
+                                      SizedBox(
+                                        width: 125.w,
+                                      ),
+                                      const Text('6 x KG')
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 6.h,
+                                  ),
+                                  Row(
+                                    children: [
+                                      const Text(
+                                        '(500 g - £5)',
+                                        style:
+                                            TextStyle(color: Color(0xff8D8D8D)),
+                                      ),
+                                      SizedBox(
+                                        width: 90.w,
+                                      ),
+                                      const Text('£ 7.90',
+                                          style: TextStyle(
+                                              fontSize: 10,
+                                              color: Color(0xff333333))),
+                                      SizedBox(
+                                        width: 6.w,
+                                      ),
+                                      const Text(
+                                        '£ 6.90',
                                         style: TextStyle(
-                                            fontSize: 10,
-                                            color: Color(0xff333333))),
-                                    SizedBox(
-                                      width: 6,
-                                    ),
-                                    Text(
-                                      '£ 6.90',
-                                      style: TextStyle(
-                                          fontSize: 16,
-                                          color: Color(0xff1E8040),
-                                          fontWeight: FontWeight.bold),
-                                    )
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: 6,
-                                ),
-                                Container(
-                                  padding: EdgeInsets.only(right: 125),
-                                  child: const Text(
+                                            fontSize: 16,
+                                            color: Color(0xff1E8040),
+                                            fontWeight: FontWeight.bold),
+                                      )
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 6.h,
+                                  ),
+                                  const Text(
                                     'Lorem Ipsum dolor....',
                                     style: TextStyle(color: Color(0xffB11F1F)),
                                   ),
-                                ),
-                                const SizedBox(
-                                  height: 5,
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          right: 0, bottom: 5, top: 15),
-                                      child: Container(
-                                        height: 25,
-                                        width: 110,
-                                        color: Color(0xffE8FEBE),
-                                        /* decoration: BoxDecoration(
-                                            color: Color(0xffE8FEBE),
-                                            borderRadius:
-                                                BorderRadius.circular(40)),*/
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                            Align(
-                                                alignment: Alignment.centerLeft,
-                                                child: IconButton(
-                                                  iconSize: 17,
-                                                  onPressed: () {},
-                                                  icon: const Icon(
-                                                      Icons.remove_circle,
+                                  Row(
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsets.only(
+                                            left: 130.w, bottom: 5.h, top: 10.h),
+                                        child: Container(
+                                          height: 20.h,
+                                          width: 90.w,
+                                          decoration: BoxDecoration(
+                                              color: const Color(0xffE8FEBE),
+                                              borderRadius:
+                                                  BorderRadius.circular(40)),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: const [
+                                              Icon(
+                                                Icons.remove_circle_outline,
+                                                color: Color(0xff1E8040),
+                                              ),
+                                              Text('1'),
+                                              Icon(
+                                                Icons.add_circle_outline,
+                                                color: Color(0xff1E8040),
+                                              ),
+                                              /* IconButton(
+                                                  iconSize: 20,
+                                                  onPressed: () {FirebaseFirestore.instance
+                                                    .collection("cart")
+                                                    .add({'uid':auth.getUser()!.uid,'quantity': 1,'amount':100});},
+                                                  icon: Icon(Icons.add_circle,
                                                       color: Color(0xff1E8040)),
-                                                )),
-                                            // SizedBox(width: 5,),
-                                            const Text('1'),
-                                            //SizedBox(width: 5,),
-                                            IconButton(
-                                              iconSize: 17,
-                                              onPressed: () {
-                                                showDialog(
+                                                ),*/
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    );
+                  }),
+                  separatorBuilder: ((context, index) {
+                    return const Divider();
+                  }),
+                );//return CircularProgressIndicator();
+    }  )
+            ],
+          ),
+        ),
+      ),
+      bottomSheet: Container(
+        margin: EdgeInsets.only(left: 30.w, right: 29.w, bottom: 10.h),
+        height: 33.h,
+        width: 350.w,
+        decoration: BoxDecoration(
+            color: const Color(0xff1E8040),
+            borderRadius: BorderRadius.circular(40)),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Padding(
+              padding: EdgeInsets.only(left: 33.w, right: 20.w),
+              child: const Icon(
+                Icons.list,
+                color: Color(0xffFFFFFF),
+                size: 30,
+              ),
+            ),
+            Container(
+                height: 32.h,
+                width: 110.w,
+                decoration: BoxDecoration(
+                    color: const Color(0xffFFFFFF),
+                    borderRadius: BorderRadius.circular(40)),
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(
+                          left: 17.w, top: 7.h, bottom: 6.h, right: 10.w),
+                      child: Image.asset(
+                        'assets/cart.png',
+                        height: 26.h,
+                        width: 20.w,
+                      ),
+                    ),
+                    Column(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(top: 3.0.h),
+                          child: Row(
+                            children: const [
+                              Text('Totals',
+                                  style: TextStyle(
+                                      color: Color(0xff8D8D8D), fontSize: 12)),
+                              Text(
+                                '780',
+                                style: TextStyle(
+                                    color: Colors.black, fontSize: 12),
+                              )
+                            ],
+                          ),
+                        ),
+                        const Text(
+                          '£2000',
+                          style: TextStyle(
+                              color: Color(0xff1E8040),
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold),
+                        )
+                      ],
+                    ),
+                  ],
+                )),
+            Padding(
+              padding: EdgeInsets.only(
+                  left: 10.w, top: 10.h, bottom: 10.h, right: 17.w),
+              child: const Text(
+                'Buy the list',
+                style: TextStyle(
+                    color: Color(0xffFFFFFF),
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+      /*TextField(
+                controller: newcontroller,
+                autofocus: true,
+                decoration: InputDecoration(
+                    fillColor: Color(0xffF8FFEB),
+                    floatingLabelStyle: TextStyle(color: Color(0xff1E8040)),
+                    hintText: 'New List',
+                    suffixIcon: FloatingActionButton.small(//mini:true,
+                      backgroundColor:Color(0xff1E8040) ,
+                      onPressed: () {},
+                      child: Icon(
+                        Icons.add,size: 20,
+                        color: Colors.white,
+                      ),
+                      //shape: CircleBorder(),
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(40),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(40),
+                      borderSide: BorderSide(color: Color(0xff1E8040)),
+                    ),
+                ),
+              ),*/
+
+                                /*showDialog(
                                                     context: context,
                                                     builder: ((BuildContext
                                                         context) {
@@ -393,11 +532,199 @@ class _Product_PageState extends State<Product_Page> {
                                                             ),
                                                           
                                                           ));
-                                                    }));
-                                              },
+                                                    }));*/
+
+       /*ListView.separated(
+                controller: _controller,
+                shrinkWrap: true,
+                padding:
+                     EdgeInsets.only(top: 10.h),
+                itemCount: listpid.length,
+                itemBuilder: ((context, int index) {
+                  return Slidable(
+                    startActionPane:
+                        (ActionPane(motion: const DrawerMotion(), children: [
+                      SlidableAction(
+                        label: 'Check-off',
+                        backgroundColor: const Color(0xffE5E4D7),
+                        icon: Icons.check_box,
+                        foregroundColor: const Color(0xff707070),
+                        onPressed: (context) {},
+                      ),
+                    ])),
+                    endActionPane:
+                        ActionPane(motion: const DrawerMotion(), children: [
+                      SlidableAction(
+                        label: 'Swap',
+                        backgroundColor: const Color(0xffE8FEBE),
+                        icon: Icons.swap_horiz,
+                        foregroundColor: const Color(0xff1E8040),
+                        onPressed: (context) {},
+                      ),
+                      SlidableAction(
+                        label: 'Move',
+                        backgroundColor: const Color(0xffE8FEBE),
+                        icon: Icons.move_to_inbox,
+                        foregroundColor: const Color(0xff1E8040),
+                        onPressed: (context) {},
+                      ),
+                      SlidableAction(
+                        label: 'Copy',
+                        backgroundColor: const Color(0xffE8FEBE),
+                        icon: Icons.copy,
+                        foregroundColor: const Color(0xff1E8040),
+                        onPressed: (context) {},
+                      ),
+                      SlidableAction(
+                        label: 'delete',
+                        backgroundColor: const Color(0xffE8FEBE),
+                        icon: Icons.delete,
+                        foregroundColor: const Color(0xff1E8040),
+                        onPressed: (context) {},
+                      )
+                    ]),
+                    child: Card(
+                      elevation: 0,
+                      shadowColor: Color(0xff00000034),
+                      shape: const RoundedRectangleBorder(
+                        side: BorderSide(color: Color(0xff00000034), width: 1),
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                      ),
+                      child: Row(
+                        children: [
+                          Container(
+                            height: 139.h,
+                            width: 97.w,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              image: const DecorationImage(
+                              image: NetworkImage('https://www.forbesindia.com/media/images/2022/Sep/img_193773_banana.jpg'),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            child: Align(
+                                alignment: Alignment.bottomRight,
+                                child: Container(
+                                    margin: const EdgeInsets.all(5),
+                                    height: 15.h,
+                                    width: 35.w,
+                                    decoration: BoxDecoration(
+                                        color: Colors.white.withOpacity(0.8),
+                                        borderRadius:
+                                            BorderRadius.circular(40)),
+                                    child: Row(
+                                      children:[
+                                        Padding(
+                                            padding: EdgeInsets.only(
+                                                top: 5.h, bottom: 5.h)),
+                                        const Icon(
+                                          Icons.star,
+                                          size: 15,
+                                          color: Color(0xff1E8040),
+                                        ),
+                                        SizedBox(
+                                          width: 3.w,
+                                        ),
+                                        const Text(
+                                          '4.5',
+                                          style: TextStyle(
+                                            color: Color(0xff333333),
+                                            fontSize: 12,
+                                          ),
+                                        ),
+                                      ],
+                                    ))),
+                          ),
+                          Padding(
+                            padding:  EdgeInsets.only(left:6.0.h),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Container(
+                                  padding: EdgeInsets.only(right: 140.w,top: 10.h),
+                                  child: Image.asset(
+                                    'assets/tesco.png',
+                                    fit: BoxFit.cover,
+                                    height: 15.h,
+                                    width: 68.w,
+                                  ),
+                                ),
+                                 SizedBox(
+                                  height: 8.h,
+                                ),
+                                Text("${listpname[index]}"),
+                                Row(
+                                  children:  [
+                                    const Text('Screen size'),
+                                    SizedBox(
+                                      width: 125.w,
+                                    ),
+                                    const Text('6 x KG')
+                                  ],
+                                ),
+                                 SizedBox(
+                                  height: 6.h,
+                                ),
+                                Row(
+                                  children:  [
+                                    const Text(
+                                      '(500 g - £5)',
+                                      style:
+                                          TextStyle(color: Color(0xff8D8D8D)),
+                                    ),
+                                    SizedBox(
+                                      width: 90.w,
+                                    ),
+                                    const Text('£ 7.90',
+                                        style: TextStyle(
+                                            fontSize: 10,
+                                            color: Color(0xff333333))),
+                                    SizedBox(
+                                      width: 6.w,
+                                    ),
+                                    const Text(
+                                      '£ 6.90',
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          color: Color(0xff1E8040),
+                                          fontWeight: FontWeight.bold),
+                                    )
+                                  ],
+                                ),
+                                 SizedBox(
+                                  height: 6.h,
+                                ),
+                                const Text(
+                                  'Lorem Ipsum dolor....',
+                                  style: TextStyle(color: Color(0xffB11F1F)),
+                                ),
+                                Row(
+                                  children: [
+                                    Padding(
+                                      padding:  EdgeInsets.only(
+                                          left: 130.w, bottom: 5.h, top: 10.h),
+                                      child: Container(
+                                        height: 20.h,
+                                        width: 90.w,
+                                         decoration: BoxDecoration(
+                                            color: const Color(0xffE8FEBE),
+                                            borderRadius:
+                                                BorderRadius.circular(40)),
+                                        child: Row(
+                                         mainAxisAlignment:MainAxisAlignment.spaceBetween,
+                                          children: const[
+                                             Icon(Icons.remove_circle_outline,color: Color(0xff1E8040),),
+                                             Text('1'),
+                                             Icon(Icons.add_circle_outline,color: Color(0xff1E8040),),
+                                           /* IconButton(
+                                              iconSize: 20,
+                                              onPressed: () {FirebaseFirestore.instance
+                                                .collection("cart")
+                                                .add({'uid':auth.getUser()!.uid,'quantity': 1,'amount':100});},
                                               icon: Icon(Icons.add_circle,
                                                   color: Color(0xff1E8040)),
-                                            ),
+                                            ),*/
                                           ],
                                         ),
                                       ),
@@ -415,211 +742,13 @@ class _Product_PageState extends State<Product_Page> {
                 separatorBuilder: ((context, index) {
                   return const Divider();
                 }),
-              ),
-            ),
-          ],
-        ),
-      ),
-      bottomSheet: Padding(
-        padding: EdgeInsets.only(left: 30, right: 20, bottom: 10),
-        child: Container(
-          height: 40,
-          width: 350,
-          decoration: BoxDecoration(
-              color: Color(0xff1E8040),
-              borderRadius: BorderRadius.circular(40)),
-          child: Row(crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Padding(
-                padding: EdgeInsets.only(left: 40, right: 20),
-                child: Icon(
-                  Icons.list,
-                  color: Color(0xffFFFFFF),
-                  size: 30,
-                ),
-              ),
-              Container(
-                  height: 40,
-                  width: 150,
-                  decoration: BoxDecoration(
-                      color: Color(0xffFFFFFF),
-                      borderRadius: BorderRadius.circular(40)),
-                  child: Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            left: 19, top: 7, bottom: 6, right: 13),
-                        child: Image.asset(
-                          'assets/Group 1648.png',
-                          height: 26,
-                          width: 24,
-                        ),
-                      ),
-                      Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(top: 3.0),
-                            child: Row(
-                              children: [
-                                Text('Totals',
-                                    style: TextStyle(
-                                        color: Color(0xff8D8D8D),
-                                        fontSize: 12)),
-                                Text(
-                                  '780',
-                                  style: TextStyle(
-                                      color: Colors.black, fontSize: 12),
-                                )
-                              ],
-                            ),
-                          ),
-                          Text(
-                            '£2000',
-                            style: TextStyle(
-                                color: Color(0xff1E8040),
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold),
-                          )
-                        ],
-                      ),
-                    ],
-                  )),
-              Padding(
-                padding: const EdgeInsets.only(
-                    left: 10, top: 10, bottom: 10, right: 17),
-                child: Text(
-                  'Buy the list',
-                  style: TextStyle(
-                      color: Color(0xffFFFFFF),
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold),
-                ),
-              )
-            ],
-          ),
-        ),
-      ),
-    );
+              ),*/                                             
 
-    //   body: StreamBuilder(
-    //   stream: FirebaseFirestore.instance.collection("products").snapshots(),
-    //   builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-    //     if (!snapshot.hasData) {
-    //       return Center(
-    //         child: CircularProgressIndicator(),
-    //       );
-    //     }
-    //     return ListView(
-    //       children: snapshot.data!.document.map((document) {
-    //         return Container(
-    //           child: Center(child: Text(document['text'])),
-    //         );
-    //       }).toList(),
-    //     );
-    //   },
-    // ),
-  }
-}
-/*Padding(
-          padding: const EdgeInsets.only(left: 40.0, right: 40),
-          child: Column(mainAxisAlignment: MainAxisAlignment.end, children: [
-            Container(
-              height: 40,
-              width: 335,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(40),
-                color: Color(0xff1E8040),
-              ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-          ]),
-        ),*/
-
-      /*TextField(
-                controller: newcontroller,
-                autofocus: true,
-                decoration: InputDecoration(
-                    fillColor: Color(0xffF8FFEB),
-                    floatingLabelStyle: TextStyle(color: Color(0xff1E8040)),
-                    hintText: 'New List',
-                    suffixIcon: FloatingActionButton.small(//mini:true,
-                      backgroundColor:Color(0xff1E8040) ,
-                      onPressed: () {},
-                      child: Icon(
-                        Icons.add,size: 20,
-                        color: Colors.white,
-                      ),
-                      //shape: CircleBorder(),
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(40),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(40),
-                      borderSide: BorderSide(color: Color(0xff1E8040)),
-                    ),
-                ),
-              ),*/
-
-              /*Container(
-                    height: 40,
-                    width: 150,
-                    child: TextField(
-                      textAlign: TextAlign.center,
-                      controller: newcontroller,
-                      decoration: InputDecoration(
-                        fillColor: Color(0xffF8FFEB),
-                        floatingLabelStyle: TextStyle(color: Color(0xff1E8040),backgroundColor: Color(0xffF8FFEB),),
-                        hintText: 'New Idea',
-                        border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                 
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                   borderSide: BorderSide(color: Color(0xff1E8040)),
-                   ),
-                    ),
-                  ),)*/
-
-                  /*SlidableAction(
-                        label: 'delete',
-                        backgroundColor: Color(0xffE8FEBE),
-                        icon: Icons.delete,
-                        onPressed: (context) {},
-                      )*/
-
-                    /* Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          right: 5, bottom: 5, top: 15),
-                                      child: Container(
-                                        height: 24,
-                                        width: 124,
-                                        decoration: BoxDecoration(
-                                            color: Color(0xffE8FEBE),
-                                            borderRadius:
-                                                BorderRadius.circular(40)),
-                                        child: Row(
-                                          children:const [
-                                            Icon(Icons.remove_circle,
-                                                size: 20,
-                                                color: Color(0xff1E8040)),SizedBox(width: 38,),
-                                                Text('1'),
-                                                SizedBox(width: 38,),
-                                            Align(alignment: Alignment.centerRight,
-                                              child: Icon(Icons.add_circle,
-                                                  size: 20,
-                                                  color: Color(0xff1E8040)),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),*/
+/*
+db.once().then((DataSnapshot snapshot){
+  Map<dynamic, dynamic> values = snapshot.value;
+     values.forEach((key,values) {
+      print(values["Email"]);
+    });
+ });
+*/              

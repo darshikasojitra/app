@@ -20,6 +20,9 @@ dependencies:
   cupertino_icons: ^1.0.2
   email_validator: ^2.1.17
   flutter_slidable: ^2.0.0
+  flutter_screenutil: ^5.6.1
+  firebase_database: ^10.0.9
+  http: ^0.13.5
 
 dev_dependencies:
   flutter_test:
@@ -36,8 +39,9 @@ flutter:
     - assets/icon_image.png
     - assets/tesco.png
     - assets/sb.jpeg
-    - assets/Group 1648.png
+    - assets/cart.png
     - assets/ocado.png
+    - assets/data.json
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

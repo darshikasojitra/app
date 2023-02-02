@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'signup_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -36,7 +37,7 @@ class _Login_screenState extends State<Login_screen> {
               ),
               Padding(
                 padding:
-                    const EdgeInsets.symmetric(vertical: 30, horizontal: 30),
+                     EdgeInsets.symmetric(vertical: 30.h, horizontal: 30.w),
                 child: Form(
                   key: fromKey,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -62,8 +63,8 @@ class _Login_screenState extends State<Login_screen> {
                               : null;
                         },
                       ),
-                      const SizedBox(
-                        height: 20,
+                       SizedBox(
+                        height: 20.h,
                       ),
                       TextFormField(
                         autofocus: true,
@@ -84,11 +85,11 @@ class _Login_screenState extends State<Login_screen> {
                               : null;
                         },
                       ),
-                      const SizedBox(
-                        height: 30,
+                       SizedBox(
+                        height: 20.h,
                       ),
                       MaterialButton(
-                        height: 60,
+                        height: 40.h,
                         minWidth: double.infinity,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(40)),
@@ -118,14 +119,14 @@ class _Login_screenState extends State<Login_screen> {
                             }
                           }
                         },
-                        child: const Text(
+                        child:  Text(
                           AllStrings.login,
                           style: TextStyle(color: Colors.white, fontSize: 25),
                         ),
                         color: Colors.teal,
                       ),
-                      const SizedBox(
-                        height: 5,
+                       SizedBox(
+                        height: 5.h,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,

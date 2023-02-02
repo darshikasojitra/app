@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:demo_splash_screen/resources/all_string.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'Login_screen.dart';
 import 'package:demo_splash_screen/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -31,7 +33,7 @@ class _signup_screenState extends State<signup_screen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                padding: const EdgeInsets.only(top: 200),
+                padding:  EdgeInsets.only(top: 100.h),
                 child: const Text(
                   AllStrings.signup,
                   style: TextStyle(
@@ -41,12 +43,12 @@ class _signup_screenState extends State<signup_screen> {
                   ),
                 ),
               ),
-              const SizedBox(
-                height: 20,
+               SizedBox(
+                height: 10.h,
               ),
               Padding(
                 padding:
-                    const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                     EdgeInsets.symmetric(vertical: 20.h, horizontal: 20.w),
                 child: Form(
                     key: formKey,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -67,8 +69,8 @@ class _signup_screenState extends State<signup_screen> {
                             return value!.isEmpty ? AllStrings.entername : null;
                           },
                         ),
-                        const SizedBox(
-                          height: 20,
+                         SizedBox(
+                          height: 20.h,
                         ),
                         TextFormField(
                           autofocus: true,
@@ -88,8 +90,8 @@ class _signup_screenState extends State<signup_screen> {
                                 : null;
                           },
                         ),
-                        const SizedBox(
-                          height: 20,
+                         SizedBox(
+                          height: 20.h,
                         ),
                         TextFormField(
                           autofocus: true,
@@ -109,8 +111,8 @@ class _signup_screenState extends State<signup_screen> {
                                 : null;
                           },
                         ),
-                        const SizedBox(
-                          height: 20,
+                         SizedBox(
+                          height: 20.h,
                         ),
                         TextFormField(
                           autofocus: true,
@@ -129,11 +131,11 @@ class _signup_screenState extends State<signup_screen> {
                                 : null;
                           },
                         ),
-                        const SizedBox(
-                          height: 30,
+                         SizedBox(
+                          height: 20.h,
                         ),
                         MaterialButton(
-                          height: 60,
+                          height: 40.h,
                           minWidth: double.infinity,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(40)),
@@ -159,6 +161,7 @@ class _signup_screenState extends State<signup_screen> {
                                             Login_screen()));
                               }
                             }
+                            FirebaseFirestore.instance.collection("user").add({'uid':auth.getUser()!.uid,'name':nameController.text,'email':emailController.text});
                           },
                           child: Text(
                             AllStrings.signup,

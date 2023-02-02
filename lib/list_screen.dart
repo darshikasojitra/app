@@ -1,7 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:demo_splash_screen/product_page.dart';
-import 'package:demo_splash_screen/screens/dashboard_screen.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class List_Screen extends StatefulWidget {
   const List_Screen({super.key});
@@ -11,724 +11,188 @@ class List_Screen extends StatefulWidget {
 }
 
 class _List_ScreenState extends State<List_Screen> {
+  //late String _pname;
+  DatabaseReference ref = FirebaseDatabase.instance.ref("product");
   static const String _title = 'Your shopping List';
-  final TextEditingController textcontroller = TextEditingController();
+  TextEditingController textcontroller = TextEditingController();
   final ScrollController _scrollcontroller = ScrollController();
-  
+  List<String> firsttitle = ['Home', 'Mohmmed', 'Mohmmed / Home Screen'];
+  List<String> secondtitle = [
+    'Private',
+    'Collaboration | Owner',
+    'Collaboration | Collaborator'
+  ];
+  List<String> images = [
+    'assets/tesco.png',
+    'assets/tesco.png',
+    'assets/ocado.png'
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         titleSpacing: 0,
         backgroundColor: Color(0xff1E8040),
-        title: Text(
+        title: const Text(
           _title,
           style: TextStyle(color: Color(0xff000000), fontSize: 20),
         ),
       ),
       body: SingleChildScrollView(
-        controller: _scrollcontroller,
-        child: Padding(
-          padding: const EdgeInsets.only(right:10.0,left: 10,top: 20),
-          child: Column(
-            children: [
-              Container(
-                height: 100,
-                width: 400,
-                decoration: BoxDecoration(
-                    color: Color(0xffFFFFFF),
-                    borderRadius: BorderRadius.circular(10)),
-                child: Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10, top: 20),
-                      child: Column( mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Home',
-                            style: TextStyle(
-                                color: Color(0xff333333),
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          Text(
-                            'Private',
-                            style: TextStyle(
-                              color: Color(0xff8D8D8D),
-                              fontSize: 10,
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      width: 259,
-                    ),
-                    Container(
-                      height: 100,
-                      width: 79,
-                      decoration: BoxDecoration(
-                          color: Color(0xffE8FEBE),
-                          borderRadius: BorderRadius.circular(10)),
-                      child: Column(
-                       mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Row(
+          controller: _scrollcontroller,
+          child: ListView.builder(
+              padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 20.h),
+              shrinkWrap: true,
+              itemCount: firsttitle.length,
+              itemBuilder: ((context, index) {
+                return Card(
+                  shadowColor: const Color(0xff00000034),
+                  elevation: 0,
+                  shape: const RoundedRectangleBorder(
+                    side: BorderSide(color: Color(0xff00000034), width: 1),
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                  ),
+                  child: Container(
+                    height: 70.h,
+                    width: 330.w,
+                    decoration: BoxDecoration(
+                        color: const Color(0xffFFFFFF),
+                        borderRadius: BorderRadius.circular(20)),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(left: 10.w, top: 7.h),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                  left: 15,
-                                ),
-                                child: Text(
-                                  'Totals',
-                                  style: TextStyle(
-                                      fontSize: 10, color: Color(0xff8D8D8D)),
+                              Text(
+                                '${firsttitle[index]}',
+                                style: const TextStyle(
+                                    color: Color(0xff333333),
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              SizedBox(
+                                height: 2.h,
+                              ),
+                              Text(
+                                '${secondtitle[index]}',
+                                style: const TextStyle(
+                                  color: Color(0xff8D8D8D),
+                                  fontSize: 10,
                                 ),
                               ),
                               SizedBox(
-                                width: 4,
+                                height: 10.h,
                               ),
-                              Text(
-                                '780',
-                                style: TextStyle(
-                                    fontSize: 12, color: Color(0xff333333)),
-                              )
-                            ],
-                          ),
-                          Text(
-                            '£2000',
-                            style: TextStyle(
-                                fontSize: 16,
-                                color: Color(0xff1E8040),
-                                fontWeight: FontWeight.bold),
-                          )
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-              ),
-             const SizedBox(
-                height: 15,
-              ),
-              Container(
-                height: 100,
-                width: 400,
-                decoration: BoxDecoration(
-                    color: Color(0xffFFFFFF),
-                    borderRadius: BorderRadius.circular(10)),
-                child: Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10, top: 20),
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Column( crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Mohmmed',
-                              style: TextStyle(
-                                  color: Color(0xff333333),
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            Text(
-                              'Collaboration | Owner',
-                              style: TextStyle(
-                                color: Color(0xff8D8D8D),
-                                fontSize: 10,
-                              ),
-                            ),
-                            SizedBox(
-                              height: 15,
-                            ),
-                            Container(
-                              child: Image.asset(
-                                'assets/tesco.png',
+                              Image.asset(
+                                '${images[index]}',
                                 fit: BoxFit.cover,
-                                height: 20,
-                                width: 74,
+                                height: 17.h,
+                                width: 74.w,
                               ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      width: 206,
-                    ),
-                    Container(
-                      height: 100,
-                      width: 79,
-                      decoration: BoxDecoration(
-                          color: Color(0xffE8FEBE),
-                          borderRadius: BorderRadius.circular(10)),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Row(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                  left: 15,
-                                ),
-                                child: Text(
-                                  'Totals',
-                                  style: TextStyle(
-                                      fontSize: 10, color: Color(0xff8D8D8D)),
-                                ),
-                              ),
-                              SizedBox(
-                                width: 4,
-                              ),
-                              Text(
-                                '780',
-                                style: TextStyle(
-                                    fontSize: 12, color: Color(0xff333333)),
-                              )
                             ],
                           ),
-                          Text(
-                            '£2000',
-                            style: TextStyle(
-                                fontSize: 16,
-                                color: Color(0xff1E8040),
-                                fontWeight: FontWeight.bold),
-                          )
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              Container(
-                height: 100,
-                width: 400,
-                decoration: BoxDecoration(
-                    color: Color(0xffFFFFFF),
-                    borderRadius: BorderRadius.circular(10)),
-                child: Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 5, top: 20),
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Mohmmed / Home Screen',
-                              style: TextStyle(
-                                  color: Color(0xff333333),
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            Text(
-                              'Collaboration | Collaborator',
-                              style: TextStyle(
-                                color: Color(0xff8D8D8D),
-                                fontSize: 10,
-                              ),
-                            ),
-                            SizedBox(
-                              height: 15,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(left:10),
-                              child: Container(
-                                child: Image.asset(
-                                  'assets/ocado.png',
-                                  fit: BoxFit.cover,
-                                  height: 20,
-                                  width: 90,
-                                ),
-                              ),
-                            ),
-                          ],
                         ),
-                      ),
+                        const LastContainer(),
+                      ],
                     ),
-                    SizedBox(
-                      width: 118,
-                    ),
-                    Container(
-                      height: 100,
-                      width: 79,
-                      decoration: BoxDecoration(
-                          color: Color(0xffE8FEBE),
-                          borderRadius: BorderRadius.circular(10)),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Row(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                  left: 15,
-                                ),
-                                child: Text(
-                                  'Totals',
-                                  style: TextStyle(
-                                      fontSize: 10, color: Color(0xff8D8D8D)),
-                                ),
-                              ),
-                              SizedBox(
-                                width: 4,
-                              ),
-                              Text(
-                                '780',
-                                style: TextStyle(
-                                    fontSize: 12, color: Color(0xff333333)),
-                              )
-                            ],
-                          ),
-                          Text(
-                            '£2000',
-                            style: TextStyle(
-                                fontSize: 16,
-                                color: Color(0xff1E8040),
-                                fontWeight: FontWeight.bold),
-                          )
-                        ],
-                      ),
-                    )
-            ],
+                  ),
+                );
+              }))),
+      bottomSheet: Padding(
+        padding: EdgeInsets.only(left: 20.h, right: 20.h, bottom: 8.h),
+        child: Container(
+          height: 35.h,
+          width: 340.w,
+          child: TextField(
+            textAlign: TextAlign.center,
+            controller: textcontroller,
+            autofocus: true,
+            decoration: InputDecoration(
+              hintText: 'New List',
+              suffixIcon: IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => Product_Page()));
+                  ref.push().update({'pname':textcontroller.text,'pid':1,'prize':100});
+
+                    /*   if (_pname == 'TV' ||
+                        _pname == 'ear phone' ||
+                        _pname == 'cold drink' ||
+                        _pname == 'mobile' ||
+                        _pname == 'cake') {
+                      FirebaseFirestore.instance.collection('products').add({
+                        'pname': _pname,
+                        'quantity': _quantity,
+                        'amount': _quantity * 20000
+                      });
+                    } else {
+                      print('enter valid name');
+                    }*/
+                  },
+                  icon: const Icon(Icons.add_circle, color: Color(0xff1E8040))),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(30),
+                borderSide: const BorderSide(color: Color(0xff1E8040)),
+              ),
+            ),
+            // onChanged: (value) {
+            //   _pname = value;
+            // },
           ),
-        ),
-     ], ),
-    ),),
-      bottomSheet: Container(
-        child: Padding(
-          padding: const EdgeInsets.only(left: 8,right: 8, bottom: 8),
-          child:
-              TextField(
-                textAlign: TextAlign.center,
-                controller: textcontroller,
-                autofocus: true,
-                decoration: InputDecoration(
-                  fillColor: Color(0xffF8FFEB),
-                  floatingLabelStyle: TextStyle(color: Color(0xff1E8040)),
-                  hintText: 'New List',
-                  suffixIcon: Padding(
-                    padding: const EdgeInsets.only(right: 8,top: 0,bottom: 0),
-                    child: FloatingActionButton.small(
-                      backgroundColor:Color(0xff1E8040) ,
-                      onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>Product_Page()));
-                //       FirebaseFirestore.instance
-                // .collection('products')
-                // .add({'text': 'data added through app'});
-                      },
-                      child: Icon(
-                        Icons.add,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(40),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(40),
-                    borderSide: BorderSide(color: Color(0xff1E8040)),
-                  ),
-                ),
-              ),
-              // SizedBox(
-              //   height: 10,
-              // )
-      
         ),
       ),
     );
   }
 }
 
+class LastContainer extends StatelessWidget {
+  const LastContainer({super.key});
 
-/*bottomSheet: Container(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 100.h,
+      width: 73.w,
+      decoration: BoxDecoration(
+          color: const Color(0xffE8FEBE),
+          borderRadius: BorderRadius.circular(10)),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Row(
             children: [
-              TextField(
-                textAlign: TextAlign.center,
-                controller: textcontroller,
-                autofocus: true,
-                decoration: InputDecoration(
-                  fillColor: Color(0xffF8FFEB),
-                  floatingLabelStyle: TextStyle(color: Color(0xff1E8040)),
-                  hintText: 'New List',
-                  suffixIcon: Padding(
-                    padding: const EdgeInsets.only(right: 8,top: 0,bottom: 0),
-                    child: FloatingActionButton.small(
-                      backgroundColor:Color(0xff1E8040) ,
-                      onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>Product_Page()));
-                //       FirebaseFirestore.instance
-                // .collection('products')
-                // .add({'text': 'data added through app'});
-                      },
-                      child: Icon(
-                        Icons.add,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(40),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(40),
-                    borderSide: BorderSide(color: Color(0xff1E8040)),
-                  ),
+              Padding(
+                padding: EdgeInsets.only(
+                  left: 12.h,
+                ),
+                child: const Text(
+                  'Totals',
+                  style: TextStyle(fontSize: 10, color: Color(0xff8D8D8D)),
                 ),
               ),
               SizedBox(
-                height: 10,
+                width: 4.w,
+              ),
+              const Text(
+                '780',
+                style: TextStyle(fontSize: 12, color: Color(0xff333333)),
               )
             ],
           ),
-        ),
-      ),*/
-      /*Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Container(
-            height: 100,
-            width: 400,
-            decoration: BoxDecoration(color: Color(0xffFFFFFF),
-                      borderRadius: BorderRadius.circular(10)),
-            child: Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 10, top: 20),
-                  child: Column(
-                    children: [
-                      Text(
-                        'Home',
-                        style: TextStyle(
-                            color: Color(0xff333333),
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      Text(
-                        'Private',
-                        style: TextStyle(
-                          color: Color(0xff8D8D8D),
-                          fontSize: 10,
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  width: 259,
-                ),
-                Container(
-                  height: 100,
-                  width: 79,
-                  decoration: BoxDecoration(color: Color(0xffE8FEBE),
-                      borderRadius: BorderRadius.circular(10)),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(left: 15,),
-                            child: Text(
-                              'Totals',
-                              style: TextStyle(
-                                  fontSize: 10, color: Color(0xff8D8D8D)),
-                            ),
-                          ),SizedBox(width: 4,),
-                          Text('780',style: TextStyle(
-                                fontSize: 12, color: Color(0xff333333)),)
-                        ],
-                      ),
-                      Text('£2000',style: TextStyle(fontSize: 16,color: Color(0xff1E8040),fontWeight: FontWeight.bold),)
-                    ],
-                  ),
-                )
-              ],
-            ),
-          ),
-        ),,*/
-
-        /*SingleChildScrollView(
-        controller: _scrollcontroller,
-        child: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Column(
-            children: [
-              Container(
-                height: 100,
-                width: 400,
-                decoration: BoxDecoration(
-                    color: Color(0xffFFFFFF),
-                    borderRadius: BorderRadius.circular(10)),
-                child: Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10, top: 20),
-                      child: Column( mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Home',
-                            style: TextStyle(
-                                color: Color(0xff333333),
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          Text(
-                            'Private',
-                            style: TextStyle(
-                              color: Color(0xff8D8D8D),
-                              fontSize: 10,
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      width: 259,
-                    ),
-                    Container(
-                      height: 100,
-                      width: 79,
-                      decoration: BoxDecoration(
-                          color: Color(0xffE8FEBE),
-                          borderRadius: BorderRadius.circular(10)),
-                      child: Column(
-                       mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Row(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                  left: 15,
-                                ),
-                                child: Text(
-                                  'Totals',
-                                  style: TextStyle(
-                                      fontSize: 10, color: Color(0xff8D8D8D)),
-                                ),
-                              ),
-                              SizedBox(
-                                width: 4,
-                              ),
-                              Text(
-                                '780',
-                                style: TextStyle(
-                                    fontSize: 12, color: Color(0xff333333)),
-                              )
-                            ],
-                          ),
-                          Text(
-                            '£2000',
-                            style: TextStyle(
-                                fontSize: 16,
-                                color: Color(0xff1E8040),
-                                fontWeight: FontWeight.bold),
-                          )
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-              ),
-             const SizedBox(
-                height: 15,
-              ),
-              Container(
-                height: 100,
-                width: 400,
-                decoration: BoxDecoration(
-                    color: Color(0xffFFFFFF),
-                    borderRadius: BorderRadius.circular(10)),
-                child: Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 10, top: 20),
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Column( crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Mohmmed',
-                              style: TextStyle(
-                                  color: Color(0xff333333),
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            Text(
-                              'Collaboration | Owner',
-                              style: TextStyle(
-                                color: Color(0xff8D8D8D),
-                                fontSize: 10,
-                              ),
-                            ),
-                            SizedBox(
-                              height: 15,
-                            ),
-                            Container(
-                              child: Image.asset(
-                                'assets/tesco.png',
-                                fit: BoxFit.cover,
-                                height: 20,
-                                width: 74,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      width: 206,
-                    ),
-                    Container(
-                      height: 100,
-                      width: 79,
-                      decoration: BoxDecoration(
-                          color: Color(0xffE8FEBE),
-                          borderRadius: BorderRadius.circular(10)),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Row(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                  left: 15,
-                                ),
-                                child: Text(
-                                  'Totals',
-                                  style: TextStyle(
-                                      fontSize: 10, color: Color(0xff8D8D8D)),
-                                ),
-                              ),
-                              SizedBox(
-                                width: 4,
-                              ),
-                              Text(
-                                '780',
-                                style: TextStyle(
-                                    fontSize: 12, color: Color(0xff333333)),
-                              )
-                            ],
-                          ),
-                          Text(
-                            '£2000',
-                            style: TextStyle(
-                                fontSize: 16,
-                                color: Color(0xff1E8040),
-                                fontWeight: FontWeight.bold),
-                          )
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              Container(
-                height: 100,
-                width: 400,
-                decoration: BoxDecoration(
-                    color: Color(0xffFFFFFF),
-                    borderRadius: BorderRadius.circular(10)),
-                child: Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 5, top: 20),
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Mohmmed / Home Screen',
-                              style: TextStyle(
-                                  color: Color(0xff333333),
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            Text(
-                              'Collaboration | Collaborator',
-                              style: TextStyle(
-                                color: Color(0xff8D8D8D),
-                                fontSize: 10,
-                              ),
-                            ),
-                            SizedBox(
-                              height: 15,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(left:10),
-                              child: Container(
-                                child: Image.asset(
-                                  'assets/ocado.png',
-                                  fit: BoxFit.cover,
-                                  height: 20,
-                                  width: 90,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      width: 118,
-                    ),
-                    Container(
-                      height: 100,
-                      width: 79,
-                      decoration: BoxDecoration(
-                          color: Color(0xffE8FEBE),
-                          borderRadius: BorderRadius.circular(10)),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Row(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                  left: 15,
-                                ),
-                                child: Text(
-                                  'Totals',
-                                  style: TextStyle(
-                                      fontSize: 10, color: Color(0xff8D8D8D)),
-                                ),
-                              ),
-                              SizedBox(
-                                width: 4,
-                              ),
-                              Text(
-                                '780',
-                                style: TextStyle(
-                                    fontSize: 12, color: Color(0xff333333)),
-                              )
-                            ],
-                          ),
-                          Text(
-                            '£2000',
-                            style: TextStyle(
-                                fontSize: 16,
-                                color: Color(0xff1E8040),
-                                fontWeight: FontWeight.bold),
-                          )
-                        ],
-                      ),
-                    )
-            ],
-          ),
-        ),
-     ], ),
-    ),),*/
+          const Text(
+            '£2000',
+            style: TextStyle(
+                fontSize: 16,
+                color: Color(0xff1E8040),
+                fontWeight: FontWeight.bold),
+          )
+        ],
+      ),
+    );
+  }
+}
