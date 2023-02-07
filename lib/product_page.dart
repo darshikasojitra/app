@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:demo_splash_screen/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -13,13 +15,9 @@ class Product_Page extends StatefulWidget {
 
 class _Product_PageState extends State<Product_Page> {
   final AuthService auth = AuthService();
-  DatabaseReference ref = FirebaseDatabase.instance.ref("prduct").child("0");
-
-  List<int> listpid = [1, 2, 3, 4, 5];
-  List<String> listpname = ['TV', 'ear phone', 'mobile', 'cold drink', 'cake'];
-  List<int> listquantity = [1, 1, 1, 1, 1];
-  List<int> listamount = [20000, 100, 5000, 10, 500];
-  ScrollController _controller = ScrollController();
+  DatabaseReference ref = FirebaseDatabase.instance.ref("product");
+  final cref = FirebaseDatabase.instance.ref("cart");
+  final ScrollController _controller = ScrollController();
 
   @override
   Widget build(BuildContext context) {
@@ -137,323 +135,348 @@ class _Product_PageState extends State<Product_Page> {
               StreamBuilder(
                   stream: ref.onValue,
                   builder: (context, snapshot) {
-                    Map<dynamic, dynamic> map =
-                        snapshot.data!.snapshot.value as dynamic;
-                    List list = [];
-                    list.clear();
-                    list = map.values.toList();
-                    return ListView.separated(
-                      controller: _controller,
-                      shrinkWrap: true,
-                      padding: EdgeInsets.only(top: 10.h),
-                      itemCount: listpid.length,
-                      itemBuilder: ((context, int index) {
-                        return Slidable(
-                          startActionPane: (ActionPane(
-                              motion: const DrawerMotion(),
-                              children: [
-                                SlidableAction(
-                                  label: 'Check-off',
-                                  backgroundColor: const Color(0xffE5E4D7),
-                                  icon: Icons.check_box,
-                                  foregroundColor: const Color(0xff707070),
-                                  onPressed: (context) {},
-                                ),
-                              ])),
-                          endActionPane: ActionPane(
-                              motion: const DrawerMotion(),
-                              children: [
-                                SlidableAction(
-                                  label: 'Swap',
-                                  backgroundColor: const Color(0xffE8FEBE),
-                                  icon: Icons.swap_horiz,
-                                  foregroundColor: const Color(0xff1E8040),
-                                  onPressed: (context) {},
-                                ),
-                                SlidableAction(
-                                  label: 'Move',
-                                  backgroundColor: const Color(0xffE8FEBE),
-                                  icon: Icons.move_to_inbox,
-                                  foregroundColor: const Color(0xff1E8040),
-                                  onPressed: (context) {},
-                                ),
-                                SlidableAction(
-                                  label: 'Copy',
-                                  backgroundColor: const Color(0xffE8FEBE),
-                                  icon: Icons.copy,
-                                  foregroundColor: const Color(0xff1E8040),
-                                  onPressed: (context) {},
-                                ),
-                                SlidableAction(
-                                  label: 'delete',
-                                  backgroundColor: const Color(0xffE8FEBE),
-                                  icon: Icons.delete,
-                                  foregroundColor: const Color(0xff1E8040),
-                                  onPressed: (context) {},
-                                )
-                              ]),
-                          child: Card(
-                            elevation: 0,
-                            shadowColor: Color(0xff00000034),
-                            shape: const RoundedRectangleBorder(
-                              side: BorderSide(
-                                  color: Color(0xff00000034), width: 1),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10)),
-                            ),
-                            child: Row(
-                              children: [
-                                Container(
-                                  height: 139.h,
-                                  width: 97.w,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    image: const DecorationImage(
-                                      image: NetworkImage(
-                                          'https://www.forbesindia.com/media/images/2022/Sep/img_193773_banana.jpg'),
-                                      fit: BoxFit.cover,
-                                    ),
+                    if (snapshot.hasData) {
+                      final Map<String, dynamic> map =
+                          Map<String, dynamic>.from(
+                              snapshot.data!.snapshot.value as Map);
+                      List list = [];
+                      list.clear();
+                      list = map.values.toList();
+                      return ListView.separated(
+                        controller: _controller,
+                        shrinkWrap: true,
+                        padding: EdgeInsets.only(top: 10.h),
+                        itemCount: list.length,
+                        itemBuilder: ((context, int index) {
+                          return Slidable(
+                            startActionPane: (ActionPane(
+                                motion: const DrawerMotion(),
+                                children: [
+                                  SlidableAction(
+                                    label: 'Check-off',
+                                    backgroundColor: const Color(0xffE5E4D7),
+                                    icon: Icons.check_box,
+                                    foregroundColor: const Color(0xff707070),
+                                    onPressed: (context) {},
                                   ),
-                                  child: Align(
-                                      alignment: Alignment.bottomRight,
-                                      child: Container(
-                                          margin: const EdgeInsets.all(5),
-                                          height: 15.h,
-                                          width: 35.w,
-                                          decoration: BoxDecoration(
-                                              color:
-                                                  Colors.white.withOpacity(0.8),
-                                              borderRadius:
-                                                  BorderRadius.circular(40)),
-                                          child: Row(
-                                            children: [
-                                              Padding(
-                                                  padding: EdgeInsets.only(
-                                                      top: 5.h, bottom: 5.h)),
-                                              const Icon(
-                                                Icons.star,
-                                                size: 15,
-                                                color: Color(0xff1E8040),
-                                              ),
-                                              SizedBox(
-                                                width: 3.w,
-                                              ),
-                                              const Text(
-                                                '4.5',
+                                ])),
+                            endActionPane: ActionPane(
+                                motion: const DrawerMotion(),
+                                children: [
+                                  SlidableAction(
+                                    label: 'Swap',
+                                    backgroundColor: const Color(0xffE8FEBE),
+                                    icon: Icons.swap_horiz,
+                                    foregroundColor: const Color(0xff1E8040),
+                                    onPressed: (context) {},
+                                  ),
+                                  SlidableAction(
+                                    label: 'Move',
+                                    backgroundColor: const Color(0xffE8FEBE),
+                                    icon: Icons.move_to_inbox,
+                                    foregroundColor: const Color(0xff1E8040),
+                                    onPressed: (context) {},
+                                  ),
+                                  SlidableAction(
+                                    label: 'Copy',
+                                    backgroundColor: const Color(0xffE8FEBE),
+                                    icon: Icons.copy,
+                                    foregroundColor: const Color(0xff1E8040),
+                                    onPressed: (context) {},
+                                  ),
+                                  SlidableAction(
+                                    label: 'delete',
+                                    backgroundColor: const Color(0xffE8FEBE),
+                                    icon: Icons.delete,
+                                    foregroundColor: const Color(0xff1E8040),
+                                    onPressed: (context) {},
+                                  )
+                                ]),
+                            child: Card(
+                              elevation: 0,
+                              shadowColor: const Color(0xff00000034),
+                              shape: const RoundedRectangleBorder(
+                                side: BorderSide(
+                                    color: Color(0xff00000034), width: 1),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10)),
+                              ),
+                              child: Row(
+                                children: [
+                                  Container(
+                                    height: 139.h,
+                                    width: 97.w,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      image:  DecorationImage(
+                                        image: NetworkImage(
+                                            '${list[index]['image']}'),
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                    child: Align(
+                                        alignment: Alignment.bottomRight,
+                                        child: Container(
+                                            margin: const EdgeInsets.all(5),
+                                            height: 15.h,
+                                            width: 35.w,
+                                            decoration: BoxDecoration(
+                                                color: Colors.white
+                                                    .withOpacity(0.8),
+                                                borderRadius:
+                                                    BorderRadius.circular(40)),
+                                            child: Row(
+                                              children: [
+                                                Padding(
+                                                    padding: EdgeInsets.only(
+                                                        top: 5.h, bottom: 5.h)),
+                                                const Icon(
+                                                  Icons.star,
+                                                  size: 15,
+                                                  color: Color(0xff1E8040),
+                                                ),
+                                                SizedBox(
+                                                  width: 3.w,
+                                                ),
+                                                const Text(
+                                                  '4.5',
+                                                  style: TextStyle(
+                                                    color: Color(0xff333333),
+                                                    fontSize: 12,
+                                                  ),
+                                                ),
+                                              ],
+                                            ))),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(left: 6.0.h),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Container(
+                                          padding: EdgeInsets.only(
+                                              right: 140.w, top: 10.h),
+                                          child: Image.asset(
+                                            'assets/tesco.png',
+                                            fit: BoxFit.cover,
+                                            height: 17.h,
+                                            width: 70.w,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 8.h,
+                                        ),
+                                        Text("${list[index]['pname']}"),
+                                        Row(
+                                          children: [
+                                            Text('${list[index]['pid']}'),
+                                            SizedBox(
+                                              width: 125.w,
+                                            ),
+                                            const Text('6 x KG')
+                                          ],
+                                        ),
+                                        SizedBox(
+                                          height: 6.h,
+                                        ),
+                                        Row(
+                                          children: [
+                                            Text(
+                                              "${list[index]['prize']}",
+                                              style: const TextStyle(
+                                                  color: Color(0xff8D8D8D)),
+                                            ),
+                                            SizedBox(
+                                              width: 135.w,
+                                            ),
+                                            const Text('£ 7.90',
                                                 style: TextStyle(
-                                                  color: Color(0xff333333),
-                                                  fontSize: 12,
+                                                    fontSize: 10,
+                                                    color: Color(0xff333333))),
+                                            SizedBox(
+                                              width: 6.w,
+                                            ),
+                                            const Text(
+                                              '£ 6.90',
+                                              style: TextStyle(
+                                                  fontSize: 16,
+                                                  color: Color(0xff1E8040),
+                                                  fontWeight: FontWeight.bold),
+                                            )
+                                          ],
+                                        ),
+                                        SizedBox(
+                                          height: 6.h,
+                                        ),
+                                        Text(
+                                          '${list[index]['desc']}',
+                                          style: const TextStyle(
+                                              color: Color(0xffB11F1F)),
+                                        ),
+                                        Row(
+                                          children: [
+                                            Padding(
+                                              padding: EdgeInsets.only(
+                                                  left: 130.w,
+                                                  bottom: 5.h,
+                                                  top: 10.h),
+                                              child: Container(
+                                                height: 20.h,
+                                                width: 90.w,
+                                                decoration: BoxDecoration(
+                                                    color:
+                                                        const Color(0xffE8FEBE),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            20)),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    GestureDetector(
+                                                      onTap: () {
+                                                        //cref.remove();
+                                                        cref.child('cart/').remove();
+                                                      },
+                                                      child: const Icon(
+                                                        Icons
+                                                            .remove_circle_outline,
+                                                        color:
+                                                            Color(0xff1E8040),
+                                                      ),
+                                                    ),
+                                                     Text('1'),
+                                                    GestureDetector(
+                                                      onTap: () {
+                                                        cref.push().set({
+                                                          'pname': list[index]
+                                                              ['pname'],
+                                                          'pid': list[index]
+                                                              ["pid"],
+                                                          'amount': list[index]
+                                                              ['prize'],
+                                                          'quantity': 1,
+                                                          'uid': auth
+                                                              .getUser()!
+                                                              .uid
+                                                        });
+                                                      },
+                                                      child:const  Icon(
+                                                        Icons
+                                                            .add_circle_outline,
+                                                        color:
+                                                            Color(0xff1E8040),
+                                                      ),
+                                                    ),
+                                                  ],
                                                 ),
                                               ),
-                                            ],
-                                          ))),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(left: 6.0.h),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Container(
-                                        padding: EdgeInsets.only(
-                                            right: 140.w, top: 10.h),
-                                        child: Image.asset(
-                                          'assets/tesco.png',
-                                          fit: BoxFit.cover,
-                                          height: 15.h,
-                                          width: 68.w,
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 8.h,
-                                      ),
-                                      Text("${listpid[index]}"),
-                                      Row(
-                                        children: [
-                                          const Text('Screen size'),
-                                          SizedBox(
-                                            width: 125.w,
-                                          ),
-                                          const Text('6 x KG')
-                                        ],
-                                      ),
-                                      SizedBox(
-                                        height: 6.h,
-                                      ),
-                                      Row(
-                                        children: [
-                                          const Text(
-                                            '(500 g - £5)',
-                                            style: TextStyle(
-                                                color: Color(0xff8D8D8D)),
-                                          ),
-                                          SizedBox(
-                                            width: 90.w,
-                                          ),
-                                          const Text('£ 7.90',
-                                              style: TextStyle(
-                                                  fontSize: 10,
-                                                  color: Color(0xff333333))),
-                                          SizedBox(
-                                            width: 6.w,
-                                          ),
-                                          const Text(
-                                            '£ 6.90',
-                                            style: TextStyle(
-                                                fontSize: 16,
-                                                color: Color(0xff1E8040),
-                                                fontWeight: FontWeight.bold),
-                                          )
-                                        ],
-                                      ),
-                                      SizedBox(
-                                        height: 6.h,
-                                      ),
-                                      const Text(
-                                        'Lorem Ipsum dolor....',
-                                        style:
-                                            TextStyle(color: Color(0xffB11F1F)),
-                                      ),
-                                      Row(
-                                        children: [
-                                          Padding(
-                                            padding: EdgeInsets.only(
-                                                left: 130.w,
-                                                bottom: 5.h,
-                                                top: 10.h),
-                                            child: Container(
-                                              height: 20.h,
-                                              width: 90.w,
-                                              decoration: BoxDecoration(
-                                                  color:
-                                                      const Color(0xffE8FEBE),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          40)),
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: const [
-                                                  Icon(
-                                                    Icons.remove_circle_outline,
-                                                    color: Color(0xff1E8040),
-                                                  ),
-                                                  Text('1'),
-                                                  Icon(
-                                                    Icons.add_circle_outline,
-                                                    color: Color(0xff1E8040),
-                                                  ),
-                                                  /* IconButton(
-                                                  iconSize: 20,
-                                                  onPressed: () {FirebaseFirestore.instance
-                                                    .collection("cart")
-                                                    .add({'uid':auth.getUser()!.uid,'quantity': 1,'amount':100});},
-                                                  icon: Icon(Icons.add_circle,
-                                                      color: Color(0xff1E8040)),
-                                                ),*/
-                                                ],
-                                              ),
                                             ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                )
-                              ],
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              ),
                             ),
-                          ),
-                        );
-                      }),
-                      separatorBuilder: ((context, index) {
-                        return const Divider();
-                      }),
-                    ); //return CircularProgressIndicator();
+                          );
+                        }),
+                        separatorBuilder: ((context, index) {
+                          return const Divider();
+                        }),
+                      );
+                    }
+                    return const CircularProgressIndicator();
                   })
             ],
           ),
         ),
       ),
-      bottomSheet: Container(
-        margin: EdgeInsets.only(left: 30.w, right: 29.w, bottom: 10.h),
-        height: 33.h,
-        width: 350.w,
-        decoration: BoxDecoration(
-            color: const Color(0xff1E8040),
-            borderRadius: BorderRadius.circular(40)),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Padding(
-              padding: EdgeInsets.only(left: 33.w, right: 20.w),
-              child: const Icon(
-                Icons.list,
-                color: Color(0xffFFFFFF),
-                size: 30,
+      bottomNavigationBar: 
+       Padding(
+         padding:  EdgeInsets.only(left: 10.w,right: 10.w,bottom: 10.h),
+         child: Container(
+          height: 33.h,
+          width: 350.w,
+          decoration: BoxDecoration(
+              color: const Color(0xff1E8040),
+              borderRadius: BorderRadius.circular(40)),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Padding(
+                padding: EdgeInsets.only(left: 40.w, right: 20.w),
+                child: const Icon(
+                  Icons.list,
+                  color: Color(0xffFFFFFF),
+                  size: 30,
+                ),
               ),
-            ),
-            Container(
-                height: 32.h,
-                width: 110.w,
-                decoration: BoxDecoration(
-                    color: const Color(0xffFFFFFF),
-                    borderRadius: BorderRadius.circular(40)),
-                child: Row(
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(
-                          left: 17.w, top: 7.h, bottom: 6.h, right: 10.w),
-                      child: Image.asset(
-                        'assets/cart.png',
-                        height: 26.h,
-                        width: 20.w,
-                      ),
-                    ),
-                    Column(
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(top: 3.0.h),
-                          child: Row(
-                            children: const [
-                              Text('Totals',
-                                  style: TextStyle(
-                                      color: Color(0xff8D8D8D), fontSize: 12)),
-                              Text(
-                                '780',
-                                style: TextStyle(
-                                    color: Colors.black, fontSize: 12),
-                              )
-                            ],
-                          ),
+              Container(
+                  height: 32.h,
+                  width: 110.w,
+                  decoration: BoxDecoration(
+                      color: const Color(0xffFFFFFF),
+                      borderRadius: BorderRadius.circular(40)),
+                  child: Row(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(
+                            left: 17.w, top: 7.h, bottom: 6.h, right: 10.w),
+                        child: Image.asset(
+                          'assets/cart.png',
+                          height: 26.h,
+                          width: 20.w,
                         ),
-                        const Text(
-                          '£2000',
-                          style: TextStyle(
-                              color: Color(0xff1E8040),
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold),
-                        )
-                      ],
-                    ),
-                  ],
-                )),
-            Padding(
-              padding: EdgeInsets.only(
-                  left: 10.w, top: 10.h, bottom: 10.h, right: 17.w),
-              child: const Text(
-                'Buy the list',
-                style: TextStyle(
-                    color: Color(0xffFFFFFF),
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold),
-              ),
-            )
-          ],
-        ),
+                      ),
+                      Column(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(top: 3.0.h),
+                            child: Row(
+                              children:   [
+                               const Text('Totals',
+                                    style: TextStyle(
+                                        color: Color(0xff8D8D8D), fontSize: 12)),SizedBox(width: 2.w,),
+                                const Text(
+                                  "320",
+                                  style: TextStyle(
+                                      color: Colors.black, fontSize: 12),
+                                )
+                              ],
+                            ),
+                          ),
+                          const Text(
+                            '£2000',
+                            style: TextStyle(
+                                color: Color(0xff1E8040),
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                    ],
+                  )),
+              Padding(
+                padding: EdgeInsets.only(
+                    left: 5.w, top: 10.h, bottom: 10.h, right: 17.w),
+                child: const Text(
+                  'Buy the list',
+                  style: TextStyle(
+                      color: Color(0xffFFFFFF),
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold),
+                ),
+              )
+            ],
+          ),
       ),
+       ),
     );
   }
 }
@@ -758,12 +781,3 @@ class _Product_PageState extends State<Product_Page> {
                   return const Divider();
                 }),
               ),*/                                             
-
-/*
-db.once().then((DataSnapshot snapshot){
-  Map<dynamic, dynamic> values = snapshot.value;
-     values.forEach((key,values) {
-      print(values["Email"]);
-    });
- });
-*/              

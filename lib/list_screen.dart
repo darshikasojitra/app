@@ -11,7 +11,8 @@ class List_Screen extends StatefulWidget {
 }
 
 class _List_ScreenState extends State<List_Screen> {
-  DatabaseReference ref = FirebaseDatabase.instance.ref("product");
+  DatabaseReference pref = FirebaseDatabase.instance.ref("product");
+   
   static const String _title = 'Your shopping List';
   TextEditingController textcontroller = TextEditingController();
   final ScrollController _scrollcontroller = ScrollController();
@@ -106,32 +107,32 @@ class _List_ScreenState extends State<List_Screen> {
           height: 35.h,
           width: 340.w,
           child: TextField(
-            textAlign: TextAlign.center,
-            controller: textcontroller,
-            autofocus: true,
-            decoration: InputDecoration(
-              hintText: 'New List',
-              suffixIcon: IconButton(
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => Product_Page()));
-                    ref.push().update(
-                        {'pname': textcontroller.text, 'pid': 1, 'prize': 100});
-                  },
-                  icon: const Icon(Icons.add_circle, color: Color(0xff1E8040))),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(30),
-                borderSide: const BorderSide(color: Color(0xff1E8040)),
+              textAlign: TextAlign.center,
+              controller: textcontroller,
+              autofocus: true,
+              decoration: InputDecoration(
+                hintText: 'New List',
+                suffixIcon: IconButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Product_Page()));
+                      pref.push().set(
+                          {'pname': textcontroller.text,
+                          'image':'https://www.forbesindia.com/media/images/2022/Sep/img_193773_banana.jpg',
+                          'prize':70,
+                          'quantity':0,
+                          });
+                    },
+                    icon: const Icon(Icons.add_circle, color: Color(0xff1E8040))),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(30),
+                  borderSide: const BorderSide(color: Color(0xff1E8040)),
+                ),
               ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
+            ),)));
+  }}
 
 class LastContainer extends StatelessWidget {
   const LastContainer({super.key});
