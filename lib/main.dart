@@ -1,3 +1,4 @@
+import 'package:demo_splash_screen/product_page.dart';
 import 'package:demo_splash_screen/screens/dashboard_screen.dart';
 import 'package:demo_splash_screen/screens/login_screen.dart';
 import 'package:demo_splash_screen/screens/signup_screen.dart';

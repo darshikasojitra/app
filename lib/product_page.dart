@@ -1,10 +1,14 @@
+import 'dart:convert';
 import 'dart:io';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:demo_splash_screen/auth_service.dart';
+import 'package:demo_splash_screen/product_data.dart';
+import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:http/http.dart' as http;
 
 class Product_Page extends StatefulWidget {
   const Product_Page({super.key});
@@ -14,11 +18,30 @@ class Product_Page extends StatefulWidget {
 }
 
 class _Product_PageState extends State<Product_Page> {
+    final List<ProductData> _productlist = <ProductData>[];
+  Future<List<ProductData>> getData()async{
+      http.Response response = await http.get(Uri.parse("https://console.firebase.google.com/product.json"));
+    var productlist = <ProductData>[];
+      if (response.statusCode==200) {
+        var pdata= await json.decode(json.encode(response.body));
+        for(var pdata in pdata){
+            productlist.add(ProductData.fromJson(pdata));
+        }
+      }
+     return productlist; 
+  }
+
   final AuthService auth = AuthService();
   DatabaseReference ref = FirebaseDatabase.instance.ref("product");
   final cref = FirebaseDatabase.instance.ref("cart");
   final ScrollController _controller = ScrollController();
 
+  void initstate(){
+super.initState();
+getData().then((value) {
+  _productlist.addAll(value);
+} );
+}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -132,21 +155,19 @@ class _Product_PageState extends State<Product_Page> {
                   ),
                 ],
               ),
-              StreamBuilder(
-                  stream: ref.onValue,
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      final Map<String, dynamic> map =
-                          Map<String, dynamic>.from(
-                              snapshot.data!.snapshot.value as Map);
-                      List list = [];
-                      list.clear();
-                      list = map.values.toList();
-                      return ListView.separated(
+              
+                   Container(
+                      // final Map<String, dynamic> map =
+                      //     Map<String, dynamic>.from(
+                      //         snapshot.data!.snapshot.value  as Map);
+                         
+                         //list.clear();
+                      //list = pdata.values.toList();
+                      child: ListView.separated(
                         controller: _controller,
                         shrinkWrap: true,
                         padding: EdgeInsets.only(top: 10.h),
-                        itemCount: list.length,
+                        itemCount: 5,
                         itemBuilder: ((context, int index) {
                           return Slidable(
                             startActionPane: (ActionPane(
@@ -210,7 +231,7 @@ class _Product_PageState extends State<Product_Page> {
                                       borderRadius: BorderRadius.circular(10),
                                       image:  DecorationImage(
                                         image: NetworkImage(
-                                            '${list[index]['image']}'),
+                                            _productlist[index].image),
                                         fit: BoxFit.cover,
                                       ),
                                     ),
@@ -268,10 +289,10 @@ class _Product_PageState extends State<Product_Page> {
                                         SizedBox(
                                           height: 8.h,
                                         ),
-                                        Text("${list[index]['pname']}"),
+                                        Text(_productlist[index].pname),
                                         Row(
                                           children: [
-                                            Text('${list[index]['pid']}'),
+                                            Text(_productlist[index].pid),
                                             SizedBox(
                                               width: 125.w,
                                             ),
@@ -284,7 +305,7 @@ class _Product_PageState extends State<Product_Page> {
                                         Row(
                                           children: [
                                             Text(
-                                              "${list[index]['prize']}",
+                                              _productlist[index].prize.toString(),
                                               style: const TextStyle(
                                                   color: Color(0xff8D8D8D)),
                                             ),
@@ -311,7 +332,7 @@ class _Product_PageState extends State<Product_Page> {
                                           height: 6.h,
                                         ),
                                         Text(
-                                          '${list[index]['desc']}',
+                                          _productlist[index].desc,
                                           style: const TextStyle(
                                               color: Color(0xffB11F1F)),
                                         ),
@@ -351,18 +372,18 @@ class _Product_PageState extends State<Product_Page> {
                                                      Text('1'),
                                                     GestureDetector(
                                                       onTap: () {
-                                                        cref.push().set({
-                                                          'pname': list[index]
-                                                              ['pname'],
-                                                          'pid': list[index]
-                                                              ["pid"],
-                                                          'amount': list[index]
-                                                              ['prize'],
+                                                        /*cref.push().set({
+                                                          'pname': productlist[index]
+                                                              .pname,
+                                                          'pid': productlist[index]
+                                                              .pid,
+                                                          'amount': productlist[index]
+                                                              .prize,
                                                           'quantity': 1,
                                                           'uid': auth
                                                               .getUser()!
                                                               .uid
-                                                        });
+                                                        });*/
                                                       },
                                                       child:const  Icon(
                                                         Icons
@@ -388,10 +409,7 @@ class _Product_PageState extends State<Product_Page> {
                         separatorBuilder: ((context, index) {
                           return const Divider();
                         }),
-                      );
-                    }
-                    return const CircularProgressIndicator();
-                  })
+                      ),)
             ],
           ),
         ),
