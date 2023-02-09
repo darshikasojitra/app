@@ -13,15 +13,17 @@ class ProductData {
       required this.image,
       required this.desc,
       required this.quantity});
-  ProductData.fromJson(Map<dynamic,dynamic> Json)
-      : pname = Json["pname"],
-        pid = Json['pid'],
-        prize = Json['prize'],
-         desc = Json['desc'],
-        image = Json['image'].toString(),
-        quantity = Json['quantity'];
+  factory ProductData.fromJson(Map<dynamic, dynamic> parsedjson) {
+    return ProductData(
+        pname: parsedjson["pname"],
+        pid: parsedjson['pid'].toString(),
+        prize: parsedjson['prize'],
+        image: parsedjson['image'],
+        desc: parsedjson['desc'],
+        quantity: parsedjson['quantity']);
+  }
 
- /* Map toJson() {
+  /* Map toJson() {
     return {
       'pid': pid,
       'pname': pname,
