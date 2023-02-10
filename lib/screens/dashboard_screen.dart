@@ -1,5 +1,6 @@
 import 'package:demo_splash_screen/home_dashboardscreen.dart';
 import 'package:demo_splash_screen/list_screen.dart';
+import 'package:demo_splash_screen/resources/all_colors.dart';
 import 'package:flutter/material.dart';
 
 class dashboard_screen extends StatefulWidget {
@@ -11,15 +12,15 @@ class dashboard_screen extends StatefulWidget {
 
 class _dashboard_screenState extends State<dashboard_screen> {
   int myIndex = 0;
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Color(0xff8BC53F));
-  static const List<Widget> widgetList = [
-    Home_Screen(),
+  static TextStyle optionStyle = TextStyle(
+      fontSize: 30, fontWeight: FontWeight.bold, color: AllColors.fontcolor);
+  static List<Widget> widgetList = [
+    const Home_Screen(),
     Text(
       'Vendor',
       style: optionStyle,
     ),
-    List_Screen(),
+    const List_Screen(),
     Text(
       'Category',
       style: optionStyle,
@@ -35,15 +36,15 @@ class _dashboard_screenState extends State<dashboard_screen> {
       body: Center(child: widgetList[myIndex]),
       bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
-          backgroundColor: Colors.white,
+          backgroundColor: AllColors.white,
           onTap: (index) {
             setState(() {
               myIndex = index;
             });
           },
           currentIndex: myIndex,
-          unselectedItemColor: Color(0xff1E8040),
-          selectedItemColor: Color(0xff8BC53F),
+          unselectedItemColor: AllColors.maincolor,
+          selectedItemColor: AllColors.fontcolor,
           items: const [
             BottomNavigationBarItem(
               icon: Icon(

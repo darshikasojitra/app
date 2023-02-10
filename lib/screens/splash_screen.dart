@@ -1,3 +1,5 @@
+import 'package:demo_splash_screen/resources/all_images.dart';
+
 import 'dashboard_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -16,8 +18,8 @@ class _splashScreenState extends State<splashScreen> {
     super.initState();
 
     Future.delayed(const Duration(seconds: 5), () {
-       Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (context) => Login_screen()));
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => Login_screen()));
       /*FirebaseAuth.instance.authStateChanges().listen((event) {
         if (event != null) {
           Navigator.pushReplacement(context,
@@ -38,7 +40,7 @@ class _splashScreenState extends State<splashScreen> {
           child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Image.asset('assets/icon_image.png'),
+          Image.asset(AllImages.iconimage),
         ],
       )),
     );

@@ -1,4 +1,8 @@
+import 'package:demo_splash_screen/bottomnavigationbar_textfield.dart';
 import 'package:demo_splash_screen/product_page.dart';
+import 'package:demo_splash_screen/resources/all_colors.dart';
+import 'package:demo_splash_screen/resources/all_string.dart';
+import 'package:demo_splash_screen/screens/dashboard_screen.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -12,36 +16,27 @@ class List_Screen extends StatefulWidget {
 
 class _List_ScreenState extends State<List_Screen> {
   DatabaseReference pref = FirebaseDatabase.instance.ref("wishlist");
-
-  static const String _title = 'Your shopping List';
-  TextEditingController textcontroller = TextEditingController();
   final ScrollController _scrollcontroller = ScrollController();
-  //List<String> firsttitle = ['Home', 'Mohmmed', 'Mohmmed / Home Screen'];
-  List<String> secondtitle = [
-    'Private',
-    'Collaboration | Owner',
-    'Collaboration | Collaborator',
-    'Private',
-    'Collaboration | Owner',
-    'Collaboration | Collaborator',
-  ];
-  List<String> images = [
-    'assets/tesco.png',
-    'assets/tesco.png',
-    'assets/ocado.png',
-    'assets/tesco.png',
-    'assets/tesco.png',
-    'assets/ocado.png'
-  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          //titleSpacing: 0,
-          backgroundColor: Color(0xff1E8040),
-          title: const Text(
-            _title,
-            style: TextStyle(color: Color(0xff000000), fontSize: 20),
+          leading: InkWell(
+              onTap: () {
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const dashboard_screen()));
+              },
+              child: Icon(
+                Icons.arrow_back,
+                color: AllColors.black,
+              )),
+          backgroundColor: AllColors.maincolor,
+          title: Text(
+            AllStrings.title,
+            style: TextStyle(color: AllColors.black, fontSize: 20),
           ),
         ),
         body: SingleChildScrollView(
@@ -65,21 +60,18 @@ class _List_ScreenState extends State<List_Screen> {
                           onTap: () => Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => Product_Page())),
+                                  builder: (context) => const Product_Page())),
                           child: Card(
-                            shadowColor: const Color(0xff00000034),
                             elevation: 0,
                             shape: const RoundedRectangleBorder(
-                              side: BorderSide(
-                                  color: Color(0xff00000034), width: 1),
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(10)),
+                                   BorderRadius.all(Radius.circular(10)),
                             ),
                             child: Container(
                               height: 70.h,
                               width: 330.w,
                               decoration: BoxDecoration(
-                                  color: const Color(0xffFFFFFF),
+                                  color: AllColors.white,
                                   borderRadius: BorderRadius.circular(20)),
                               child: Row(
                                 mainAxisAlignment:
@@ -98,25 +90,6 @@ class _List_ScreenState extends State<List_Screen> {
                                               color: Color(0xff333333),
                                               fontSize: 16,
                                               fontWeight: FontWeight.bold),
-                                        ),
-                                        SizedBox(
-                                          height: 2.h,
-                                        ),
-                                        Text(
-                                          '${secondtitle[index]}',
-                                          style: const TextStyle(
-                                            color: Color(0xff8D8D8D),
-                                            fontSize: 10,
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          height: 10.h,
-                                        ),
-                                        Image.asset(
-                                          '${images[index]}',
-                                          fit: BoxFit.cover,
-                                          height: 17.h,
-                                          width: 74.w,
                                         ),
                                       ],
                                     ),
@@ -138,11 +111,11 @@ class _List_ScreenState extends State<List_Screen> {
                                               padding: EdgeInsets.only(
                                                 left: 12.h,
                                               ),
-                                              child: const Text(
-                                                'Totals',
+                                              child: Text(
+                                                AllStrings.total,
                                                 style: TextStyle(
                                                     fontSize: 10,
-                                                    color: Color(0xff8D8D8D)),
+                                                    color: AllColors.totals),
                                               ),
                                             ),
                                             SizedBox(
@@ -152,15 +125,15 @@ class _List_ScreenState extends State<List_Screen> {
                                               '${list[index]['total_prize']}',
                                               style: TextStyle(
                                                   fontSize: 12,
-                                                  color: Color(0xff333333)),
+                                                  color: AllColors.prize),
                                             )
                                           ],
                                         ),
-                                        const Text(
-                                          '£2000',
+                                        Text(
+                                          AllStrings.text2000,
                                           style: TextStyle(
                                               fontSize: 16,
-                                              color: Color(0xff1E8040),
+                                              color: AllColors.maincolor,
                                               fontWeight: FontWeight.bold),
                                         )
                                       ],
@@ -174,35 +147,8 @@ class _List_ScreenState extends State<List_Screen> {
                       }),
                     );
                   }
-                  return CircularProgressIndicator();
+                  return const CircularProgressIndicator();
                 })),
-        bottomNavigationBar: Padding(
-            padding: EdgeInsets.only(left: 20.h, right: 20.h, bottom: 8.h),
-            child: Container(
-              height: 35.h,
-              width: 340.w,
-              child: TextField(
-                textAlign: TextAlign.center,
-                controller: textcontroller,
-                autofocus: true,
-                decoration: InputDecoration(
-                  hintText: 'New List',
-                  suffixIcon: IconButton(
-                      onPressed: () {
-                        pref.push().set({
-                          'name': textcontroller.text,
-                          'total_prize': 700,
-                          'total_quantity': 0,
-                        });
-                      },
-                      icon: const Icon(Icons.add_circle,
-                          color: Color(0xff1E8040))),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30),
-                    borderSide: const BorderSide(color: Color(0xff1E8040)),
-                  ),
-                ),
-              ),
-            )));
+        bottomNavigationBar: const BottomnavigationbarTextfield());
   }
 }

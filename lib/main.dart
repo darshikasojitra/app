@@ -1,9 +1,8 @@
-import 'package:demo_splash_screen/product_page.dart';
+
 import 'package:demo_splash_screen/screens/dashboard_screen.dart';
-import 'package:demo_splash_screen/screens/login_screen.dart';
-import 'package:demo_splash_screen/screens/signup_screen.dart';
+
 import 'package:flutter/material.dart';
-import 'package:demo_splash_screen/screens/splash_screen.dart';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

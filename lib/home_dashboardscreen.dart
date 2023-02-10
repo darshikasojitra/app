@@ -1,3 +1,5 @@
+import 'package:demo_splash_screen/resources/all_colors.dart';
+import 'package:demo_splash_screen/resources/all_string.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:demo_splash_screen/auth_service.dart';
@@ -18,72 +20,69 @@ class _Home_ScreenState extends State<Home_Screen> {
     user = _auth.getUser();
     super.initState();
   }
-    bool _issignout = false;
 
   @override
   Widget build(BuildContext context) {
-     final  height =MediaQuery.of(context).size.height;
-   print(height);
-    return Scaffold(appBar: AppBar(backgroundColor: Colors.teal,),
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: AllColors.teal,
+      ),
       drawer: Drawer(
-        child: ListView( 
+        child: ListView(
           padding: EdgeInsets.zero,
           children: <Widget>[
             UserAccountsDrawerHeader(
               decoration: BoxDecoration(
-                color: Colors.teal,
+                color: AllColors.teal,
               ),
               currentAccountPicture: CircleAvatar(
                 radius: 50,
-                backgroundColor: Colors.white,
+                backgroundColor: AllColors.white,
                 child: Text(
-                  '${user?.displayName}'.substring(0,1).toUpperCase(),
-                  style: TextStyle(color: Colors.teal, fontSize: 40.0),
+                  '${user?.displayName}'.substring(0, 1).toUpperCase(),
+                  style: TextStyle(color: AllColors.teal, fontSize: 40.0),
                 ),
               ),
               accountName: Text(
                 "${user?.displayName}",
-                style: TextStyle(fontSize: 20, color: Colors.white),
+                style: TextStyle(fontSize: 20, color: AllColors.white),
               ),
               accountEmail: Text(
                 "${user?.email}",
-                style: TextStyle(fontSize: 20, color: Colors.white),
+                style: TextStyle(fontSize: 20, color: AllColors.white),
               ),
             ),
-            ListTile(
+            const ListTile(
               leading: Icon(Icons.payment),
               title: Text('Payment method'),
             ),
-            ListTile(
+            const ListTile(
               leading: Icon(Icons.house),
               title: Text('Addresses'),
             ),
-            ListTile(
+            const ListTile(
               leading: Icon(Icons.password),
               title: Text('password'),
             ),
-            ListTile(
+            const ListTile(
               leading: Icon(Icons.home_filled),
               title: Text('Household'),
             ),
             ListTile(
-              onTap: () async{
-                setState(() {
-                  _issignout =true;
-                });
+              onTap: () async {
+                setState(() {});
                 await FirebaseAuth.instance.signOut();
-                setState(() {
-                  _issignout=false;
-                });
-                Navigator.push(context, MaterialPageRoute(builder: (context)=> Login_screen()));
+                setState(() {});
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Login_screen()));
               },
-              leading: Icon(Icons.logout),
-              title: Text('logout'),
+              leading: const Icon(Icons.logout),
+              title: const Text(AllStrings.logout),
             ),
           ],
         ),
       ),
-      body: Center(child: Text('hello')),
+      // body:
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:demo_splash_screen/resources/all_colors.dart';
 import 'package:demo_splash_screen/resources/all_string.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'Login_screen.dart';
@@ -34,10 +35,10 @@ class _signup_screenState extends State<signup_screen> {
             children: [
               Container(
                 padding:  EdgeInsets.only(top: 100.h),
-                child: const Text(
+                child:  Text(
                   AllStrings.signup,
                   style: TextStyle(
-                    color: Colors.teal,
+                    color: AllColors.teal,
                     fontWeight: FontWeight.bold,
                     fontSize: 35,
                   ),
@@ -58,12 +59,12 @@ class _signup_screenState extends State<signup_screen> {
                           autofocus: true,
                           controller: nameController,
                           keyboardType: TextInputType.name,
-                          decoration: const InputDecoration(
+                          decoration:  InputDecoration(
                             labelText: AllStrings.name,
-                            floatingLabelStyle: TextStyle(color: Colors.teal),
+                            floatingLabelStyle: TextStyle(color: AllColors.teal),
                             hintText: AllStrings.entername,
-                            border: OutlineInputBorder(),
-                            focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.teal),),
+                            border: const OutlineInputBorder(),
+                            focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: AllColors.teal),),
                           ),
                           validator: (value) {
                             return value!.isEmpty ? AllStrings.entername : null;
@@ -76,12 +77,13 @@ class _signup_screenState extends State<signup_screen> {
                           autofocus: true,
                           controller: emailController,
                           keyboardType: TextInputType.emailAddress,
-                          decoration: const InputDecoration(
+                          decoration: 
+                           InputDecoration(
                             labelText: AllStrings.email,
-                            floatingLabelStyle: TextStyle(color: Colors.teal),
+                            floatingLabelStyle: TextStyle(color: AllColors.teal),
                             hintText: AllStrings.enteremail,
-                            border: OutlineInputBorder(),
-                            focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.teal),),
+                            border: const OutlineInputBorder(),
+                            focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: AllColors.teal),),
                           ),
                           validator: (value) {
                             return value != null &&
@@ -97,12 +99,12 @@ class _signup_screenState extends State<signup_screen> {
                           autofocus: true,
                           controller: passwordController,
                           obscureText: true,
-                          decoration: const InputDecoration(
+                          decoration:  InputDecoration(
                             labelText: AllStrings.password,
-                            floatingLabelStyle: TextStyle(color: Colors.teal),
+                            floatingLabelStyle: TextStyle(color: AllColors.teal),
                             hintText: AllStrings.enterpassword,
-                            border: OutlineInputBorder(),
-                            focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.teal),),
+                            border:const OutlineInputBorder(),
+                            focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: AllColors.teal),),
                           ),
                           validator: (value) {
                              confirmpass = value;
@@ -117,12 +119,12 @@ class _signup_screenState extends State<signup_screen> {
                         TextFormField(
                           autofocus: true,
                           obscureText: true,
-                          decoration: const InputDecoration(
+                          decoration:  InputDecoration(
                             labelText: AllStrings.cpassword,
-                            floatingLabelStyle: TextStyle(color: Colors.teal),
+                            floatingLabelStyle: TextStyle(color: AllColors.teal),
                             hintText: AllStrings.entercpassword,
-                            border: OutlineInputBorder(),
-                            focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.teal),),
+                            border: const OutlineInputBorder(),
+                            focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: AllColors.teal),),
                           ),
                           validator: (value) {
                             return value!.isEmpty &&
@@ -163,11 +165,11 @@ class _signup_screenState extends State<signup_screen> {
                             }
                             FirebaseFirestore.instance.collection("user").add({'uid':auth.getUser()!.uid,'name':nameController.text,'email':emailController.text});
                           },
-                          child: Text(
-                            AllStrings.signup,
-                            style: TextStyle(color: Colors.white, fontSize: 25),
-                          ),
                           color: Colors.teal,
+                          child:  Text(
+                            AllStrings.signup,
+                            style: TextStyle(color: AllColors.white, fontSize: 25),
+                          ),
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -179,12 +181,12 @@ class _signup_screenState extends State<signup_screen> {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              Login_screen()));
+                                              const Login_screen()));
                                 },
-                                child: const Text(
+                                child:  Text(
                                   AllStrings.login,
                                   style: TextStyle(
-                                      fontSize: 20, color: Colors.teal),
+                                      fontSize: 20, color: AllColors.teal),
                                 ))
                           ],
                         ),

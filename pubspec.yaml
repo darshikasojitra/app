@@ -36,12 +36,8 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/icon_image.png
-    - assets/tesco.png
-    - assets/sb.jpeg
-    - assets/cart.png
-    - assets/ocado.png
-    - assets/data.json
+        - assets/images/
+  
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
