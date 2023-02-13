@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:demo_splash_screen/resources/all_colors.dart';
 import 'package:demo_splash_screen/resources/all_images.dart';
 import 'package:demo_splash_screen/resources/all_string.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -9,6 +11,10 @@ class BottomnavigationbarContaineer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
+    var _totals = 0;
+//DatabaseReference pref = FirebaseDatabase.instance.ref("wishlist");
+ 
     return Padding(
       padding: EdgeInsets.only(left: 10.w, right: 10.w, bottom: 10.h),
       child: Container(
@@ -58,8 +64,8 @@ class BottomnavigationbarContaineer extends StatelessWidget {
                               SizedBox(
                                 width: 2.w,
                               ),
-                              Text(
-                                "320",
+                              Text('200',
+                               // "$totals",
                                 style: TextStyle(
                                     color: AllColors.black, fontSize: 12),
                               )

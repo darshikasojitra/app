@@ -1,9 +1,9 @@
+import 'package:demo_splash_screen/model/auth_service.dart';
 import 'package:demo_splash_screen/resources/all_colors.dart';
 import 'package:demo_splash_screen/resources/all_string.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:demo_splash_screen/auth_service.dart';
-import 'package:demo_splash_screen/screens/login_screen.dart';
+import 'package:demo_splash_screen/screens/login/login_screen.dart';
 
 class Home_Screen extends StatefulWidget {
   const Home_Screen({super.key});
@@ -14,7 +14,7 @@ class Home_Screen extends StatefulWidget {
 
 class _Home_ScreenState extends State<Home_Screen> {
   User? user;
-  AuthService _auth = AuthService();
+  final AuthService _auth = AuthService();
 
   void initState() {
     user = _auth.getUser();
@@ -25,7 +25,7 @@ class _Home_ScreenState extends State<Home_Screen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: AllColors.teal,
+        backgroundColor: AllColors.maincolor,
       ),
       drawer: Drawer(
         child: ListView(
@@ -39,7 +39,7 @@ class _Home_ScreenState extends State<Home_Screen> {
                 radius: 50,
                 backgroundColor: AllColors.white,
                 child: Text(
-                  '${user?.displayName}'.substring(0, 1).toUpperCase(),
+                  '${user?.displayName}'.substring(0,1).toUpperCase(),
                   style: TextStyle(color: AllColors.teal, fontSize: 40.0),
                 ),
               ),
@@ -70,11 +70,11 @@ class _Home_ScreenState extends State<Home_Screen> {
             ),
             ListTile(
               onTap: () async {
-                setState(() {});
                 await FirebaseAuth.instance.signOut();
-                setState(() {});
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => Login_screen()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const Login_screen()));
               },
               leading: const Icon(Icons.logout),
               title: const Text(AllStrings.logout),

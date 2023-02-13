@@ -1,9 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:demo_splash_screen/model/auth_service.dart';
 import 'package:demo_splash_screen/resources/all_colors.dart';
 import 'package:demo_splash_screen/resources/all_string.dart';
+import 'package:demo_splash_screen/screens/login/login_screen.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'Login_screen.dart';
-import 'package:demo_splash_screen/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
@@ -17,6 +18,7 @@ class signup_screen extends StatefulWidget {
 
 class _signup_screenState extends State<signup_screen> {
   var confirmpass;
+  DatabaseReference uref = FirebaseDatabase.instance.ref("user");
   final AuthService auth = AuthService();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -34,8 +36,8 @@ class _signup_screenState extends State<signup_screen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                padding:  EdgeInsets.only(top: 100.h),
-                child:  Text(
+                padding: EdgeInsets.only(top: 100.h),
+                child: Text(
                   AllStrings.signup,
                   style: TextStyle(
                     color: AllColors.teal,
@@ -44,12 +46,11 @@ class _signup_screenState extends State<signup_screen> {
                   ),
                 ),
               ),
-               SizedBox(
+              SizedBox(
                 height: 10.h,
               ),
               Padding(
-                padding:
-                     EdgeInsets.symmetric(vertical: 20.h, horizontal: 20.w),
+                padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 20.w),
                 child: Form(
                     key: formKey,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -59,31 +60,36 @@ class _signup_screenState extends State<signup_screen> {
                           autofocus: true,
                           controller: nameController,
                           keyboardType: TextInputType.name,
-                          decoration:  InputDecoration(
+                          decoration: InputDecoration(
                             labelText: AllStrings.name,
-                            floatingLabelStyle: TextStyle(color: AllColors.teal),
+                            floatingLabelStyle:
+                                TextStyle(color: AllColors.teal),
                             hintText: AllStrings.entername,
                             border: const OutlineInputBorder(),
-                            focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: AllColors.teal),),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: AllColors.teal),
+                            ),
                           ),
                           validator: (value) {
                             return value!.isEmpty ? AllStrings.entername : null;
                           },
                         ),
-                         SizedBox(
+                        SizedBox(
                           height: 20.h,
                         ),
                         TextFormField(
                           autofocus: true,
                           controller: emailController,
                           keyboardType: TextInputType.emailAddress,
-                          decoration: 
-                           InputDecoration(
+                          decoration: InputDecoration(
                             labelText: AllStrings.email,
-                            floatingLabelStyle: TextStyle(color: AllColors.teal),
+                            floatingLabelStyle:
+                                TextStyle(color: AllColors.teal),
                             hintText: AllStrings.enteremail,
                             border: const OutlineInputBorder(),
-                            focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: AllColors.teal),),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: AllColors.teal),
+                            ),
                           ),
                           validator: (value) {
                             return value != null &&
@@ -92,48 +98,53 @@ class _signup_screenState extends State<signup_screen> {
                                 : null;
                           },
                         ),
-                         SizedBox(
+                        SizedBox(
                           height: 20.h,
                         ),
                         TextFormField(
                           autofocus: true,
                           controller: passwordController,
                           obscureText: true,
-                          decoration:  InputDecoration(
+                          decoration: InputDecoration(
                             labelText: AllStrings.password,
-                            floatingLabelStyle: TextStyle(color: AllColors.teal),
+                            floatingLabelStyle:
+                                TextStyle(color: AllColors.teal),
                             hintText: AllStrings.enterpassword,
-                            border:const OutlineInputBorder(),
-                            focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: AllColors.teal),),
+                            border: const OutlineInputBorder(),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: AllColors.teal),
+                            ),
                           ),
                           validator: (value) {
-                             confirmpass = value;
+                            confirmpass = value;
                             return value != null && value.length < 6
                                 ? AllStrings.validpassword
                                 : null;
                           },
                         ),
-                         SizedBox(
+                        SizedBox(
                           height: 20.h,
                         ),
                         TextFormField(
                           autofocus: true,
                           obscureText: true,
-                          decoration:  InputDecoration(
+                          decoration: InputDecoration(
                             labelText: AllStrings.cpassword,
-                            floatingLabelStyle: TextStyle(color: AllColors.teal),
+                            floatingLabelStyle:
+                                TextStyle(color: AllColors.teal),
                             hintText: AllStrings.entercpassword,
                             border: const OutlineInputBorder(),
-                            focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: AllColors.teal),),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: AllColors.teal),
+                            ),
                           ),
                           validator: (value) {
-                            return value!.isEmpty &&
-                                    value != confirmpass
+                            return value!.isEmpty && value != confirmpass
                                 ? AllStrings.entercpassword
                                 : null;
                           },
                         ),
-                         SizedBox(
+                        SizedBox(
                           height: 20.h,
                         ),
                         MaterialButton(
@@ -160,15 +171,20 @@ class _signup_screenState extends State<signup_screen> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            Login_screen()));
+                                            const Login_screen()));
                               }
                             }
-                            FirebaseFirestore.instance.collection("user").add({'uid':auth.getUser()!.uid,'name':nameController.text,'email':emailController.text});
+                            uref.push().set({
+                              'uid': auth.getUser()!.uid,
+                              'name': nameController.text,
+                              'email': emailController.text
+                            });
                           },
                           color: Colors.teal,
-                          child:  Text(
+                          child: Text(
                             AllStrings.signup,
-                            style: TextStyle(color: AllColors.white, fontSize: 25),
+                            style:
+                                TextStyle(color: AllColors.white, fontSize: 25),
                           ),
                         ),
                         Row(
@@ -181,9 +197,9 @@ class _signup_screenState extends State<signup_screen> {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              const Login_screen()));
+                                              Login_screen()));
                                 },
-                                child:  Text(
+                                child: Text(
                                   AllStrings.login,
                                   style: TextStyle(
                                       fontSize: 20, color: AllColors.teal),

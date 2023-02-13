@@ -1,11 +1,12 @@
+import 'package:demo_splash_screen/model/auth_service.dart';
+import 'package:demo_splash_screen/resources/all_style.dart';
+import 'package:demo_splash_screen/screens/dashboard/dashboard_screen.dart';
+import 'package:demo_splash_screen/screens/signup/signup_screen.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../resources/all_colors.dart';
-import 'signup_screen.dart';
+import '../../resources/all_colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
-import 'dashboard_screen.dart';
-import 'package:demo_splash_screen/auth_service.dart';
 import 'package:demo_splash_screen/resources/all_string.dart';
 
 class Login_screen extends StatefulWidget {

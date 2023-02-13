@@ -1,8 +1,8 @@
-import 'package:demo_splash_screen/bottomnavigationbar_textfield.dart';
-import 'package:demo_splash_screen/product_page.dart';
+import 'package:demo_splash_screen/screens/list/bottomnavigationbar_textfield.dart';
+import 'package:demo_splash_screen/screens/product/product_screen.dart';
 import 'package:demo_splash_screen/resources/all_colors.dart';
 import 'package:demo_splash_screen/resources/all_string.dart';
-import 'package:demo_splash_screen/screens/dashboard_screen.dart';
+import 'package:demo_splash_screen/screens/dashboard/dashboard_screen.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -102,21 +102,17 @@ class _List_ScreenState extends State<List_Screen> {
                                         borderRadius:
                                             BorderRadius.circular(10)),
                                     child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: [
-                                        Row(
+                                        Row(mainAxisAlignment: MainAxisAlignment.center,
                                           children: [
-                                            Padding(
-                                              padding: EdgeInsets.only(
-                                                left: 12.h,
-                                              ),
-                                              child: Text(
-                                                AllStrings.total,
-                                                style: TextStyle(
-                                                    fontSize: 10,
-                                                    color: AllColors.totals),
-                                              ),
+                                            Text(
+                                              AllStrings.total,
+                                              style: TextStyle(
+                                                  fontSize: 10,
+                                                  color: AllColors.totals),
                                             ),
                                             SizedBox(
                                               width: 4.w,
@@ -124,9 +120,10 @@ class _List_ScreenState extends State<List_Screen> {
                                             Text(
                                               '${list[index]['total_prize']}',
                                               style: TextStyle(
-                                                  fontSize: 12,
+                                                  fontSize: 14,
                                                   color: AllColors.prize),
-                                            )
+                                            ),
+                                            
                                           ],
                                         ),
                                         Text(

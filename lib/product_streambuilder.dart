@@ -1,7 +1,6 @@
 import 'dart:convert';
-import 'package:demo_splash_screen/auth_service.dart';
+import 'package:demo_splash_screen/model/auth_service.dart';
 import 'package:demo_splash_screen/model/product_data.dart';
-import 'package:demo_splash_screen/product_card.dart';
 import 'package:demo_splash_screen/resources/all_colors.dart';
 import 'package:demo_splash_screen/resources/all_images.dart';
 import 'package:demo_splash_screen/resources/all_string.dart';
@@ -20,7 +19,12 @@ class ProductStreambuilder extends StatefulWidget {
 }
 
 class _ProductStreambuilderState extends State<ProductStreambuilder> {
-  String newKey = "";
+  void setState(fn) {
+    if (mounted) {
+      super.setState(fn);
+    }
+  }
+  var total = 0;
   Future<String> getdata() async {
     http.Response response = await http.get(Uri.parse(
         "https://flutter-authentication-8b2ee-default-rtdb.firebaseio.com/product.json"));
@@ -41,11 +45,11 @@ class _ProductStreambuilderState extends State<ProductStreambuilder> {
 
   final AuthService auth = AuthService();
   final cref = FirebaseDatabase.instance.ref("cart");
-   final ScrollController _controller = ScrollController();
+  DatabaseReference pref = FirebaseDatabase.instance.ref("wishlist");
+  final ScrollController _controller = ScrollController();
 
   void initstate() {
     loaddata();
-    super.initState();
   }
 
   @override
@@ -61,6 +65,7 @@ class _ProductStreambuilderState extends State<ProductStreambuilder> {
               itemCount: 5,
               itemBuilder: ((context, int index) {
                 var pindex = _productlist[index];
+                
                 return Slidable(
                   startActionPane:
                       (ActionPane(motion: const DrawerMotion(), children: [
@@ -106,7 +111,7 @@ class _ProductStreambuilderState extends State<ProductStreambuilder> {
                           child: Align(
                               alignment: Alignment.bottomRight,
                               child: Container(
-                                  margin: const EdgeInsets.all(5),
+                                  margin: EdgeInsets.all(5.h),
                                   height: 15.h,
                                   width: 35.w,
                                   decoration: BoxDecoration(
@@ -174,7 +179,7 @@ class _ProductStreambuilderState extends State<ProductStreambuilder> {
                                     style: TextStyle(color: AllColors.prize),
                                   ),
                                   SizedBox(
-                                    width: 135.w,
+                                    width: 155.w,
                                   ),
                                   Text('£ 7.90',
                                       style: TextStyle(
@@ -184,7 +189,8 @@ class _ProductStreambuilderState extends State<ProductStreambuilder> {
                                     width: 6.w,
                                   ),
                                   Text(
-                                    '£ 6.90',
+                                    '$total',
+                                    // '£ 6.90',
                                     style: TextStyle(
                                         fontSize: 16,
                                         color: AllColors.maincolor,
@@ -218,12 +224,26 @@ class _ProductStreambuilderState extends State<ProductStreambuilder> {
                                           GestureDetector(
                                             onTap: () {
                                               if (pindex.quantity > 0) {
-                                                cref.child(newKey).update({
+                                                cref
+                                                    .child(pindex.pname)
+                                                    .update({
                                                   'quantity': --pindex.quantity,
                                                   'prize': pindex.quantity *
                                                       pindex.prize,
                                                 });
                                               }
+                                              setState(() {
+                                                if (total > 0) {
+                                                  total =
+                                                      total - pindex.prize;
+                                                }
+                                                pref
+                                                    .child(
+                                                        '-NO9A2WrPD86gpOYUwFy')
+                                                    .update({
+                                                  'total_prize': total
+                                                });
+                                              });
                                             },
                                             child: Icon(
                                               Icons.remove_circle_outline,
@@ -236,8 +256,7 @@ class _ProductStreambuilderState extends State<ProductStreambuilder> {
                                           GestureDetector(
                                             onTap: () {
                                               if (pindex.quantity == 0) {
-                                                newKey = cref.push().key!;
-                                                cref.child(newKey).set({
+                                                cref.child(pindex.pname).set({
                                                   'pname': pindex.pname,
                                                   'pid': pindex.pid,
                                                   'prize': pindex.prize,
@@ -245,12 +264,23 @@ class _ProductStreambuilderState extends State<ProductStreambuilder> {
                                                   'uid': auth.getUser()!.uid
                                                 });
                                               } else {
-                                                cref.child(newKey).update({
+                                                cref
+                                                    .child(pindex.pname)
+                                                    .update({
                                                   'quantity': ++pindex.quantity,
                                                   'prize': pindex.quantity *
                                                       pindex.prize,
                                                 });
                                               }
+                                              setState(() {
+                                                total = total + pindex.prize;
+                                                pref
+                                                    .child(
+                                                        '-NO9A2WrPD86gpOYUwFy')
+                                                    .update({
+                                                  'total_prize': total
+                                                });
+                                              });
                                             },
                                             child: Icon(
                                               Icons.add_circle_outline,

@@ -3,6 +3,7 @@ import 'package:demo_splash_screen/product_streambuilder.dart';
 import 'package:demo_splash_screen/resources/all_colors.dart';
 import 'package:demo_splash_screen/resources/all_images.dart';
 import 'package:demo_splash_screen/resources/all_string.dart';
+import 'package:demo_splash_screen/screens/list/list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -12,12 +13,21 @@ class Product_Page extends StatefulWidget {
   @override
   State<Product_Page> createState() => _Product_PageState();
 }
-
 class _Product_PageState extends State<Product_Page> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      appBar: AppBar(leading: InkWell(
+              onTap: () {
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>  const List_Screen()));
+              },
+              child: Icon(
+                Icons.arrow_back,
+                color: AllColors.black,
+              )),
         backgroundColor: AllColors.white,
         title: Text(
           AllStrings.home,
@@ -130,7 +140,7 @@ class _Product_PageState extends State<Product_Page> {
           ),
         ),
       ),
-      bottomNavigationBar: const BottomnavigationbarContaineer(),
+      bottomNavigationBar:  const BottomnavigationbarContaineer(),
     );
   }
 }

@@ -1,4 +1,4 @@
-import 'package:demo_splash_screen/auth_service.dart';
+import 'package:demo_splash_screen/model/auth_service.dart';
 import 'package:demo_splash_screen/resources/all_colors.dart';
 import 'package:demo_splash_screen/resources/all_string.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -15,7 +15,7 @@ class BottomnavigationbarTextfield extends StatelessWidget {
     final AuthService auth = AuthService();
     return Padding(
         padding: EdgeInsets.only(left: 20.h, right: 20.h, bottom: 8.h),
-        child: Container(
+        child: SizedBox(
           height: 35.h,
           width: 340.w,
           child: TextField(
@@ -26,11 +26,11 @@ class BottomnavigationbarTextfield extends StatelessWidget {
               hintText: AllStrings.newlist,
               suffixIcon: IconButton(
                   onPressed: () {
-                    pref.push().set({
+                    pref.child('0').set({
                       'uid': auth.getUser()!.uid,
                       'uname': auth.getUser()!.displayName,
                       'name': textcontroller.text,
-                      'total_prize': 700,
+                      'total_prize': 0,
                       'total_quantity': 0,
                     });
                   },

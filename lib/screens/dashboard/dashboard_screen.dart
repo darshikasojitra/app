@@ -1,5 +1,5 @@
-import 'package:demo_splash_screen/home_dashboardscreen.dart';
-import 'package:demo_splash_screen/list_screen.dart';
+import 'package:demo_splash_screen/screens/dashboard/home_dashboardscreen.dart';
+import 'package:demo_splash_screen/screens/list/list_screen.dart';
 import 'package:demo_splash_screen/resources/all_colors.dart';
 import 'package:flutter/material.dart';
 
