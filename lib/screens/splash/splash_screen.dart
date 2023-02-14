@@ -13,32 +13,33 @@ class splashScreen extends StatefulWidget {
 }
 
 class _splashScreenState extends State<splashScreen> {
-  // void setState(fn) {
-  //   if (mounted) {
-  //     super.setState(fn);
-  //   }
-  // }
-  void discope(){
-    super.dispose();
-  }
+ 
+  
   void initState() {
     super.initState();
 
-    Future.delayed( Duration(seconds: 5), () {
+    Future.delayed( Duration(seconds: 2), () {
       // Navigator.pushReplacement(
       //     context, MaterialPageRoute(builder: (context) => Login_screen()));
       FirebaseAuth.instance.authStateChanges().listen((event) {
         if (event != null) {
-          Navigator.pushReplacement(context,
+          Navigator.push(context,
               MaterialPageRoute(builder: (context) => dashboard_screen()));
         } else {
-          Navigator.pushReplacement(
+          Navigator.push(
               context, MaterialPageRoute(builder: (context) => Login_screen()));
         }
       });
     });
   }
-  
+// void discope(){
+//     super.dispose();
+//   }  
+//   void setState(fn) {
+//     if (mounted) {
+//       super.setState(fn);
+//     }
+//   }
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +49,7 @@ class _splashScreenState extends State<splashScreen> {
           child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Image.asset(AllImages.iconimage),
+          Image.asset(AllImages.splashimage),
         ],
       )),
     );

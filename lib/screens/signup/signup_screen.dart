@@ -1,8 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:demo_splash_screen/model/auth_service.dart';
 import 'package:demo_splash_screen/resources/all_colors.dart';
 import 'package:demo_splash_screen/resources/all_string.dart';
 import 'package:demo_splash_screen/screens/login/login_screen.dart';
+import 'package:demo_splash_screen/text_formfield.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -23,6 +23,7 @@ class _signup_screenState extends State<signup_screen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController nameController = TextEditingController();
+  TextEditingController cpasswordController = TextEditingController();
   bool isprocessing = false;
   final formKey = GlobalKey<FormState>();
 
@@ -40,7 +41,7 @@ class _signup_screenState extends State<signup_screen> {
                 child: Text(
                   AllStrings.signup,
                   style: TextStyle(
-                    color: AllColors.teal,
+                    color: AllColors.maincolor,
                     fontWeight: FontWeight.bold,
                     fontSize: 35,
                   ),
@@ -56,20 +57,11 @@ class _signup_screenState extends State<signup_screen> {
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     child: Column(
                       children: [
-                        TextFormField(
-                          autofocus: true,
+                        TextFormFeild1(
+                          obscureText: false,
                           controller: nameController,
-                          keyboardType: TextInputType.name,
-                          decoration: InputDecoration(
-                            labelText: AllStrings.name,
-                            floatingLabelStyle:
-                                TextStyle(color: AllColors.teal),
-                            hintText: AllStrings.entername,
-                            border: const OutlineInputBorder(),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: AllColors.teal),
-                            ),
-                          ),
+                          labelText: AllStrings.name,
+                          hintText: AllStrings.entername,
                           validator: (value) {
                             return value!.isEmpty ? AllStrings.entername : null;
                           },
@@ -77,20 +69,11 @@ class _signup_screenState extends State<signup_screen> {
                         SizedBox(
                           height: 20.h,
                         ),
-                        TextFormField(
-                          autofocus: true,
+                        TextFormFeild1(
+                          obscureText: false,
                           controller: emailController,
-                          keyboardType: TextInputType.emailAddress,
-                          decoration: InputDecoration(
-                            labelText: AllStrings.email,
-                            floatingLabelStyle:
-                                TextStyle(color: AllColors.teal),
-                            hintText: AllStrings.enteremail,
-                            border: const OutlineInputBorder(),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: AllColors.teal),
-                            ),
-                          ),
+                          labelText: AllStrings.email,
+                          hintText: AllStrings.enteremail,
                           validator: (value) {
                             return value != null &&
                                     !EmailValidator.validate(value)
@@ -101,20 +84,11 @@ class _signup_screenState extends State<signup_screen> {
                         SizedBox(
                           height: 20.h,
                         ),
-                        TextFormField(
-                          autofocus: true,
-                          controller: passwordController,
+                        TextFormFeild1(
                           obscureText: true,
-                          decoration: InputDecoration(
-                            labelText: AllStrings.password,
-                            floatingLabelStyle:
-                                TextStyle(color: AllColors.teal),
-                            hintText: AllStrings.enterpassword,
-                            border: const OutlineInputBorder(),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: AllColors.teal),
-                            ),
-                          ),
+                          controller: passwordController,
+                          labelText: AllStrings.password,
+                          hintText: AllStrings.enterpassword,
                           validator: (value) {
                             confirmpass = value;
                             return value != null && value.length < 6
@@ -125,19 +99,11 @@ class _signup_screenState extends State<signup_screen> {
                         SizedBox(
                           height: 20.h,
                         ),
-                        TextFormField(
-                          autofocus: true,
+                        TextFormFeild1(
                           obscureText: true,
-                          decoration: InputDecoration(
-                            labelText: AllStrings.cpassword,
-                            floatingLabelStyle:
-                                TextStyle(color: AllColors.teal),
-                            hintText: AllStrings.entercpassword,
-                            border: const OutlineInputBorder(),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: AllColors.teal),
-                            ),
-                          ),
+                          controller: cpasswordController,
+                          labelText: AllStrings.cpassword,
+                          hintText: AllStrings.entercpassword,
                           validator: (value) {
                             return value!.isEmpty && value != confirmpass
                                 ? AllStrings.entercpassword
@@ -180,7 +146,7 @@ class _signup_screenState extends State<signup_screen> {
                               'email': emailController.text
                             });
                           },
-                          color: Colors.teal,
+                          color: AllColors.maincolor,
                           child: Text(
                             AllStrings.signup,
                             style:
@@ -202,7 +168,7 @@ class _signup_screenState extends State<signup_screen> {
                                 child: Text(
                                   AllStrings.login,
                                   style: TextStyle(
-                                      fontSize: 20, color: AllColors.teal),
+                                      fontSize: 20, color: AllColors.maincolor),
                                 ))
                           ],
                         ),

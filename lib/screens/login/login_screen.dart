@@ -1,13 +1,14 @@
 import 'package:demo_splash_screen/model/auth_service.dart';
-import 'package:demo_splash_screen/resources/all_style.dart';
 import 'package:demo_splash_screen/screens/dashboard/dashboard_screen.dart';
 import 'package:demo_splash_screen/screens/signup/signup_screen.dart';
+import 'package:demo_splash_screen/text_formfield.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../resources/all_colors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:demo_splash_screen/resources/all_string.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class Login_screen extends StatefulWidget {
   const Login_screen({super.key});
@@ -16,12 +17,19 @@ class Login_screen extends StatefulWidget {
 }
 
 class _Login_screenState extends State<Login_screen> {
+  // void setState(fn) {
+  //   if (mounted) {
+  //     super.setState(fn);
+  //   }
+  // }
   final AuthService auth = AuthService();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   bool isprocessing = false;
   final fromKey = GlobalKey<FormState>();
-
+// void discope(){
+//     super.dispose();
+//   }
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -30,10 +38,10 @@ class _Login_screenState extends State<Login_screen> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text(
-                AllStrings.login,
+              Text(//'Login',
+                AppLocalizations.of(context)!.login,
                 style: TextStyle(
-                    color: AllColors.teal,
+                    color: AllColors.maincolor,
                     fontSize: 35,
                     fontWeight: FontWeight.bold),
               ),
@@ -44,22 +52,14 @@ class _Login_screenState extends State<Login_screen> {
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   child: Column(
                     children: [
-                      TextFormField(
-                        autofocus: true,
+                      TextFormFeild1(
+                        obscureText: false,
                         controller: emailController,
-                        keyboardType: TextInputType.emailAddress,
-                        decoration: InputDecoration(
-                          labelText: AllStrings.email,
-                          floatingLabelStyle: TextStyle(color: AllColors.teal),
-                          hintText: AllStrings.enteremail,
-                          border: const OutlineInputBorder(),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: AllColors.teal),
-                          ),
-                        ),
-                        validator: (email) {
-                          return email != null &&
-                                  !EmailValidator.validate(email)
+                        labelText: AllStrings.email,
+                        hintText: AllStrings.enteremail,
+                        validator: (value) {
+                          return value != null &&
+                                  !EmailValidator.validate(value)
                               ? AllStrings.validemail
                               : null;
                         },
@@ -67,21 +67,13 @@ class _Login_screenState extends State<Login_screen> {
                       SizedBox(
                         height: 20.h,
                       ),
-                      TextFormField(
-                        autofocus: true,
-                        controller: passwordController,
+                      TextFormFeild1(
                         obscureText: true,
-                        decoration: InputDecoration(
-                          labelText: AllStrings.password,
-                          floatingLabelStyle: TextStyle(color: AllColors.teal),
-                          hintText: AllStrings.enterpassword,
-                          border: const OutlineInputBorder(),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: AllColors.teal),
-                          ),
-                        ),
-                        validator: (password) {
-                          return password != null && password.length < 6
+                        controller: passwordController,
+                        labelText: AllStrings.password,
+                        hintText: AllStrings.enterpassword,
+                        validator: (value) {
+                          return value != null && value.length < 6
                               ? AllStrings.validpassword
                               : null;
                         },
@@ -110,16 +102,13 @@ class _Login_screenState extends State<Login_screen> {
                                   MaterialPageRoute(
                                       builder: (context) =>
                                           dashboard_screen()));
-
                               setState(() {
                                 isprocessing = false;
                               });
-                            } else {
-                              print('123');
                             }
                           }
                         },
-                        color: AllColors.teal,
+                        color: AllColors.maincolor,
                         child: Text(
                           AllStrings.login,
                           style:
@@ -144,7 +133,7 @@ class _Login_screenState extends State<Login_screen> {
                               child: Text(
                                 AllStrings.signup,
                                 style: TextStyle(
-                                    fontSize: 20, color: AllColors.teal),
+                                    fontSize: 20, color: AllColors.maincolor),
                               ))
                         ],
                       )

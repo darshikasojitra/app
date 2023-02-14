@@ -13,9 +13,16 @@ class Home_Screen extends StatefulWidget {
 }
 
 class _Home_ScreenState extends State<Home_Screen> {
+  // void setState(fn) {
+  //   if (mounted) {
+  //     super.setState(fn);
+  //   }
+  // }
   User? user;
   final AuthService _auth = AuthService();
-
+// void discope(){
+//     super.dispose();
+//   }
   void initState() {
     user = _auth.getUser();
     super.initState();

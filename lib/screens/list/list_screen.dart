@@ -57,10 +57,10 @@ class _List_ScreenState extends State<List_Screen> {
                       itemCount: list.length,
                       itemBuilder: ((context, index) {
                         return GestureDetector(
-                          onTap: () => Navigator.pushReplacement(
+                          onTap: () => Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const Product_Page())),
+                                  builder: (context) =>  Product_Page())),
                           child: Card(
                             elevation: 0,
                             shape: const RoundedRectangleBorder(
