@@ -20,16 +20,17 @@ class _splashScreenState extends State<splashScreen> {
       FirebaseAuth.instance.authStateChanges().listen((event) {
         if (event != null) {
           Navigator.pushNamed(
-              context, dashboard_screen.id, );
+            context,
+            dashboard_screen.id,
+          );
         } else {
-          Navigator.pushNamed(
-              context, Login_screen.id);
-
+          Navigator.pushNamed(context, Login_screen.id);
         }
       });
     });
   }
- @override
+
+  @override
   void dispose() {
     super.dispose();
   }

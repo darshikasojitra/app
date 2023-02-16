@@ -18,11 +18,10 @@ import 'package:http/http.dart' as http;
 
 class Product_Page extends StatefulWidget {
   const Product_Page({super.key});
-static const String id = 'Product_Page';
+  static const String id = 'Product_Page';
   @override
   State<Product_Page> createState() => _Product_PageState();
 }
-
 
 class _Product_PageState extends State<Product_Page> {
   @override
@@ -65,9 +64,7 @@ class _Product_PageState extends State<Product_Page> {
       appBar: AppBar(
         leading: InkWell(
             onTap: () {
-                Navigator.pushNamed(
-                                context,
-                            List_Screen.id);
+              Navigator.pushNamed(context, List_Screen.id);
             },
             child: Padding(
               padding: EdgeInsets.only(left: 10.w),
@@ -80,179 +77,183 @@ class _Product_PageState extends State<Product_Page> {
         backgroundColor: AllColors.white,
         title: Text(
           StringManager.home,
-          style: regularTextStyle(color: AllColors.black,fontSize: 16.sp),
+          style: regularTextStyle(color: AllColors.black, fontSize: 16.sp),
         ),
       ),
       body: Stack(
         children: [
-         SingleChildScrollView(
-          child: Padding(
-           padding: EdgeInsets.symmetric(vertical: 5.w, horizontal: 8.h),
-           child: Column(
-            children: [
-              Row(
+          SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.only(top: 5.w, left: 8.h,right: 8.h,bottom: 50.w),
+              child: Column(
                 children: [
-                  Image.asset(
-                    AllImages.tesco,
-                    fit: BoxFit.cover,
-                    height: 17.h,
-                    width: 70.w,
-                  ),
-                  Icon(
-                    Icons.arrow_drop_down,
-                    color: AllColors.maincolor,
-                    size: 20,
-                  ),
-                  SizedBox(
-                    width: 175.w,
-                  ),
-                  Icon(
-                    Icons.people,
-                    color: AllColors.maincolor,
-                  ),
-                  SizedBox(
-                    width: 12.w,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                        left: 5, top: 20, bottom: 20, right: 20),
-                    child: Icon(
-                      Icons.share,
-                      color: AllColors.maincolor,
-                    ),
-                  )
-                ],
-              ),
-              Row(
-                children: [
-                  MaterialButtons(
-                    color: AllColors.white,
-                    buttontext: StringManager.gotostore,
-                    icon: Icons.store,
-                  ),
-                  SizedBox(
-                    width: 20.w,
+                  Row(
+                    children: [
+                      Image.asset(
+                        AllImages.tesco,
+                        fit: BoxFit.cover,
+                        height: 17.h,
+                        width: 70.w,
+                      ),
+                      Icon(
+                        Icons.arrow_drop_down,
+                        color: AllColors.maincolor,
+                        size: 20,
+                      ),
+                      SizedBox(
+                        width: 175.w,
+                      ),
+                      Icon(
+                        Icons.people,
+                        color: AllColors.maincolor,
+                      ),
+                      SizedBox(
+                        width: 12.w,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            left: 5, top: 20, bottom: 20, right: 20),
+                        child: Icon(
+                          Icons.share,
+                          color: AllColors.maincolor,
+                        ),
+                      )
+                    ],
                   ),
                   Row(
                     children: [
                       MaterialButtons(
-                        buttontext: StringManager.newidea,
-                        color: AllColors.buttoncolor,
-                        icon: Icons.add_circle,
+                        color: AllColors.white,
+                        buttontext: StringManager.gotostore,
+                        icon: Icons.store,
+                      ),
+                      SizedBox(
+                        width: 20.w,
+                      ),
+                      Row(
+                        children: [
+                          MaterialButtons(
+                            buttontext: StringManager.newidea,
+                            color: AllColors.buttoncolor,
+                            icon: Icons.add_circle,
+                          ),
+                        ],
                       ),
                     ],
                   ),
+                  StreamBuilder(
+                      stream: loaddata().asStream(),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          return ListView.separated(
+                            controller: _controller,
+                            shrinkWrap: true,
+                            padding: EdgeInsets.only(top: 10.h),
+                            itemCount: 5,
+                            itemBuilder: ((context, int index) {
+                              var pindex = _productlist[index];
+                              return Slidable(
+                                startActionPane: (ActionPane(
+                                    motion: const DrawerMotion(),
+                                    children: [
+                                      SlidableAction(
+                                        label: StringManager.checkoff,
+                                        backgroundColor: AllColors.checkoff,
+                                        icon: Icons.check_box,
+                                        foregroundColor: AllColors.checkbox,
+                                        onPressed: (context) {},
+                                      ),
+                                    ])),
+                                endActionPane: ActionPane(
+                                  motion: const DrawerMotion(),
+                                  children: [
+                                    Slidable_Action(
+                                        lable: StringManager.swap,
+                                        icon: Icons.swap_horiz_sharp),
+                                    Slidable_Action(
+                                        lable: StringManager.move,
+                                        icon: Icons.move_to_inbox),
+                                    Slidable_Action(
+                                        lable: StringManager.copy,
+                                        icon: Icons.copy),
+                                    Slidable_Action(
+                                        lable: StringManager.delete,
+                                        icon: Icons.delete),
+                                  ],
+                                ),
+                                child: ProductCard(
+                                  image: pindex.image.toString(),
+                                  pname: pindex.pname,
+                                  pid: pindex.pid,
+                                  prize: pindex.prize.toString(),
+                                  quantity: pindex.quantity.toString(),
+                                  desc: pindex.desc,
+                                  onTapminus: () {
+                                    if (pindex.quantity > 0) {
+                                      cref.child(pindex.pname).update({
+                                        'quantity': --pindex.quantity,
+                                        'prize': pindex.quantity * pindex.prize,
+                                      });
+                                    }
+                                    setState(() {
+                                      if (total > 0) {
+                                        total = total - pindex.prize;
+                                      }
+                                      pref
+                                          .child('-NO9A2WrPD86gpOYUwFy')
+                                          .update({'total_prize': total});
+                                    });
+                                  },
+                                  onTapplus: () {
+                                    if (pindex.quantity == 0) {
+                                      cref.child(pindex.pname).set({
+                                        'pname': pindex.pname,
+                                        'pid': pindex.pid,
+                                        'prize': pindex.prize,
+                                        'quantity': ++pindex.quantity,
+                                        'uid': auth.getUser()!.uid
+                                      });
+                                    } else {
+                                      cref.child(pindex.pname).update({
+                                        'quantity': ++pindex.quantity,
+                                        'prize': pindex.quantity * pindex.prize,
+                                      });
+                                    }
+                                    setState(() {
+                                      total = total + pindex.prize;
+                                      pref
+                                          .child('-NO9A2WrPD86gpOYUwFy')
+                                          .update({
+                                        'total_prize': total,
+                                      });
+                                    });
+                                  },
+                                ),
+                              );
+                            }),
+                            separatorBuilder: ((context, index) {
+                              return const Divider();
+                            }),
+                          );
+                        }
+                        return const CircularProgressIndicator();
+                      }),
                 ],
               ),
-              StreamBuilder(
-                  stream: loaddata().asStream(),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      return ListView.separated(
-                        controller: _controller,
-                        shrinkWrap: true,
-                        padding: EdgeInsets.only(top: 10.h),
-                        itemCount: 5,
-                        itemBuilder: ((context, int index) {
-                          var pindex = _productlist[index];
-                          return Slidable(
-                            startActionPane: (ActionPane(
-                                motion: const DrawerMotion(),
-                                children: [
-                                  SlidableAction(
-                                    label: StringManager.checkoff,
-                                    backgroundColor: AllColors.checkoff,
-                                    icon: Icons.check_box,
-                                    foregroundColor: AllColors.checkbox,
-                                    onPressed: (context) {},
-                                  ),
-                                ])),
-                            endActionPane: ActionPane(
-                              motion: const DrawerMotion(),
-                              children: [
-                                Slidable_Action(
-                                    lable: StringManager.swap,
-                                    icon: Icons.swap_horiz_sharp),
-                                Slidable_Action(
-                                    lable: StringManager.move,
-                                    icon: Icons.move_to_inbox),
-                                Slidable_Action(
-                                    lable: StringManager.copy,
-                                    icon: Icons.copy),
-                                Slidable_Action(
-                                    lable: StringManager.delete,
-                                    icon: Icons.delete),
-                              ],
-                            ),
-                            child: ProductCard(
-                              image: pindex.image.toString(),
-                              pname: pindex.pname,
-                              pid: pindex.pid,
-                              prize: pindex.prize.toString(),
-                              quantity: pindex.quantity.toString(),
-                              desc: pindex.desc,
-                              onTapminus: () {
-                                if (pindex.quantity > 0) {
-                                  cref.child(pindex.pname).update({
-                                    'quantity': --pindex.quantity,
-                                    'prize': pindex.quantity * pindex.prize,
-                                  });
-                                }
-                                setState(() {
-                                  if (total > 0) {
-                                    total = total - pindex.prize;
-                                  }
-                                  pref
-                                      .child('-NO9A2WrPD86gpOYUwFy')
-                                      .update({'total_prize': total});
-                                });
-                              },
-                              onTapplus: () {
-                                if (pindex.quantity == 0) {
-                                  cref.child(pindex.pname).set({
-                                    'pname': pindex.pname,
-                                    'pid': pindex.pid,
-                                    'prize': pindex.prize,
-                                    'quantity': ++pindex.quantity,
-                                    'uid': auth.getUser()!.uid
-                                  });
-                                } else {
-                                  cref.child(pindex.pname).update({
-                                    'quantity': ++pindex.quantity,
-                                    'prize': pindex.quantity * pindex.prize,
-                                  });
-                                }
-                                setState(() {
-                                  total = total + pindex.prize;
-                                  pref.child('-NO9A2WrPD86gpOYUwFy').update({
-                                    'total_prize': total,
-                                  });
-                                });
-                              },
-                            ),
-                          );
-                        }),
-                        separatorBuilder: ((context, index) {
-                          return const Divider();
-                        }),
-                      );
-                    }
-                    return const CircularProgressIndicator();
-                  }),
-              
-            ],
-             ),
             ),
-        ),
-        Positioned(left:3,top:760,right: 3,
+          ),
+          Positioned(
+            left: 3,
+            top: 760,
+            right: 3,
             child: BottomnavigationbarContaineer(
-        total: total,
-      ),) 
+              total: total,
+            ),
+          )
         ],
       ),
     );
   }
- 
 }
 
 

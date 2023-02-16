@@ -24,10 +24,12 @@ class _Home_ScreenState extends State<Home_Screen> {
     user = _auth.getUser();
     super.initState();
   }
-@override
+
+  @override
   void dispose() {
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,18 +48,16 @@ class _Home_ScreenState extends State<Home_Screen> {
                 radius: 50,
                 backgroundColor: AllColors.white,
                 child: Text(
-                  '${user?.displayName}'.substring(0, 1).toUpperCase(),
-                  style: regularTextStyle(color: AllColors.maincolor,fontSize: 36.sp)
-                ),
+                    '${user?.displayName}'.substring(0, 1).toUpperCase(),
+                    style: regularTextStyle(
+                        color: AllColors.maincolor, fontSize: 36.sp)),
               ),
-              accountName: Text(
-                "${user?.displayName}",
-                style: regularTextStyle(color: AllColors.white,fontSize: 17.sp)
-              ),
-              accountEmail: Text(
-                "${user?.email}",
-                style: regularTextStyle(color: AllColors.white,fontSize: 17.sp)
-              ),
+              accountName: Text("${user?.displayName}",
+                  style: regularTextStyle(
+                      color: AllColors.white, fontSize: 17.sp)),
+              accountEmail: Text("${user?.email}",
+                  style: regularTextStyle(
+                      color: AllColors.white, fontSize: 17.sp)),
             ),
             const ListTile(
               leading: Icon(Icons.payment),
@@ -67,9 +67,9 @@ class _Home_ScreenState extends State<Home_Screen> {
               leading: Icon(Icons.house),
               title: Text('Addresses'),
             ),
-             ListTile(
+            ListTile(
               onTap: () {
-                Navigator.pushNamed(context,  LanguageScreen.id );
+                Navigator.pushNamed(context, LanguageScreen.id);
               },
               leading: const Icon(Icons.language),
               title: const Text('change language'),
@@ -80,27 +80,22 @@ class _Home_ScreenState extends State<Home_Screen> {
             ),
             ListTile(
               onTap: () async {
-                // await FirebaseAuth.instance.signOut();
-             if(FirebaseAuth.instance.currentUser != null)
-                   {
-                    // await _auth.signOut();
-                    FirebaseAuth.instance.signOut();
-                   }
-                     Navigator.pushNamedAndRemoveUntil(context, Login_screen.id,(route) => false,);
-                },
-                
-              
-              //   Navigator.pushNamed(
-              //       context, Login_screen.id
-              //     );
-              // },
+                if (FirebaseAuth.instance.currentUser != null) {
+                  FirebaseAuth.instance.signOut();
+                }
+                Navigator.pushNamedAndRemoveUntil(
+                  context,
+                  Login_screen.id,
+                  (route) => false,
+                );
+              },
               leading: const Icon(Icons.logout),
               title: const Text(StringManager.logout),
             ),
           ],
         ),
       ),
-       //body:Text('login'),
+      //body:Text('login'),
     );
   }
 }

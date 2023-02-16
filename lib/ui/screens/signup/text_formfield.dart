@@ -25,7 +25,7 @@ class _TextFormFeild1State extends State<TextFormFeild1> {
   Widget build(BuildContext context) {
     return TextFormField(
       autofocus: true,
-      obscureText:widget.obscureText,
+      obscureText: widget.obscureText,
       controller: widget.controller,
       decoration: InputDecoration(
         labelText: widget.labelText,

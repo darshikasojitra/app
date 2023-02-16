@@ -8,6 +8,7 @@ import 'package:demo_splash_screen/utils/services_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+
 class LanguageScreen extends StatefulWidget {
   const LanguageScreen({Key? key}) : super(key: key);
 
@@ -42,8 +43,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
       height: 48.h,
       width: double.infinity,
       decoration: BoxDecoration(
-          color: AllColors.maincolor,
-          borderRadius: BorderRadius.circular(8.0)),
+          color: AllColors.maincolor, borderRadius: BorderRadius.circular(8.0)),
       child: TextButton(
         onPressed: onPressed,
         child: Text(
@@ -111,7 +111,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
                             ServiceUtils.languageList[selectedIndex].langCode);
                   });
                   Navigator.pushNamedAndRemoveUntil(
-                      context,   dashboard_screen.id, (route) => false);
+                      context, dashboard_screen.id, (route) => false);
                 }),
               ),
               buildSizedBoxSpacer()
@@ -175,4 +175,3 @@ SizedBox buildSizedBoxSpacer() {
     width: 15.w,
   );
 }
-

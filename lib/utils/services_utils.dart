@@ -5,10 +5,7 @@ import 'package:demo_splash_screen/user_preferences/global_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-
 class ServiceUtils {
-
-
   static showErrorMsg(String msg, BuildContext context) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text(
@@ -57,14 +54,10 @@ class ServiceUtils {
           child: SizedBox(
             height: 21.h,
             width: 27.w,
-            child: Icon(Icons.arrow_back,size: 25.sp,),
-            // child: Image.asset(
-            //   lngCode == LanguageCode.languageCodeArabic
-            //       ? AllImages.backarrow
-            //       : AllImages.arabic,
-            //   fit: BoxFit.fitHeight,
-            //   //color: Colors.black,
-            // ),
+            child: Icon(
+              Icons.arrow_back,
+              size: 25.sp,
+            ),
           ),
         ),
         SizedBox(
@@ -74,8 +67,7 @@ class ServiceUtils {
           title,
           textAlign: TextAlign.left,
           overflow: TextOverflow.visible,
-          style: TextStyle(
-              fontSize: 18.sp, color: AllColors.black),
+          style: TextStyle(fontSize: 18.sp, color: AllColors.black),
         ),
       ],
     );

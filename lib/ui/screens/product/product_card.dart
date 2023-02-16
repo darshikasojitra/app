@@ -85,7 +85,7 @@ class _ProductCardState extends State<ProductCard> {
           Padding(
             padding: EdgeInsets.only(left: 6.0.h),
             child: Padding(
-          padding: EdgeInsets.only(left:5,right: 5,),
+          padding: EdgeInsets.only(left:5.w,right: 5.w,),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,

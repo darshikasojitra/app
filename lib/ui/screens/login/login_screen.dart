@@ -26,10 +26,11 @@ class _Login_screenState extends State<Login_screen> {
   TextEditingController passwordController = TextEditingController();
   bool isprocessing = false;
   final fromKey = GlobalKey<FormState>();
-@override
+  @override
   void dispose() {
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -56,8 +57,7 @@ class _Login_screenState extends State<Login_screen> {
             ),
             Text(
               AppLocalizations.of(context)!.login,
-              style:
-                  boldTextStyle(color: AllColors.maincolor, fontSize: 35.sp),
+              style: boldTextStyle(color: AllColors.maincolor, fontSize: 35.sp),
             ),
             Padding(
               padding: EdgeInsets.symmetric(vertical: 30.h, horizontal: 30.w),
@@ -110,9 +110,7 @@ class _Login_screenState extends State<Login_screen> {
                               password: passwordController.text);
 
                           if (user != null) {
-                            Navigator.pushNamed(
-                                context,
-                             dashboard_screen.id);
+                            Navigator.pushNamed(context, dashboard_screen.id);
                             setState(() {
                               isprocessing = false;
                             });

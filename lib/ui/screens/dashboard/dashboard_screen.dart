@@ -48,7 +48,7 @@ class _dashboard_screenState extends State<dashboard_screen> {
           currentIndex: myIndex,
           unselectedItemColor: AllColors.maincolor,
           selectedItemColor: AllColors.fontcolor,
-          items:  [
+          items: [
             BottomNavigationBarItem(
               icon: Icon(
                 Icons.home,
