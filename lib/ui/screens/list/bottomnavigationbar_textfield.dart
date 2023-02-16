@@ -1,6 +1,6 @@
 import 'package:demo_splash_screen/model/auth_service.dart';
 import 'package:demo_splash_screen/resources/all_colors.dart';
-import 'package:demo_splash_screen/resources/all_string.dart';
+import 'package:demo_splash_screen/resources/string_manager.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -23,10 +23,10 @@ class BottomnavigationbarTextfield extends StatelessWidget {
             controller: textcontroller,
             autofocus: true,
             decoration: InputDecoration(
-              hintText: AllStrings.newlist,
+              hintText: StringManager.newlist,
               suffixIcon: IconButton(
                   onPressed: () {
-                    pref.child('0').set({
+                    pref.push().set({
                       'uid': auth.getUser()!.uid,
                       'uname': auth.getUser()!.displayName,
                       'name': textcontroller.text,
@@ -36,7 +36,7 @@ class BottomnavigationbarTextfield extends StatelessWidget {
                   },
                   icon: Icon(Icons.add_circle, color: AllColors.maincolor)),
               focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(30),
+                borderRadius: BorderRadius.circular(30.r),
                 borderSide: BorderSide(color: AllColors.maincolor),
               ),
             ),

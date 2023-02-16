@@ -1,4 +1,4 @@
-class AllStrings {
+class StringManager {
   static const String login = 'Login';
   static const String signup = 'Sign Up';
   static const String name = 'Name';
@@ -29,4 +29,8 @@ class AllStrings {
   static const String buythelist = "Buy the list";
   static const String text2000 = "£2000";
   static const String kg = "1 x KG";
+  static const String vendor = "Vendor";
+  static const String list = "List";
+  static const String category = "Category";
+  static const String more = "More";
 }

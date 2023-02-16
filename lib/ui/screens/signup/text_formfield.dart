@@ -5,14 +5,14 @@ class TextFormFeild1 extends StatefulWidget {
   TextEditingController? controller;
   String? labelText;
   String? hintText;
-  bool? obscureText;
+  final bool obscureText;
   String? Function(dynamic value) validator;
   TextFormFeild1({
     super.key,
     this.controller,
     this.labelText,
     this.hintText,
-    this.obscureText,
+    required this.obscureText,
     required this.validator,
   });
 
@@ -25,6 +25,7 @@ class _TextFormFeild1State extends State<TextFormFeild1> {
   Widget build(BuildContext context) {
     return TextFormField(
       autofocus: true,
+      obscureText:widget.obscureText,
       controller: widget.controller,
       decoration: InputDecoration(
         labelText: widget.labelText,

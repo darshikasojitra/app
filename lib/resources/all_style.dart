@@ -1,27 +1,18 @@
-// import 'package:flutter/material.dart';
-// import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 
-// class AllStyle extends StatefulWidget {
-//   final String? text;
-//   Color? color;
-//   double? fontsize;
-//   FontWeight? fontWeight;
-//    AllStyle({super.key,this.text, this.color, this.fontsize, this.fontWeight});
+class FontWeightManager {
+  static const FontWeight bold = FontWeight.w700;
+  static const FontWeight regular = FontWeight.w400;
+}
 
-//   @override
-//   State<AllStyle> createState() => _AllStyleState();
-// }
+TextStyle _getTextStyle(double fontSize, FontWeight fontWeight, Color color) {
+  return TextStyle(fontSize: fontSize, fontWeight: fontWeight, color: color);
+}
 
-// class _AllStyleState extends State<AllStyle> {
-//   @override
-//   Widget build(BuildContext context) { 
-//     return Text(,
-//       style: TextStyle(
-//       color: widget.color,
-//       fontSize: widget.fontsize,
-//       fontWeight: widget.fontWeight,
-//     ),
-//     );
-    
-//   }
-// }
+TextStyle regularTextStyle({double fontSize = 35, Color color = Colors.black}) {
+  return _getTextStyle(fontSize, FontWeightManager.regular, color);
+}
+
+TextStyle boldTextStyle({double fontSize = 25, Color color = Colors.black}) {
+  return _getTextStyle(fontSize, FontWeightManager.bold, color);
+}

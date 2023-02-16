@@ -23,14 +23,4 @@ class ProductData {
         quantity: parsedjson['quantity']);
   }
 
-  /* Map toJson() {
-    return {
-      'pid': pid,
-      'pname': pname,
-      'image': image,
-      'desc':desc,
-      'amount': prize,
-      'quantity': quantity
-    };
-  }*/
 }

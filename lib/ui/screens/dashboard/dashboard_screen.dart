@@ -1,9 +1,12 @@
-import 'package:demo_splash_screen/screens/dashboard/home_dashboardscreen.dart';
-import 'package:demo_splash_screen/screens/list/list_screen.dart';
+import 'package:demo_splash_screen/resources/string_manager.dart';
+import 'package:demo_splash_screen/ui/screens/dashboard/home_dashboardscreen.dart';
+import 'package:demo_splash_screen/ui/screens/list/list_screen.dart';
 import 'package:demo_splash_screen/resources/all_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class dashboard_screen extends StatefulWidget {
+  static const String id = 'dashboard_screen';
   const dashboard_screen({super.key});
 
   @override
@@ -13,7 +16,7 @@ class dashboard_screen extends StatefulWidget {
 class _dashboard_screenState extends State<dashboard_screen> {
   int myIndex = 0;
   static TextStyle optionStyle = TextStyle(
-      fontSize: 30, fontWeight: FontWeight.bold, color: AllColors.fontcolor);
+      fontSize: 30.sp, fontWeight: FontWeight.bold, color: AllColors.fontcolor);
   static List<Widget> widgetList = [
     const Home_Screen(),
     Text(
@@ -45,41 +48,41 @@ class _dashboard_screenState extends State<dashboard_screen> {
           currentIndex: myIndex,
           unselectedItemColor: AllColors.maincolor,
           selectedItemColor: AllColors.fontcolor,
-          items: const [
+          items:  [
             BottomNavigationBarItem(
               icon: Icon(
                 Icons.home,
-                size: 30,
+                size: 28.sp,
               ),
-              label: 'Home',
+              label: StringManager.home,
             ),
             BottomNavigationBarItem(
               icon: Icon(
                 Icons.people,
-                size: 30,
+                size: 28.sp,
               ),
-              label: 'Vendors',
+              label: StringManager.vendor,
             ),
             BottomNavigationBarItem(
               icon: Icon(
                 Icons.list,
-                size: 30,
+                size: 28.sp,
               ),
-              label: 'List',
+              label: StringManager.list,
             ),
             BottomNavigationBarItem(
               icon: Icon(
                 Icons.category,
-                size: 30,
+                size: 28.sp,
               ),
-              label: 'Category',
+              label: StringManager.category,
             ),
             BottomNavigationBarItem(
               icon: Icon(
                 Icons.more,
-                size: 30,
+                size: 28.sp,
               ),
-              label: 'More',
+              label: StringManager.more,
             ),
           ]),
     );

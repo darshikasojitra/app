@@ -1,8 +1,9 @@
 import 'package:demo_splash_screen/model/auth_service.dart';
 import 'package:demo_splash_screen/resources/all_colors.dart';
-import 'package:demo_splash_screen/resources/all_string.dart';
-import 'package:demo_splash_screen/screens/login/login_screen.dart';
-import 'package:demo_splash_screen/text_formfield.dart';
+import 'package:demo_splash_screen/resources/all_style.dart';
+import 'package:demo_splash_screen/resources/string_manager.dart';
+import 'package:demo_splash_screen/ui/screens/login/login_screen.dart';
+import 'package:demo_splash_screen/ui/screens/signup/text_formfield.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -39,12 +40,9 @@ class _signup_screenState extends State<signup_screen> {
               Container(
                 padding: EdgeInsets.only(top: 100.h),
                 child: Text(
-                  AllStrings.signup,
-                  style: TextStyle(
-                    color: AllColors.maincolor,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 35,
-                  ),
+                  StringManager.signup,
+                  style: boldTextStyle(
+                      color: AllColors.maincolor, fontSize: 35.sp),
                 ),
               ),
               SizedBox(
@@ -60,64 +58,58 @@ class _signup_screenState extends State<signup_screen> {
                         TextFormFeild1(
                           obscureText: false,
                           controller: nameController,
-                          labelText: AllStrings.name,
-                          hintText: AllStrings.entername,
+                          labelText: StringManager.name,
+                          hintText: StringManager.entername,
                           validator: (value) {
-                            return value!.isEmpty ? AllStrings.entername : null;
+                            return value!.isEmpty
+                                ? StringManager.entername
+                                : null;
                           },
                         ),
-                        SizedBox(
-                          height: 20.h,
-                        ),
+                        buildSizedBoxSpacer(),
                         TextFormFeild1(
                           obscureText: false,
                           controller: emailController,
-                          labelText: AllStrings.email,
-                          hintText: AllStrings.enteremail,
+                          labelText: StringManager.email,
+                          hintText: StringManager.enteremail,
                           validator: (value) {
                             return value != null &&
                                     !EmailValidator.validate(value)
-                                ? AllStrings.validemail
+                                ? StringManager.validemail
                                 : null;
                           },
                         ),
-                        SizedBox(
-                          height: 20.h,
-                        ),
+                        buildSizedBoxSpacer(),
                         TextFormFeild1(
                           obscureText: true,
                           controller: passwordController,
-                          labelText: AllStrings.password,
-                          hintText: AllStrings.enterpassword,
+                          labelText: StringManager.password,
+                          hintText: StringManager.enterpassword,
                           validator: (value) {
                             confirmpass = value;
                             return value != null && value.length < 6
-                                ? AllStrings.validpassword
+                                ? StringManager.validpassword
                                 : null;
                           },
                         ),
-                        SizedBox(
-                          height: 20.h,
-                        ),
+                        buildSizedBoxSpacer(),
                         TextFormFeild1(
                           obscureText: true,
                           controller: cpasswordController,
-                          labelText: AllStrings.cpassword,
-                          hintText: AllStrings.entercpassword,
+                          labelText: StringManager.cpassword,
+                          hintText: StringManager.entercpassword,
                           validator: (value) {
                             return value!.isEmpty && value != confirmpass
-                                ? AllStrings.entercpassword
+                                ? StringManager.entercpassword
                                 : null;
                           },
                         ),
-                        SizedBox(
-                          height: 20.h,
-                        ),
+                        buildSizedBoxSpacer(),
                         MaterialButton(
                           height: 40.h,
                           minWidth: double.infinity,
                           shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(40)),
+                              borderRadius: BorderRadius.circular(40.r)),
                           onPressed: () async {
                             setState(() {
                               isprocessing = true;
@@ -147,29 +139,22 @@ class _signup_screenState extends State<signup_screen> {
                             });
                           },
                           color: AllColors.maincolor,
-                          child: Text(
-                            AllStrings.signup,
-                            style:
-                                TextStyle(color: AllColors.white, fontSize: 25),
-                          ),
+                          child: Text(StringManager.signup,
+                              style: regularTextStyle(
+                                  fontSize: 23.sp, color: AllColors.white)),
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const Text(AllStrings.alreadyaccount),
+                            const Text(StringManager.alreadyaccount),
                             TextButton(
                                 onPressed: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              Login_screen()));
+                                  Navigator.pushNamed(context, Login_screen.id);
                                 },
-                                child: Text(
-                                  AllStrings.login,
-                                  style: TextStyle(
-                                      fontSize: 20, color: AllColors.maincolor),
-                                ))
+                                child: Text(StringManager.login,
+                                    style: boldTextStyle(
+                                        color: AllColors.maincolor,
+                                        fontSize: 16.sp)))
                           ],
                         ),
                       ],
@@ -181,4 +166,10 @@ class _signup_screenState extends State<signup_screen> {
       ),
     );
   }
+}
+
+SizedBox buildSizedBoxSpacer() {
+  return SizedBox(
+    height: 20.h,
+  );
 }

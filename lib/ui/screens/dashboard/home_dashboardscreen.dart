@@ -1,9 +1,12 @@
 import 'package:demo_splash_screen/model/auth_service.dart';
 import 'package:demo_splash_screen/resources/all_colors.dart';
-import 'package:demo_splash_screen/resources/all_string.dart';
+import 'package:demo_splash_screen/resources/all_style.dart';
+import 'package:demo_splash_screen/resources/string_manager.dart';
+import 'package:demo_splash_screen/ui/screens/dashboard/change_language.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:demo_splash_screen/screens/login/login_screen.dart';
+import 'package:demo_splash_screen/ui/screens/login/login_screen.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class Home_Screen extends StatefulWidget {
   const Home_Screen({super.key});
@@ -13,21 +16,18 @@ class Home_Screen extends StatefulWidget {
 }
 
 class _Home_ScreenState extends State<Home_Screen> {
-  // void setState(fn) {
-  //   if (mounted) {
-  //     super.setState(fn);
-  //   }
-  // }
   User? user;
   final AuthService _auth = AuthService();
-// void discope(){
-//     super.dispose();
-//   }
+
+  @override
   void initState() {
     user = _auth.getUser();
     super.initState();
   }
-
+@override
+  void dispose() {
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,23 +40,23 @@ class _Home_ScreenState extends State<Home_Screen> {
           children: <Widget>[
             UserAccountsDrawerHeader(
               decoration: BoxDecoration(
-                color: AllColors.teal,
+                color: AllColors.maincolor,
               ),
               currentAccountPicture: CircleAvatar(
                 radius: 50,
                 backgroundColor: AllColors.white,
                 child: Text(
-                  '${user?.displayName}'.substring(0,1).toUpperCase(),
-                  style: TextStyle(color: AllColors.teal, fontSize: 40.0),
+                  '${user?.displayName}'.substring(0, 1).toUpperCase(),
+                  style: regularTextStyle(color: AllColors.maincolor,fontSize: 36.sp)
                 ),
               ),
               accountName: Text(
                 "${user?.displayName}",
-                style: TextStyle(fontSize: 20, color: AllColors.white),
+                style: regularTextStyle(color: AllColors.white,fontSize: 17.sp)
               ),
               accountEmail: Text(
                 "${user?.email}",
-                style: TextStyle(fontSize: 20, color: AllColors.white),
+                style: regularTextStyle(color: AllColors.white,fontSize: 17.sp)
               ),
             ),
             const ListTile(
@@ -67,9 +67,12 @@ class _Home_ScreenState extends State<Home_Screen> {
               leading: Icon(Icons.house),
               title: Text('Addresses'),
             ),
-            const ListTile(
-              leading: Icon(Icons.password),
-              title: Text('password'),
+             ListTile(
+              onTap: () {
+                Navigator.pushNamed(context,  LanguageScreen.id );
+              },
+              leading: const Icon(Icons.language),
+              title: const Text('change language'),
             ),
             const ListTile(
               leading: Icon(Icons.home_filled),
@@ -77,19 +80,27 @@ class _Home_ScreenState extends State<Home_Screen> {
             ),
             ListTile(
               onTap: () async {
-                await FirebaseAuth.instance.signOut();
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const Login_screen()));
-              },
+                // await FirebaseAuth.instance.signOut();
+             if(FirebaseAuth.instance.currentUser != null)
+                   {
+                    // await _auth.signOut();
+                    FirebaseAuth.instance.signOut();
+                   }
+                     Navigator.pushNamedAndRemoveUntil(context, Login_screen.id,(route) => false,);
+                },
+                
+              
+              //   Navigator.pushNamed(
+              //       context, Login_screen.id
+              //     );
+              // },
               leading: const Icon(Icons.logout),
-              title: const Text(AllStrings.logout),
+              title: const Text(StringManager.logout),
             ),
           ],
         ),
       ),
-      // body:
+       //body:Text('login'),
     );
   }
 }

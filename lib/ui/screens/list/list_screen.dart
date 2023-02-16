@@ -1,15 +1,16 @@
-import 'package:demo_splash_screen/screens/list/bottomnavigationbar_textfield.dart';
-import 'package:demo_splash_screen/screens/product/product_screen.dart';
+import 'package:demo_splash_screen/resources/all_style.dart';
+import 'package:demo_splash_screen/ui/screens/list/bottomnavigationbar_textfield.dart';
+import 'package:demo_splash_screen/ui/screens/product/product_screen.dart';
 import 'package:demo_splash_screen/resources/all_colors.dart';
-import 'package:demo_splash_screen/resources/all_string.dart';
-import 'package:demo_splash_screen/screens/dashboard/dashboard_screen.dart';
+import 'package:demo_splash_screen/resources/string_manager.dart';
+import 'package:demo_splash_screen/ui/screens/dashboard/dashboard_screen.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class List_Screen extends StatefulWidget {
   const List_Screen({super.key});
-
+static const String id = 'List_Screen';
   @override
   State<List_Screen> createState() => _List_ScreenState();
 }
@@ -24,10 +25,9 @@ class _List_ScreenState extends State<List_Screen> {
         appBar: AppBar(
           leading: InkWell(
               onTap: () {
-                Navigator.pushReplacement(
+                Navigator.pushNamed(
                     context,
-                    MaterialPageRoute(
-                        builder: (context) => const dashboard_screen()));
+                   dashboard_screen.id);
               },
               child: Icon(
                 Icons.arrow_back,
@@ -35,8 +35,8 @@ class _List_ScreenState extends State<List_Screen> {
               )),
           backgroundColor: AllColors.maincolor,
           title: Text(
-            AllStrings.title,
-            style: TextStyle(color: AllColors.black, fontSize: 20),
+            StringManager.title,
+            style: regularTextStyle(color: AllColors.black, fontSize: 17.sp),
           ),
         ),
         body: SingleChildScrollView(
@@ -57,22 +57,21 @@ class _List_ScreenState extends State<List_Screen> {
                       itemCount: list.length,
                       itemBuilder: ((context, index) {
                         return GestureDetector(
-                          onTap: () => Navigator.push(
+                          onTap: () => Navigator.pushNamed(
                               context,
-                              MaterialPageRoute(
-                                  builder: (context) =>  Product_Page())),
+                              Product_Page.id),
                           child: Card(
                             elevation: 0,
-                            shape: const RoundedRectangleBorder(
+                            shape:  RoundedRectangleBorder(side: BorderSide(color: AllColors.grey),
                               borderRadius:
-                                   BorderRadius.all(Radius.circular(10)),
+                                   BorderRadius.all(Radius.circular(10.r),),
                             ),
                             child: Container(
                               height: 70.h,
                               width: 330.w,
                               decoration: BoxDecoration(
                                   color: AllColors.white,
-                                  borderRadius: BorderRadius.circular(20)),
+                                  borderRadius: BorderRadius.circular(20.r)),
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -84,12 +83,16 @@ class _List_ScreenState extends State<List_Screen> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Text(
-                                          '${list[index]['name']}',
-                                          style: const TextStyle(
-                                              color: Color(0xff333333),
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.bold),
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Text(
+                                            '${list[index]['name']}',
+                                            style:  boldTextStyle(
+                                                color: AllColors.totals,
+                                                
+                                                fontSize: 15.sp,
+                                                ),
+                                          ),
                                         ),
                                       ],
                                     ),
@@ -98,9 +101,9 @@ class _List_ScreenState extends State<List_Screen> {
                                     height: 100.h,
                                     width: 73.w,
                                     decoration: BoxDecoration(
-                                        color: const Color(0xffE8FEBE),
+                                        color: AllColors.slidable,
                                         borderRadius:
-                                            BorderRadius.circular(10)),
+                                            BorderRadius.only(topRight: Radius.circular(10.r),bottomRight: Radius.circular(10.r))),
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.center,
                                       mainAxisAlignment:
@@ -109,9 +112,9 @@ class _List_ScreenState extends State<List_Screen> {
                                         Row(mainAxisAlignment: MainAxisAlignment.center,
                                           children: [
                                             Text(
-                                              AllStrings.total,
-                                              style: TextStyle(
-                                                  fontSize: 10,
+                                              StringManager.total,
+                                              style: regularTextStyle(
+                                                  fontSize: 10.sp,
                                                   color: AllColors.totals),
                                             ),
                                             SizedBox(
@@ -119,19 +122,19 @@ class _List_ScreenState extends State<List_Screen> {
                                             ),
                                             Text(
                                               '${list[index]['total_prize']}',
-                                              style: TextStyle(
-                                                  fontSize: 14,
+                                              style: regularTextStyle(
+                                                  fontSize: 12.sp,
                                                   color: AllColors.prize),
                                             ),
                                             
                                           ],
                                         ),
                                         Text(
-                                          AllStrings.text2000,
-                                          style: TextStyle(
-                                              fontSize: 16,
+                                          StringManager.text2000,
+                                          style: boldTextStyle(
+                                              fontSize: 15.sp,
                                               color: AllColors.maincolor,
-                                              fontWeight: FontWeight.bold),
+                                             ),
                                         )
                                       ],
                                     ),
