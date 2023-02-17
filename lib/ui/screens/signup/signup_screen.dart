@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:demo_splash_screen/model/auth_service.dart';
 import 'package:demo_splash_screen/resources/all_colors.dart';
 import 'package:demo_splash_screen/resources/all_style.dart';
 import 'package:demo_splash_screen/resources/string_manager.dart';
+import 'package:demo_splash_screen/ui/screens/dashboard/dashboard_screen.dart';
 import 'package:demo_splash_screen/ui/screens/login/login_screen.dart';
 import 'package:demo_splash_screen/ui/screens/signup/text_formfield.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -12,6 +14,7 @@ import 'package:email_validator/email_validator.dart';
 
 class signup_screen extends StatefulWidget {
   const signup_screen({super.key});
+  static const String id = 'signup_screen';
 
   @override
   State<signup_screen> createState() => _signup_screenState();
@@ -27,6 +30,17 @@ class _signup_screenState extends State<signup_screen> {
   TextEditingController cpasswordController = TextEditingController();
   bool isprocessing = false;
   final formKey = GlobalKey<FormState>();
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  // @override
+  // void setState(fn) {
+  //   if (mounted) {
+  //     super.setState(fn);
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -60,8 +74,8 @@ class _signup_screenState extends State<signup_screen> {
                           controller: nameController,
                           labelText: StringManager.name,
                           hintText: StringManager.entername,
-                          validator: (value) {
-                            return value!.isEmpty
+                          validator: (name) {
+                            return name!.isEmpty
                                 ? StringManager.entername
                                 : null;
                           },
@@ -72,9 +86,9 @@ class _signup_screenState extends State<signup_screen> {
                           controller: emailController,
                           labelText: StringManager.email,
                           hintText: StringManager.enteremail,
-                          validator: (value) {
-                            return value != null &&
-                                    !EmailValidator.validate(value)
+                          validator: (email) {
+                            return email != null &&
+                                    !EmailValidator.validate(email)
                                 ? StringManager.validemail
                                 : null;
                           },
@@ -85,9 +99,9 @@ class _signup_screenState extends State<signup_screen> {
                           controller: passwordController,
                           labelText: StringManager.password,
                           hintText: StringManager.enterpassword,
-                          validator: (value) {
-                            confirmpass = value;
-                            return value != null && value.length < 6
+                          validator: (password) {
+                            confirmpass = password;
+                            return password != null && password.length < 6
                                 ? StringManager.validpassword
                                 : null;
                           },
@@ -98,8 +112,9 @@ class _signup_screenState extends State<signup_screen> {
                           controller: cpasswordController,
                           labelText: StringManager.cpassword,
                           hintText: StringManager.entercpassword,
-                          validator: (value) {
-                            return value!.isEmpty && value != confirmpass
+                          validator: (cpassword) {
+                            return cpassword!.isEmpty &&
+                                    cpassword != confirmpass
                                 ? StringManager.entercpassword
                                 : null;
                           },
@@ -117,26 +132,24 @@ class _signup_screenState extends State<signup_screen> {
                             if (formKey.currentState!.validate()) {
                               Future<User?> user =
                                   auth.registerUsingEmailPassword(
-                                      name: nameController.text,
+                                      name: nameController.text.trim(),
                                       email: emailController.text,
                                       password: passwordController.text);
                               setState(() {
                                 isprocessing = false;
                               });
-
-                              if (user != null) {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const Login_screen()));
-                              }
-                            }
-                            uref.push().set({
+                               FirebaseFirestore.instance.collection("user").add({
                               'uid': auth.getUser()!.uid,
                               'name': nameController.text,
                               'email': emailController.text
                             });
+                             Navigator.pushNamedAndRemoveUntil(
+                                context,
+                                Login_screen.id,
+                                (route) => false,
+                              );
+                             
+                            }
                           },
                           color: AllColors.maincolor,
                           child: Text(StringManager.signup,

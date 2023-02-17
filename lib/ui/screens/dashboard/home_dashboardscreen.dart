@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:demo_splash_screen/model/auth_service.dart';
 import 'package:demo_splash_screen/resources/all_colors.dart';
 import 'package:demo_splash_screen/resources/all_style.dart';
@@ -18,18 +20,16 @@ class Home_Screen extends StatefulWidget {
 class _Home_ScreenState extends State<Home_Screen> {
   User? user;
   final AuthService _auth = AuthService();
+ @override
+  void dispose() {
+    super.dispose();
+  }
 
   @override
   void initState() {
     user = _auth.getUser();
     super.initState();
   }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,9 +48,10 @@ class _Home_ScreenState extends State<Home_Screen> {
                 radius: 50,
                 backgroundColor: AllColors.white,
                 child: Text(
-                    '${user?.displayName}'.substring(0, 1).toUpperCase(),
+                     '${user?.displayName}'.substring(0,1).toUpperCase(),
                     style: regularTextStyle(
-                        color: AllColors.maincolor, fontSize: 36.sp)),
+                        color: AllColors.maincolor, fontSize: 36.sp)
+                        ),
               ),
               accountName: Text("${user?.displayName}",
                   style: regularTextStyle(
@@ -81,7 +82,7 @@ class _Home_ScreenState extends State<Home_Screen> {
             ListTile(
               onTap: () async {
                 if (FirebaseAuth.instance.currentUser != null) {
-                  FirebaseAuth.instance.signOut();
+                await  FirebaseAuth.instance.signOut();
                 }
                 Navigator.pushNamedAndRemoveUntil(
                   context,

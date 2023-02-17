@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:demo_splash_screen/resources/all_images.dart';
 import 'package:demo_splash_screen/ui/screens/login/login_screen.dart';
 import 'package:demo_splash_screen/ui/screens/dashboard/dashboard_screen.dart';
@@ -16,23 +18,21 @@ class _splashScreenState extends State<splashScreen> {
   void initState() {
     super.initState();
 
-    Future.delayed(const Duration(seconds: 2), () {
+   Timer(const Duration(seconds: 3), () {
       FirebaseAuth.instance.authStateChanges().listen((event) {
         if (event != null) {
-          Navigator.pushNamed(
+          Navigator.pushReplacementNamed(
             context,
             dashboard_screen.id,
           );
         } else {
-          Navigator.pushNamed(context, Login_screen.id);
+          if(mounted){
+                      Navigator.pushNamedAndRemoveUntil(context, Login_screen.id, (route) => false);
+
+          }
         }
       });
     });
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
   }
 
   @override
