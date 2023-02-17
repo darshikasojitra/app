@@ -2,6 +2,7 @@ import 'package:demo_splash_screen/resources/all_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
+// ignore: camel_case_types, must_be_immutable
 class Slidable_Action extends StatefulWidget {
   String lable;
   IconData icon;
@@ -11,6 +12,7 @@ class Slidable_Action extends StatefulWidget {
   State<Slidable_Action> createState() => _Slidable_ActionState();
 }
 
+// ignore: camel_case_types
 class _Slidable_ActionState extends State<Slidable_Action> {
   @override
   Widget build(BuildContext context) {

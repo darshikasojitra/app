@@ -14,7 +14,7 @@ class NetworkCubit extends Cubit<NetworkState> {
   String customerId = "";
 
   NetworkCubit({this.networkService, required this.context})
-      : super(NetworkInitial()) {}
+      : super(NetworkInitial());
   bool isDialogShowing = false;
   bool isErrorDialogShowing = false;
   var error = ErrorBody();
@@ -241,7 +241,7 @@ class NetworkInitial extends NetworkState {}
 class AuthTokenIssue extends NetworkState {
   final ErrorBody errorBody;
 
-  AuthTokenIssue({required this.errorBody});
+  const AuthTokenIssue({required this.errorBody});
 }
 
 class ApiCalling extends NetworkState {}
@@ -251,11 +251,11 @@ class ApiCallDone extends NetworkState {}
 class ErrorState extends NetworkState {
   final ErrorBody errorBody;
 
-  ErrorState({required this.errorBody});
+  const ErrorState({required this.errorBody});
 }
 
 class SyncErrorState extends NetworkState {
   final ErrorBody errorBody;
 
-  SyncErrorState({required this.errorBody});
+  const SyncErrorState({required this.errorBody});
 }

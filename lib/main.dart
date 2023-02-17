@@ -10,7 +10,6 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:demo_splash_screen/l10n/localization.dart';
 import 'package:provider/provider.dart' as prov;
-
 import 'resources/routes_manager/route_manager.dart';
 
 Future main() async {

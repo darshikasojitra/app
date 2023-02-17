@@ -1,7 +1,6 @@
 import 'package:demo_splash_screen/model/language.dart';
 import 'package:demo_splash_screen/resources/all_colors.dart';
 import 'package:demo_splash_screen/resources/all_images.dart';
-import 'package:demo_splash_screen/user_preferences/global_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

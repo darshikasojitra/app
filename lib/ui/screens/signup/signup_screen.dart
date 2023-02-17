@@ -3,7 +3,6 @@ import 'package:demo_splash_screen/model/auth_service.dart';
 import 'package:demo_splash_screen/resources/all_colors.dart';
 import 'package:demo_splash_screen/resources/all_style.dart';
 import 'package:demo_splash_screen/resources/string_manager.dart';
-import 'package:demo_splash_screen/ui/screens/dashboard/dashboard_screen.dart';
 import 'package:demo_splash_screen/ui/screens/login/login_screen.dart';
 import 'package:demo_splash_screen/ui/screens/signup/text_formfield.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -12,6 +11,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
 
+// ignore: camel_case_types
 class signup_screen extends StatefulWidget {
   const signup_screen({super.key});
   static const String id = 'signup_screen';
@@ -20,8 +20,8 @@ class signup_screen extends StatefulWidget {
   State<signup_screen> createState() => _signup_screenState();
 }
 
+// ignore: camel_case_types
 class _signup_screenState extends State<signup_screen> {
-  var confirmpass;
   DatabaseReference uref = FirebaseDatabase.instance.ref("user");
   final AuthService auth = AuthService();
   TextEditingController emailController = TextEditingController();
@@ -30,18 +30,6 @@ class _signup_screenState extends State<signup_screen> {
   TextEditingController cpasswordController = TextEditingController();
   bool isprocessing = false;
   final formKey = GlobalKey<FormState>();
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
-  // @override
-  // void setState(fn) {
-  //   if (mounted) {
-  //     super.setState(fn);
-  //   }
-  // }
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -100,7 +88,6 @@ class _signup_screenState extends State<signup_screen> {
                           labelText: StringManager.password,
                           hintText: StringManager.enterpassword,
                           validator: (password) {
-                            confirmpass = password;
                             return password != null && password.length < 6
                                 ? StringManager.validpassword
                                 : null;
@@ -113,10 +100,19 @@ class _signup_screenState extends State<signup_screen> {
                           labelText: StringManager.cpassword,
                           hintText: StringManager.entercpassword,
                           validator: (cpassword) {
-                            return cpassword!.isEmpty &&
-                                    cpassword != confirmpass
-                                ? StringManager.entercpassword
-                                : null;
+                            if (cpassword!.isEmpty &&
+                                cpassword == passwordController.text &&
+                                cpassword.length < 6) {
+                              return StringManager.entercpassword;
+                            }
+                            if (cpassword != passwordController.text) {
+                              return StringManager.entercpassword;
+                            }
+                            return null;
+                            // return cpassword!.isEmpty &&
+                            //         cpassword == passwordController.text&& cpassword.length < 6
+                            //     ? StringManager.entercpassword
+                            //     : null;
                           },
                         ),
                         buildSizedBoxSpacer(),
@@ -138,17 +134,18 @@ class _signup_screenState extends State<signup_screen> {
                               setState(() {
                                 isprocessing = false;
                               });
-                               FirebaseFirestore.instance.collection("user").add({
-                              'uid': auth.getUser()!.uid,
-                              'name': nameController.text,
-                              'email': emailController.text
-                            });
-                             Navigator.pushNamedAndRemoveUntil(
+                              FirebaseFirestore.instance
+                                  .collection("user")
+                                  .add({
+                                'uid': auth.getUser()!.uid,
+                                'name': nameController.text,
+                                'email': emailController.text
+                              });
+                              Navigator.pushNamedAndRemoveUntil(
                                 context,
                                 Login_screen.id,
                                 (route) => false,
                               );
-                             
                             }
                           },
                           color: AllColors.maincolor,

@@ -16,6 +16,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:http/http.dart' as http;
 
+// ignore: camel_case_types
 class Product_Page extends StatefulWidget {
   const Product_Page({super.key});
   static const String id = 'Product_Page';
@@ -23,6 +24,7 @@ class Product_Page extends StatefulWidget {
   State<Product_Page> createState() => _Product_PageState();
 }
 
+// ignore: camel_case_types
 class _Product_PageState extends State<Product_Page> {
   @override
   void setState(fn) {

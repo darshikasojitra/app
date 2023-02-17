@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:demo_splash_screen/model/auth_service.dart';
 import 'package:demo_splash_screen/resources/all_colors.dart';
 import 'package:demo_splash_screen/resources/all_style.dart';
@@ -7,11 +6,11 @@ import 'package:demo_splash_screen/ui/screens/signup/signup_screen.dart';
 import 'package:demo_splash_screen/ui/screens/signup/text_formfield.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:demo_splash_screen/resources/string_manager.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+// ignore: camel_case_types
 class Login_screen extends StatefulWidget {
   const Login_screen({super.key});
   static const String id = 'Login_screen';
@@ -19,6 +18,7 @@ class Login_screen extends StatefulWidget {
   State<Login_screen> createState() => _Login_screenState();
 }
 
+// ignore: camel_case_types
 class _Login_screenState extends State<Login_screen> {
   final AuthService auth = AuthService();
   TextEditingController emailController = TextEditingController();
@@ -91,6 +91,7 @@ class _Login_screenState extends State<Login_screen> {
                                 password: passwordController.text);
 
                             if (user != null) {
+                              // ignore: use_build_context_synchronously
                               Navigator.pushNamedAndRemoveUntil(
                                 context,
                                 dashboard_screen.id,
@@ -100,12 +101,6 @@ class _Login_screenState extends State<Login_screen> {
                                 isprocessing = false;
                               });
                             }
-
-                            // FirebaseFirestore.instance.collection("user").add({
-                            //   'uid': auth.getUser()!.uid,
-                            //   'name': user?.displayName,
-                            //   'email': emailController.text
-                            // });
                           }
                         },
                         color: AllColors.maincolor,

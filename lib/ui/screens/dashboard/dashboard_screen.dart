@@ -5,6 +5,7 @@ import 'package:demo_splash_screen/resources/all_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+// ignore: camel_case_types
 class dashboard_screen extends StatefulWidget {
   static const String id = 'dashboard_screen';
   const dashboard_screen({super.key});

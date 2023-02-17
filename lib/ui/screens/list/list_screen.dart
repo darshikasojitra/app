@@ -8,6 +8,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+// ignore: camel_case_types
 class List_Screen extends StatefulWidget {
   const List_Screen({super.key});
 static const String id = 'List_Screen';
@@ -15,6 +16,7 @@ static const String id = 'List_Screen';
   State<List_Screen> createState() => _List_ScreenState();
 }
 
+// ignore: camel_case_types
 class _List_ScreenState extends State<List_Screen> {
   DatabaseReference pref = FirebaseDatabase.instance.ref("wishlist");
   final ScrollController _scrollcontroller = ScrollController();

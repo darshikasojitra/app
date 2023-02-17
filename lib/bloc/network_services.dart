@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class NetworkService {
-  NetworkService() {}
+  NetworkService();
 
   String authToken = '';
 
@@ -16,7 +16,6 @@ class NetworkService {
     Map<String, dynamic>? body,
     bool isformdata,
   ) async {
-    print(endpoint);
     final jsonString = json.encode(body);
     final response = await http.post(Uri.parse(endpoint),
         headers: getHeader(), body: jsonString);
@@ -25,7 +24,6 @@ class NetworkService {
 
   Future<http.Response?> put(
       String endpoint, Map<String, dynamic>? body) async {
-    print(endpoint);
     final jsonString = json.encode(body);
     final response = await http
         .put(Uri.parse(endpoint), headers: getHeader(), body: jsonString)
@@ -38,7 +36,6 @@ class NetworkService {
     Map<String, dynamic>? body,
     bool isformdata,
   ) async {
-    print(endpoint);
     final jsonString = json.encode(body);
     final response = await http
         .patch(Uri.parse(endpoint), headers: getHeader(), body: jsonString)
@@ -53,7 +50,7 @@ class NetworkService {
     String queryString = Uri(queryParameters: body).query;
     final response = await http
         .get(
-          Uri.parse(endpoint + "?" + queryString),
+          Uri.parse("$endpoint?$queryString"),
           headers: getHeader(),
         )
         .timeout(const Duration(seconds: 60));
@@ -64,12 +61,11 @@ class NetworkService {
     String endpoint,
     Map<String, String>? body,
   ) async {
-    print(endpoint);
     String queryString = Uri(queryParameters: body).query;
 
     final response = await http
         .delete(
-          Uri.parse(endpoint + "?" + queryString),
+          Uri.parse("$endpoint?$queryString"),
           headers: getHeader(),
         )
         .timeout(const Duration(seconds: 60));
@@ -80,7 +76,6 @@ class NetworkService {
     String endpoint,
     Map<String, dynamic>? body,
   ) async {
-    print(endpoint);
     final jsonString = json.encode(body);
     final response = await http
         .delete(Uri.parse(endpoint), headers: getHeader(), body: jsonString)
@@ -93,7 +88,6 @@ class NetworkService {
     Map<String, String>? body,
     bool isformdata,
   ) async {
-    print(endpoint);
     var request = http.MultipartRequest(
       'POST',
       Uri.parse(
