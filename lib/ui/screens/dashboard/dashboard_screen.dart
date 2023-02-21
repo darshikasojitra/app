@@ -1,4 +1,4 @@
-import 'package:demo_splash_screen/resources/string_manager.dart';
+import 'package:demo_splash_screen/l10n/localization.dart';
 import 'package:demo_splash_screen/ui/screens/dashboard/home_dashboardscreen.dart';
 import 'package:demo_splash_screen/ui/screens/list/list_screen.dart';
 import 'package:demo_splash_screen/resources/all_colors.dart';
@@ -55,35 +55,35 @@ class _dashboard_screenState extends State<dashboard_screen> {
                 Icons.home,
                 size: 28.sp,
               ),
-              label: StringManager.home,
+              label: AppLocalizations.of(context)!.home,
             ),
             BottomNavigationBarItem(
               icon: Icon(
                 Icons.people,
                 size: 28.sp,
               ),
-              label: StringManager.vendor,
+              label: AppLocalizations.of(context)!.vendor,
             ),
             BottomNavigationBarItem(
               icon: Icon(
                 Icons.list,
                 size: 28.sp,
               ),
-              label: StringManager.list,
+              label: AppLocalizations.of(context)!.list,
             ),
             BottomNavigationBarItem(
               icon: Icon(
                 Icons.category,
                 size: 28.sp,
               ),
-              label: StringManager.category,
+              label: AppLocalizations.of(context)!.category,
             ),
             BottomNavigationBarItem(
               icon: Icon(
                 Icons.more,
                 size: 28.sp,
               ),
-              label: StringManager.more,
+              label: AppLocalizations.of(context)!.more,
             ),
           ]),
     );

@@ -1,22 +1,17 @@
 import 'dart:convert';
-import 'package:demo_splash_screen/ui/screens/product/bottomnavigationbar_container.dart';
-import 'package:demo_splash_screen/ui/screens/product/material_button.dart';
+import 'package:demo_splash_screen/resources/resources.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:demo_splash_screen/l10n/localization.dart';
 import 'package:demo_splash_screen/model/auth_service.dart';
 import 'package:demo_splash_screen/model/product_data.dart';
-import 'package:demo_splash_screen/ui/screens/product/product_card.dart';
-import 'package:demo_splash_screen/resources/all_colors.dart';
-import 'package:demo_splash_screen/resources/all_images.dart';
-import 'package:demo_splash_screen/resources/all_style.dart';
-import 'package:demo_splash_screen/resources/string_manager.dart';
 import 'package:demo_splash_screen/ui/screens/list/list_screen.dart';
-import 'package:demo_splash_screen/ui/screens/product/slidable_action.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:http/http.dart' as http;
+import 'package:demo_splash_screen/ui/screens/product/productcard/product.dart';
 
-// ignore: camel_case_types
 class Product_Page extends StatefulWidget {
   const Product_Page({super.key});
   static const String id = 'Product_Page';
@@ -24,16 +19,9 @@ class Product_Page extends StatefulWidget {
   State<Product_Page> createState() => _Product_PageState();
 }
 
-// ignore: camel_case_types
 class _Product_PageState extends State<Product_Page> {
-  @override
-  void setState(fn) {
-    if (mounted) {
-      super.setState(fn);
-    }
-  }
-
-  var total = 0;
+  var documentID = '';
+  var _total = 0;
   Future<String> getdata() async {
     http.Response response = await http.get(Uri.parse(
         "https://flutter-authentication-8b2ee-default-rtdb.firebaseio.com/product.json"));
@@ -52,8 +40,9 @@ class _Product_PageState extends State<Product_Page> {
     return _productlist;
   }
 
-  final AuthService auth = AuthService();
-  final cref = FirebaseDatabase.instance.ref("cart");
+  final AuthService _auth = AuthService();
+  var cart = FirebaseFirestore.instance.collection('cart');
+  var wishlist = FirebaseFirestore.instance.collection('wishlist');
   DatabaseReference pref = FirebaseDatabase.instance.ref("wishlist");
   final ScrollController _controller = ScrollController();
   void initstate() {
@@ -86,60 +75,25 @@ class _Product_PageState extends State<Product_Page> {
         children: [
           SingleChildScrollView(
             child: Padding(
-              padding: EdgeInsets.only(top: 5.w, left: 8.h,right: 8.h,bottom: 50.w),
+              padding: EdgeInsets.only(
+                  top: 5.w, left: 8.h, right: 8.h, bottom: 50.w),
               child: Column(
                 children: [
-                  Row(
-                    children: [
-                      Image.asset(
-                        AllImages.tesco,
-                        fit: BoxFit.cover,
-                        height: 17.h,
-                        width: 70.w,
-                      ),
-                      Icon(
-                        Icons.arrow_drop_down,
-                        color: AllColors.maincolor,
-                        size: 20,
-                      ),
-                      SizedBox(
-                        width: 175.w,
-                      ),
-                      Icon(
-                        Icons.people,
-                        color: AllColors.maincolor,
-                      ),
-                      SizedBox(
-                        width: 12.w,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            left: 5, top: 20, bottom: 20, right: 20),
-                        child: Icon(
-                          Icons.share,
-                          color: AllColors.maincolor,
-                        ),
-                      )
-                    ],
-                  ),
+                 const DropDownBar(),
                   Row(
                     children: [
                       MaterialButtons(
                         color: AllColors.white,
-                        buttontext: StringManager.gotostore,
+                        buttontext: AppLocalizations.of(context)!.gotostore,
                         icon: Icons.store,
                       ),
                       SizedBox(
                         width: 20.w,
                       ),
-                      Row(
-                        children: [
-                          MaterialButtons(
-                            buttontext: StringManager.newidea,
-                            color: AllColors.buttoncolor,
-                            icon: Icons.add_circle,
-                          ),
-                        ],
+                      MaterialButtons(
+                        buttontext: AppLocalizations.of(context)!.newidea,
+                        color: AllColors.buttoncolor,
+                        icon: Icons.add_circle,
                       ),
                     ],
                   ),
@@ -159,7 +113,8 @@ class _Product_PageState extends State<Product_Page> {
                                     motion: const DrawerMotion(),
                                     children: [
                                       SlidableAction(
-                                        label: StringManager.checkoff,
+                                        label: AppLocalizations.of(context)!
+                                            .checkoff,
                                         backgroundColor: AllColors.checkoff,
                                         icon: Icons.check_box,
                                         foregroundColor: AllColors.checkbox,
@@ -170,67 +125,100 @@ class _Product_PageState extends State<Product_Page> {
                                   motion: const DrawerMotion(),
                                   children: [
                                     Slidable_Action(
-                                        lable: StringManager.swap,
+                                        lable:
+                                            AppLocalizations.of(context)!.swap,
                                         icon: Icons.swap_horiz_sharp),
                                     Slidable_Action(
-                                        lable: StringManager.move,
+                                        lable:
+                                            AppLocalizations.of(context)!.move,
                                         icon: Icons.move_to_inbox),
                                     Slidable_Action(
-                                        lable: StringManager.copy,
+                                        lable:
+                                            AppLocalizations.of(context)!.copy,
                                         icon: Icons.copy),
                                     Slidable_Action(
-                                        lable: StringManager.delete,
+                                        lable: AppLocalizations.of(context)!
+                                            .delete,
                                         icon: Icons.delete),
                                   ],
                                 ),
                                 child: ProductCard(
-                                  image: pindex.image.toString(),
-                                  pname: pindex.pname,
-                                  pid: pindex.pid,
-                                  prize: pindex.prize.toString(),
-                                  quantity: pindex.quantity.toString(),
-                                  desc: pindex.desc,
-                                  onTapminus: () {
-                                    if (pindex.quantity > 0) {
-                                      cref.child(pindex.pname).update({
-                                        'quantity': --pindex.quantity,
-                                        'prize': pindex.quantity * pindex.prize,
-                                      });
-                                    }
-                                    setState(() {
-                                      if (total > 0) {
-                                        total = total - pindex.prize;
+                                    image: pindex.image.toString(),
+                                    pname: pindex.pname,
+                                    pid: pindex.pid,
+                                    prize: pindex.prize.toString(),
+                                    quantity: pindex.quantity.toString(),
+                                    desc: pindex.desc,
+                                    onTapminus: () {
+                                      if (pindex.quantity > 0) {
+                                        FirebaseFirestore.instance
+                                            .collection("cart")
+                                            .where("pid", isEqualTo: pindex.pid)
+                                            .where("uid",
+                                                isEqualTo: _auth.getUser()!.uid)
+                                            .get()
+                                            .then((QuerySnapshot snapshot) => {
+                                                  snapshot.docs
+                                                      .forEach((element) {
+                                                    documentID =
+                                                        element.reference.id;
+                                                  }),
+                                                  cart.doc(documentID).update({
+                                                    'quantity':
+                                                        --pindex.quantity,
+                                                    'prize': pindex.quantity *
+                                                        pindex.prize,
+                                                  }),
+                                                });
                                       }
-                                      pref
-                                          .child('-NO9A2WrPD86gpOYUwFy')
-                                          .update({'total_prize': total});
-                                    });
-                                  },
-                                  onTapplus: () {
-                                    if (pindex.quantity == 0) {
-                                      cref.child(pindex.pname).set({
-                                        'pname': pindex.pname,
-                                        'pid': pindex.pid,
-                                        'prize': pindex.prize,
-                                        'quantity': ++pindex.quantity,
-                                        'uid': auth.getUser()!.uid
+                                      setState(() {
+                                        if (_total > 0) {
+                                          _total = _total - pindex.prize;
+                                        }
+                                        pref
+                                            .child('-NO9A2WrPD86gpOYUwFy')
+                                            .update({'total_prize': _total});
                                       });
-                                    } else {
-                                      cref.child(pindex.pname).update({
-                                        'quantity': ++pindex.quantity,
-                                        'prize': pindex.quantity * pindex.prize,
+                                    },
+                                    onTapplus: () {
+                                      if (pindex.quantity == 0) {
+                                        cart.add({
+                                          'pname': pindex.pname,
+                                          'pid': pindex.pid,
+                                          'prize': pindex.prize,
+                                          'quantity': ++pindex.quantity,
+                                          'uid': _auth.getUser()!.uid
+                                        });
+                                      } else {
+                                        FirebaseFirestore.instance
+                                            .collection("cart")
+                                            .where("pid", isEqualTo: pindex.pid)
+                                            .where("uid",
+                                                isEqualTo: _auth.getUser()!.uid)
+                                            .get()
+                                            .then((QuerySnapshot snapshot) => {
+                                                  snapshot.docs
+                                                      .forEach((element) {
+                                                    documentID =
+                                                        element.reference.id;
+                                                  }),
+                                                  cart.doc(documentID).update({
+                                                    'quantity':
+                                                        ++pindex.quantity,
+                                                    'prize': pindex.quantity *
+                                                        pindex.prize,
+                                                  }),
+                                                });
+                                      }
+                                      setState(() {
+                                        _total = _total + pindex.prize;
+                                        pref
+                                            .child('-NO9A2WrPD86gpOYUwFy')
+                                            .update({
+                                          'total_prize': _total,
+                                        });
                                       });
-                                    }
-                                    setState(() {
-                                      total = total + pindex.prize;
-                                      pref
-                                          .child('-NO9A2WrPD86gpOYUwFy')
-                                          .update({
-                                        'total_prize': total,
-                                      });
-                                    });
-                                  },
-                                ),
+                                    }),
                               );
                             }),
                             separatorBuilder: ((context, index) {
@@ -245,11 +233,11 @@ class _Product_PageState extends State<Product_Page> {
             ),
           ),
           Positioned(
-            left: 3,
-            top: 760,
-            right: 3,
+            left: 3.w,
+            top: 590.h,
+            right: 3.w,
             child: BottomnavigationbarContaineer(
-              total: total,
+              total: _total,
             ),
           )
         ],
@@ -257,34 +245,3 @@ class _Product_PageState extends State<Product_Page> {
     );
   }
 }
-
-
- // MaterialButton(
-                  //   color: AllColors.buttoncolor,
-                  //   onPressed: () {},
-                  //   height: 30.h,
-                  //   minWidth: 157.w,
-                  //   shape: RoundedRectangleBorder(
-                  //       side: BorderSide(color: AllColors.maincolor, width: 1),
-                  //       borderRadius: BorderRadius.circular(40)),
-                  //   child: Row(
-                  //     children: [
-                  //       Padding(
-                  //         padding: EdgeInsets.only(
-                  //             left: 15.w, top: 9.h, bottom: 8.h, right: 30.w),
-                  //         child: Text(
-                  //           StringManager.newidea,
-                  //           style: TextStyle(
-                  //               color: AllColors.maincolor,
-                  //               fontWeight: FontWeight.bold,
-                  //               fontSize: 16),
-                  //         ),
-                  //       ),
-                  //       Icon(
-                  //         Icons.add_circle,
-                  //         size: 22,
-                  //         color: AllColors.maincolor,
-                  //       ),
-                  //     ],
-                  //   ),
-                  // ),

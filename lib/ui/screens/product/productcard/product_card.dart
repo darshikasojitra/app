@@ -1,9 +1,7 @@
-import 'package:demo_splash_screen/resources/all_colors.dart';
-import 'package:demo_splash_screen/resources/all_images.dart';
-import 'package:demo_splash_screen/resources/all_style.dart';
-import 'package:demo_splash_screen/resources/string_manager.dart';
+import 'package:demo_splash_screen/l10n/localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:demo_splash_screen/resources/resources.dart';
 
 class ProductCard extends StatefulWidget {
   String image;
@@ -40,58 +38,91 @@ class _ProductCardState extends State<ProductCard> {
       ),
       child: Row(
         children: [
-          Container(
-            height: 139.h,
-            width: 92.w,
-            
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(bottomLeft: Radius.circular(10.r),topLeft: Radius.circular(10.r)),
-              image: DecorationImage(
-                image: NetworkImage(widget.image.toString(),),
-                fit: BoxFit.cover,
+          Stack(
+            children: [
+              Container(
+                height: 139.h,
+                width: 91.w,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(10.r),
+                      topLeft: Radius.circular(10.r)),
+                  image: DecorationImage(
+                    image: NetworkImage(
+                      widget.image.toString(),
+                    ),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                child: Align(
+                    alignment: Alignment.bottomRight,
+                    child: Container(
+                        margin: EdgeInsets.all(5.h),
+                        height: 15.h,
+                        width: 35.w,
+                        decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(0.8),
+                            borderRadius: BorderRadius.circular(40.r)),
+                        child: Row(
+                          children: [
+                            Padding(
+                                padding:
+                                    EdgeInsets.only(top: 5.h, bottom: 5.h)),
+                            Icon(
+                              Icons.star,
+                              size: 13.sp,
+                              color: AllColors.maincolor,
+                            ),
+                            SizedBox(
+                              width: 3.w,
+                            ),
+                            Text(
+                              AppLocalizations.of(context)!.ratingtext,
+                              style: regularTextStyle(
+                                color: AllColors.totals,
+                                fontSize: 10.sp,
+                              ),
+                            ),
+                          ],
+                        ))),
               ),
-            ),
-            child: Align(
-                alignment: Alignment.bottomRight,
-                child: Container(
-                    margin: EdgeInsets.all(5.h),
+              Positioned(
+                  right: 13.w,
+                  child: Container(
                     height: 15.h,
-                    width: 35.w,
+                    width: 78.w,
+                    alignment: Alignment.topLeft,
                     decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.8),
-                        borderRadius: BorderRadius.circular(40.r)),
-                    child: Row(
-                      children: [
-                        Padding(
-                            padding: EdgeInsets.only(top: 5.h, bottom: 5.h)),
-                        Icon(
-                          Icons.star,
-                          size: 13.sp,
-                          color: AllColors.maincolor,
-                        ),
-                        SizedBox(
-                          width: 3.w,
-                        ),
-                        Text(
-                          StringManager.ratingtext,
-                          style: regularTextStyle(
-                            color: AllColors.totals,
-                            fontSize: 10.sp,
-                          ),
-                        ),
-                      ],
-                    ))),
+                        color: AllColors.fontcolor,
+                        borderRadius: BorderRadius.only(
+                            bottomRight: Radius.circular(20.r),
+                            topLeft: Radius.circular(10.r))),
+                    child: Padding(
+                      padding: EdgeInsets.only(left: 5.w, top: 2.h),
+                      child: Text(
+                        AppLocalizations.of(context)!.discount,
+                        style: regularTextStyle(
+                            fontSize: 10.sp, color: AllColors.white),
+                      ),
+                    ),
+                  ))
+            ],
           ),
           Padding(
             padding: EdgeInsets.only(left: 6.0.h),
             child: Padding(
-          padding: EdgeInsets.only(left:5.w,right: 5.w,),
+              padding: EdgeInsets.only(
+                left: 5.w,
+                right: 5.w,
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Container(
-                    padding: EdgeInsets.only( top: 10.h,),
+                    padding: EdgeInsets.only(
+                      top: 10.h,
+                    ),
                     child: Image.asset(
                       AllImages.tesco,
                       fit: BoxFit.cover,
@@ -109,7 +140,7 @@ class _ProductCardState extends State<ProductCard> {
                       SizedBox(
                         width: 165.w,
                       ),
-                      const Text(StringManager.kg)
+                       Text(AppLocalizations.of(context)!.kg)
                     ],
                   ),
                   SizedBox(
@@ -118,8 +149,9 @@ class _ProductCardState extends State<ProductCard> {
                   Row(
                     children: [
                       Text(
-                        '(500 g - 10₹)',
-                        style: regularTextStyle(color: AllColors.prize,fontSize: 12.sp),
+                        StringManager.text500g,
+                        style: regularTextStyle(
+                            color: AllColors.prize, fontSize: 12.sp),
                       ),
                       SizedBox(
                         width: 120.w,
@@ -138,13 +170,14 @@ class _ProductCardState extends State<ProductCard> {
                   ),
                   Text(
                     widget.desc,
-                    style: regularTextStyle(color: AllColors.desc,fontSize: 12.sp),
+                    style: regularTextStyle(
+                        color: AllColors.desc, fontSize: 12.sp),
                   ),
                   Row(
                     children: [
                       Padding(
-                        padding:
-                            EdgeInsets.only(left: 130.w, bottom: 5.h, top: 10.h),
+                        padding: EdgeInsets.only(
+                            left: 130.w, bottom: 5.h, top: 10.h),
                         child: Container(
                           height: 20.h,
                           width: 90.w,

@@ -1,3 +1,4 @@
+import 'package:demo_splash_screen/l10n/localization.dart';
 import 'package:demo_splash_screen/model/auth_service.dart';
 import 'package:demo_splash_screen/resources/all_colors.dart';
 import 'package:demo_splash_screen/resources/all_style.dart';
@@ -60,44 +61,42 @@ class _Home_ScreenState extends State<Home_Screen> {
                   style: regularTextStyle(
                       color: AllColors.white, fontSize: 17.sp)),
             ),
-            const ListTile(
-              leading: Icon(Icons.payment),
-              title: Text('Payment method'),
+            ListTile(
+              leading: const Icon(Icons.payment),
+              title: Text(AppLocalizations.of(context)!.paymentmethod),
             ),
-            const ListTile(
-              leading: Icon(Icons.house),
-              title: Text('Addresses'),
+            ListTile(
+              leading: const Icon(Icons.house),
+              title: Text(AppLocalizations.of(context)!.address),
             ),
             ListTile(
               onTap: () {
                 Navigator.pushNamed(context, LanguageScreen.id);
               },
               leading: const Icon(Icons.language),
-              title: const Text('change language'),
+              title: Text(AppLocalizations.of(context)!.changelanguage),
             ),
-            const ListTile(
-              leading: Icon(Icons.home_filled),
-              title: Text('Household'),
+            ListTile(
+              leading: const Icon(Icons.home_filled),
+              title: Text(AppLocalizations.of(context)!.household),
             ),
             ListTile(
               onTap: () async {
                 if (FirebaseAuth.instance.currentUser != null) {
                   await FirebaseAuth.instance.signOut();
                 }
-                // ignore: use_build_context_synchronously
-                Navigator.pushNamedAndRemoveUntil(
-                  context,
-                  Login_screen.id,
-                  (route) => false,
-                );
+                if (mounted) {
+                  Navigator.pushNamedAndRemoveUntil(
+                      context, Login_screen.id, (route) => false);
+                }
               },
               leading: const Icon(Icons.logout),
-              title: const Text(StringManager.logout),
+              title: Text(AppLocalizations.of(context)!.logout),
             ),
           ],
         ),
       ),
-      //body:Text('login'),
+      //body:
     );
   }
 }

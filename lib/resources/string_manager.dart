@@ -33,4 +33,10 @@ class StringManager {
   static const String list = "List";
   static const String category = "Category";
   static const String more = "More";
+  static const String discount='10% Discount';
+  static const String text500g="(500 g - 10₹)";
+  static const String paymentmethod = "Payment Method";
+  static const String address = "Addresses";
+  static const String changelanguage = "Change Language";
+  static const String household = "Household";
 }

@@ -1,9 +1,7 @@
-import 'package:demo_splash_screen/resources/all_colors.dart';
-import 'package:demo_splash_screen/resources/all_images.dart';
-import 'package:demo_splash_screen/resources/all_style.dart';
-import 'package:demo_splash_screen/resources/string_manager.dart';
+import 'package:demo_splash_screen/l10n/localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:demo_splash_screen/resources/resources.dart';
 
 class BottomnavigationbarContaineer extends StatelessWidget {
   const BottomnavigationbarContaineer({super.key, required this.total});
@@ -32,7 +30,7 @@ class BottomnavigationbarContaineer extends StatelessWidget {
             ),
             Container(
                 height: 32.h,
-                width: 110.w,
+                width: 115.w,
                 decoration: BoxDecoration(
                     color: AllColors.white,
                     borderRadius: BorderRadius.circular(40.r)),
@@ -40,7 +38,7 @@ class BottomnavigationbarContaineer extends StatelessWidget {
                   children: [
                     Padding(
                       padding: EdgeInsets.only(
-                          left: 17.w, top: 7.h, bottom: 6.h, right: 6.w),
+                          left: 12.w, top: 7.h, bottom: 6.h, right: 6.w),
                       child: Image.asset(
                         AllImages.cart,
                         height: 26.h,
@@ -53,7 +51,7 @@ class BottomnavigationbarContaineer extends StatelessWidget {
                           padding: EdgeInsets.only(top: 10.0.h),
                           child: Row(
                             children: [
-                              Text(StringManager.total,
+                              Text(AppLocalizations.of(context)!.total,
                                   style: regularTextStyle(
                                     color: AllColors.prize,
                                     fontSize: 11.sp,
@@ -79,7 +77,7 @@ class BottomnavigationbarContaineer extends StatelessWidget {
               padding: EdgeInsets.only(
                   left: 5.w, top: 10.h, bottom: 10.h, right: 20.w),
               child: Text(
-                StringManager.buythelist,
+                AppLocalizations.of(context)!.buythelist,
                 style: boldTextStyle(
                   color: AllColors.white,
                   fontSize: 13.sp,

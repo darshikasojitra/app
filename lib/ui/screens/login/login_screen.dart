@@ -1,14 +1,12 @@
 import 'package:demo_splash_screen/model/auth_service.dart';
-import 'package:demo_splash_screen/resources/all_colors.dart';
-import 'package:demo_splash_screen/resources/all_style.dart';
 import 'package:demo_splash_screen/ui/screens/dashboard/dashboard_screen.dart';
 import 'package:demo_splash_screen/ui/screens/signup/signup_screen.dart';
 import 'package:demo_splash_screen/ui/screens/signup/text_formfield.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
-import 'package:demo_splash_screen/resources/string_manager.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:demo_splash_screen/resources/resources.dart';
 
 // ignore: camel_case_types
 class Login_screen extends StatefulWidget {
@@ -49,12 +47,12 @@ class _Login_screenState extends State<Login_screen> {
                       TextFormFeild1(
                         obscureText: false,
                         controller: emailController,
-                        labelText: StringManager.email,
-                        hintText: StringManager.enteremail,
+                        labelText: AppLocalizations.of(context)!.email,
+                        hintText: AppLocalizations.of(context)!.enteremail,
                         validator: (email) {
                           return email != null &&
                                   !EmailValidator.validate(email)
-                              ? StringManager.validemail
+                              ?  AppLocalizations.of(context)!.validemail
                               : null;
                         },
                       ),
@@ -64,11 +62,11 @@ class _Login_screenState extends State<Login_screen> {
                       TextFormFeild1(
                         obscureText: true,
                         controller: passwordController,
-                        labelText: StringManager.password,
-                        hintText: StringManager.enterpassword,
+                        labelText: AppLocalizations.of(context)!.password,
+                        hintText: AppLocalizations.of(context)!.enterpassword,
                         validator: (password) {
                           return password != null && password.length < 6
-                              ? StringManager.validpassword
+                              ?  AppLocalizations.of(context)!.validpassword
                               : null;
                         },
                       ),
@@ -116,13 +114,13 @@ class _Login_screenState extends State<Login_screen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text(StringManager.account),
+                           Text(AppLocalizations.of(context)!.account),
                           TextButton(
                               onPressed: () {
                                 Navigator.pushNamed(context, signup_screen.id);
                               },
                               child: Text(
-                                StringManager.signup,
+                                AppLocalizations.of(context)!.signup,
                                 style: boldTextStyle(
                                     fontSize: 16.sp,
                                     color: AllColors.maincolor),

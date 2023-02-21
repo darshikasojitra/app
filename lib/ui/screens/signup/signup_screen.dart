@@ -1,8 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:demo_splash_screen/l10n/localization.dart';
 import 'package:demo_splash_screen/model/auth_service.dart';
-import 'package:demo_splash_screen/resources/all_colors.dart';
-import 'package:demo_splash_screen/resources/all_style.dart';
-import 'package:demo_splash_screen/resources/string_manager.dart';
 import 'package:demo_splash_screen/ui/screens/login/login_screen.dart';
 import 'package:demo_splash_screen/ui/screens/signup/text_formfield.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -10,6 +8,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:demo_splash_screen/resources/resources.dart';
 
 // ignore: camel_case_types
 class signup_screen extends StatefulWidget {
@@ -42,7 +41,7 @@ class _signup_screenState extends State<signup_screen> {
               Container(
                 padding: EdgeInsets.only(top: 100.h),
                 child: Text(
-                  StringManager.signup,
+                  AppLocalizations.of(context)!.signup,
                   style: boldTextStyle(
                       color: AllColors.maincolor, fontSize: 35.sp),
                 ),
@@ -60,11 +59,11 @@ class _signup_screenState extends State<signup_screen> {
                         TextFormFeild1(
                           obscureText: false,
                           controller: nameController,
-                          labelText: StringManager.name,
-                          hintText: StringManager.entername,
+                          labelText: AppLocalizations.of(context)!.name,
+                          hintText: AppLocalizations.of(context)!.entername,
                           validator: (name) {
                             return name!.isEmpty
-                                ? StringManager.entername
+                                ? AppLocalizations.of(context)!.entername
                                 : null;
                           },
                         ),
@@ -72,12 +71,12 @@ class _signup_screenState extends State<signup_screen> {
                         TextFormFeild1(
                           obscureText: false,
                           controller: emailController,
-                          labelText: StringManager.email,
-                          hintText: StringManager.enteremail,
+                          labelText: AppLocalizations.of(context)!.email,
+                          hintText: AppLocalizations.of(context)!.enteremail,
                           validator: (email) {
                             return email != null &&
                                     !EmailValidator.validate(email)
-                                ? StringManager.validemail
+                                ? AppLocalizations.of(context)!.validemail
                                 : null;
                           },
                         ),
@@ -85,11 +84,11 @@ class _signup_screenState extends State<signup_screen> {
                         TextFormFeild1(
                           obscureText: true,
                           controller: passwordController,
-                          labelText: StringManager.password,
-                          hintText: StringManager.enterpassword,
+                          labelText: AppLocalizations.of(context)!.password,
+                          hintText: AppLocalizations.of(context)!.enterpassword,
                           validator: (password) {
                             return password != null && password.length < 6
-                                ? StringManager.validpassword
+                                ? AppLocalizations.of(context)!.validpassword
                                 : null;
                           },
                         ),
@@ -97,22 +96,18 @@ class _signup_screenState extends State<signup_screen> {
                         TextFormFeild1(
                           obscureText: true,
                           controller: cpasswordController,
-                          labelText: StringManager.cpassword,
-                          hintText: StringManager.entercpassword,
+                          labelText: AppLocalizations.of(context)!.cpassword,
+                          hintText: AppLocalizations.of(context)!.entercpassword,
                           validator: (cpassword) {
                             if (cpassword!.isEmpty &&
                                 cpassword == passwordController.text &&
                                 cpassword.length < 6) {
-                              return StringManager.entercpassword;
+                              return AppLocalizations.of(context)!.entercpassword;
                             }
                             if (cpassword != passwordController.text) {
-                              return StringManager.entercpassword;
+                              return AppLocalizations.of(context)!.entercpassword;
                             }
                             return null;
-                            // return cpassword!.isEmpty &&
-                            //         cpassword == passwordController.text&& cpassword.length < 6
-                            //     ? StringManager.entercpassword
-                            //     : null;
                           },
                         ),
                         buildSizedBoxSpacer(),
@@ -149,19 +144,19 @@ class _signup_screenState extends State<signup_screen> {
                             }
                           },
                           color: AllColors.maincolor,
-                          child: Text(StringManager.signup,
+                          child: Text(AppLocalizations.of(context)!.signup,
                               style: regularTextStyle(
                                   fontSize: 23.sp, color: AllColors.white)),
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const Text(StringManager.alreadyaccount),
+                             Text(AppLocalizations.of(context)!.alreadyaccount),
                             TextButton(
                                 onPressed: () {
                                   Navigator.pushNamed(context, Login_screen.id);
                                 },
-                                child: Text(StringManager.login,
+                                child: Text(AppLocalizations.of(context)!.login,
                                     style: boldTextStyle(
                                         color: AllColors.maincolor,
                                         fontSize: 16.sp)))

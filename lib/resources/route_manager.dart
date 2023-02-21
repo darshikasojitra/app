@@ -5,7 +5,7 @@ import 'package:demo_splash_screen/ui/screens/login/login_screen.dart';
 import 'package:demo_splash_screen/ui/screens/product/product_screen.dart';
 import 'package:demo_splash_screen/ui/screens/signup/signup_screen.dart';
 import 'package:flutter/cupertino.dart';
-import '../../ui/screens/splash/splash_screen.dart';
+import '../ui/screens/splash/splash_screen.dart';
 
 final Map<String, WidgetBuilder> routes = {
   splashScreen.id: (context) => const splashScreen(),
