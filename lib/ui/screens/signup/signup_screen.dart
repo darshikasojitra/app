@@ -1,26 +1,23 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:demo_splash_screen/l10n/localization.dart';
 import 'package:demo_splash_screen/model/auth_service.dart';
+import 'package:demo_splash_screen/resources/validator.dart';
 import 'package:demo_splash_screen/ui/screens/login/login_screen.dart';
-import 'package:demo_splash_screen/ui/screens/signup/text_formfield.dart';
+import 'package:demo_splash_screen/ui/screens/signup/customtextfield.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:email_validator/email_validator.dart';
 import 'package:demo_splash_screen/resources/resources.dart';
 
-// ignore: camel_case_types
-class signup_screen extends StatefulWidget {
-  const signup_screen({super.key});
+class SignupScreen extends StatefulWidget {
+  const SignupScreen({super.key});
   static const String id = 'signup_screen';
-
   @override
-  State<signup_screen> createState() => _signup_screenState();
+  State<SignupScreen> createState() => _SignupScreenState();
 }
 
-// ignore: camel_case_types
-class _signup_screenState extends State<signup_screen> {
+class _SignupScreenState extends State<SignupScreen> {
   DatabaseReference uref = FirebaseDatabase.instance.ref("user");
   final AuthService auth = AuthService();
   TextEditingController emailController = TextEditingController();
@@ -29,6 +26,34 @@ class _signup_screenState extends State<signup_screen> {
   TextEditingController cpasswordController = TextEditingController();
   bool isprocessing = false;
   final formKey = GlobalKey<FormState>();
+  Future userdetail() async {
+    await FirebaseFirestore.instance.collection("user").add({
+      'uid': auth.getUser()!.uid,
+      'name': nameController.text,
+      'email': emailController.text
+    });
+  }
+
+  Future addData() async {
+    setState(() {
+      isprocessing = true;
+    });
+    if (formKey.currentState!.validate()) {
+      Future<User?> user = auth.registerUsingEmailPassword(
+          name: nameController.text.trim(),
+          email: emailController.text,
+          password: passwordController.text);
+      setState(() {
+        isprocessing = false;
+      });
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        LoginScreen.id,
+        (route) => false,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -56,59 +81,36 @@ class _signup_screenState extends State<signup_screen> {
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     child: Column(
                       children: [
-                        TextFormFeild1(
-                          obscureText: false,
-                          controller: nameController,
-                          labelText: AppLocalizations.of(context)!.name,
-                          hintText: AppLocalizations.of(context)!.entername,
-                          validator: (name) {
-                            return name!.isEmpty
-                                ? AppLocalizations.of(context)!.entername
-                                : null;
-                          },
-                        ),
+                        CustomTextFields(
+                            obscureText: false,
+                            controller: nameController,
+                            labelText: AppLocalizations.of(context)!.name,
+                            hintText: AppLocalizations.of(context)!.entername,
+                            validator: Validator.nameValidator),
                         buildSizedBoxSpacer(),
-                        TextFormFeild1(
-                          obscureText: false,
-                          controller: emailController,
-                          labelText: AppLocalizations.of(context)!.email,
-                          hintText: AppLocalizations.of(context)!.enteremail,
-                          validator: (email) {
-                            return email != null &&
-                                    !EmailValidator.validate(email)
-                                ? AppLocalizations.of(context)!.validemail
-                                : null;
-                          },
-                        ),
+                        CustomTextFields(
+                            obscureText: false,
+                            controller: emailController,
+                            labelText: AppLocalizations.of(context)!.email,
+                            hintText: AppLocalizations.of(context)!.enteremail,
+                            validator: Validator.emailValidator),
                         buildSizedBoxSpacer(),
-                        TextFormFeild1(
-                          obscureText: true,
-                          controller: passwordController,
-                          labelText: AppLocalizations.of(context)!.password,
-                          hintText: AppLocalizations.of(context)!.enterpassword,
-                          validator: (password) {
-                            return password != null && password.length < 6
-                                ? AppLocalizations.of(context)!.validpassword
-                                : null;
-                          },
-                        ),
+                        CustomTextFields(
+                            obscureText: true,
+                            controller: passwordController,
+                            labelText: AppLocalizations.of(context)!.password,
+                            hintText:
+                                AppLocalizations.of(context)!.enterpassword,
+                            validator: Validator.passValidator),
                         buildSizedBoxSpacer(),
-                        TextFormFeild1(
+                        CustomTextFields(
                           obscureText: true,
                           controller: cpasswordController,
                           labelText: AppLocalizations.of(context)!.cpassword,
-                          hintText: AppLocalizations.of(context)!.entercpassword,
-                          validator: (cpassword) {
-                            if (cpassword!.isEmpty &&
-                                cpassword == passwordController.text &&
-                                cpassword.length < 6) {
-                              return AppLocalizations.of(context)!.entercpassword;
-                            }
-                            if (cpassword != passwordController.text) {
-                              return AppLocalizations.of(context)!.entercpassword;
-                            }
-                            return null;
-                          },
+                          hintText:
+                              AppLocalizations.of(context)!.entercpassword,
+                          validator: (value) => Validator.confirmpassworrd(
+                              value, passwordController.text),
                         ),
                         buildSizedBoxSpacer(),
                         MaterialButton(
@@ -116,33 +118,7 @@ class _signup_screenState extends State<signup_screen> {
                           minWidth: double.infinity,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(40.r)),
-                          onPressed: () async {
-                            setState(() {
-                              isprocessing = true;
-                            });
-                            if (formKey.currentState!.validate()) {
-                              Future<User?> user =
-                                  auth.registerUsingEmailPassword(
-                                      name: nameController.text.trim(),
-                                      email: emailController.text,
-                                      password: passwordController.text);
-                              setState(() {
-                                isprocessing = false;
-                              });
-                              FirebaseFirestore.instance
-                                  .collection("user")
-                                  .add({
-                                'uid': auth.getUser()!.uid,
-                                'name': nameController.text,
-                                'email': emailController.text
-                              });
-                              Navigator.pushNamedAndRemoveUntil(
-                                context,
-                                Login_screen.id,
-                                (route) => false,
-                              );
-                            }
-                          },
+                          onPressed: () => addData(),
                           color: AllColors.maincolor,
                           child: Text(AppLocalizations.of(context)!.signup,
                               style: regularTextStyle(
@@ -151,11 +127,10 @@ class _signup_screenState extends State<signup_screen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                             Text(AppLocalizations.of(context)!.alreadyaccount),
+                            Text(AppLocalizations.of(context)!.alreadyaccount),
                             TextButton(
-                                onPressed: () {
-                                  Navigator.pushNamed(context, Login_screen.id);
-                                },
+                                onPressed: () => Navigator.pushNamed(
+                                    context, LoginScreen.id),
                                 child: Text(AppLocalizations.of(context)!.login,
                                     style: boldTextStyle(
                                         color: AllColors.maincolor,

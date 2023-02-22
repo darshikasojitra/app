@@ -1,28 +1,49 @@
 import 'package:demo_splash_screen/model/auth_service.dart';
+import 'package:demo_splash_screen/resources/validator.dart';
 import 'package:demo_splash_screen/ui/screens/dashboard/dashboard_screen.dart';
 import 'package:demo_splash_screen/ui/screens/signup/signup_screen.dart';
-import 'package:demo_splash_screen/ui/screens/signup/text_formfield.dart';
-import 'package:email_validator/email_validator.dart';
+import 'package:demo_splash_screen/ui/screens/signup/customtextfield.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:demo_splash_screen/resources/resources.dart';
+import 'package:demo_splash_screen/model/model.dart';
 
-// ignore: camel_case_types
-class Login_screen extends StatefulWidget {
-  const Login_screen({super.key});
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
   static const String id = 'Login_screen';
   @override
-  State<Login_screen> createState() => _Login_screenState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
-// ignore: camel_case_types
-class _Login_screenState extends State<Login_screen> {
+class _LoginScreenState extends State<LoginScreen> {
   final AuthService auth = AuthService();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   bool isprocessing = false;
   final fromKey = GlobalKey<FormState>();
+  Future addAllData() async {
+    if (fromKey.currentState!.validate()) {
+      setState(() {
+        isprocessing = true;
+      });
+
+      final user = await auth.signInUsingEmailPassword(
+          email: emailController.text, password: passwordController.text);
+
+      if (user != null) {
+        // ignore: use_build_context_synchronously
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          DashboardScreen.id,
+          (route) => false,
+        );
+        setState(() {
+          isprocessing = false;
+        });
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,32 +65,21 @@ class _Login_screenState extends State<Login_screen> {
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   child: Column(
                     children: [
-                      TextFormFeild1(
-                        obscureText: false,
-                        controller: emailController,
-                        labelText: AppLocalizations.of(context)!.email,
-                        hintText: AppLocalizations.of(context)!.enteremail,
-                        validator: (email) {
-                          return email != null &&
-                                  !EmailValidator.validate(email)
-                              ?  AppLocalizations.of(context)!.validemail
-                              : null;
-                        },
-                      ),
+                      CustomTextFields(
+                          obscureText: false,
+                          controller: emailController,
+                          labelText: AppLocalizations.of(context)!.email,
+                          hintText: AppLocalizations.of(context)!.enteremail,
+                          validator: Validator.emailValidator),
                       SizedBox(
                         height: 20.h,
                       ),
-                      TextFormFeild1(
-                        obscureText: true,
-                        controller: passwordController,
-                        labelText: AppLocalizations.of(context)!.password,
-                        hintText: AppLocalizations.of(context)!.enterpassword,
-                        validator: (password) {
-                          return password != null && password.length < 6
-                              ?  AppLocalizations.of(context)!.validpassword
-                              : null;
-                        },
-                      ),
+                      CustomTextFields(
+                          obscureText: true,
+                          controller: passwordController,
+                          labelText: AppLocalizations.of(context)!.password,
+                          hintText: AppLocalizations.of(context)!.enterpassword,
+                          validator: Validator.passValidator),
                       SizedBox(
                         height: 20.h,
                       ),
@@ -78,29 +88,7 @@ class _Login_screenState extends State<Login_screen> {
                         minWidth: double.infinity,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(40.r)),
-                        onPressed: () async {
-                          if (fromKey.currentState!.validate()) {
-                            setState(() {
-                              isprocessing = true;
-                            });
-
-                            final user = await auth.signInUsingEmailPassword(
-                                email: emailController.text,
-                                password: passwordController.text);
-
-                            if (user != null) {
-                              // ignore: use_build_context_synchronously
-                              Navigator.pushNamedAndRemoveUntil(
-                                context,
-                                dashboard_screen.id,
-                                (route) => false,
-                              );
-                              setState(() {
-                                isprocessing = false;
-                              });
-                            }
-                          }
-                        },
+                        onPressed: () =>addAllData(),
                         color: AllColors.maincolor,
                         child: Text(
                           AppLocalizations.of(context)!.login,
@@ -114,11 +102,9 @@ class _Login_screenState extends State<Login_screen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                           Text(AppLocalizations.of(context)!.account),
+                          Text(AppLocalizations.of(context)!.account),
                           TextButton(
-                              onPressed: () {
-                                Navigator.pushNamed(context, signup_screen.id);
-                              },
+                              onPressed: () => Navigator.pushNamed(context, SignupScreen.id),
                               child: Text(
                                 AppLocalizations.of(context)!.signup,
                                 style: boldTextStyle(

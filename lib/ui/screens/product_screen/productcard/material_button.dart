@@ -1,20 +1,19 @@
-import 'package:demo_splash_screen/resources/all_colors.dart';
-import 'package:demo_splash_screen/resources/all_style.dart';
+import 'package:demo_splash_screen/resources/resources.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 // ignore: must_be_immutable
-class MaterialButtons extends StatefulWidget {
+class CustomMaterialButtons extends StatefulWidget {
   IconData? icon;
   String buttontext;
   Color? color;
-  MaterialButtons({super.key, this.icon, required this.buttontext, this.color});
+  CustomMaterialButtons({super.key, this.icon, required this.buttontext, this.color});
 
   @override
-  State<MaterialButtons> createState() => _MaterialButtonsState();
+  State<CustomMaterialButtons> createState() => _CustomMaterialButtonsState();
 }
 
-class _MaterialButtonsState extends State<MaterialButtons> {
+class _CustomMaterialButtonsState extends State<CustomMaterialButtons> {
   @override
   Widget build(BuildContext context) {
     return MaterialButton(

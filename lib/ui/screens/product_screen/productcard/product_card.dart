@@ -1,18 +1,19 @@
+
 import 'package:demo_splash_screen/l10n/localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:demo_splash_screen/resources/resources.dart';
 
 class ProductCard extends StatefulWidget {
-  String image;
-  String pname;
-  String pid;
-  String desc;
-  String? prize;
-  String? quantity;
-  Function()? onTapminus;
-  Function()? onTapplus;
-  ProductCard({
+  final String image;
+  final String pname;
+  final String pid;
+  final String desc;
+  final int? prize;
+   final int? quantity;
+  final Function()? onTapminus;
+  final Function()? onTapplus;
+  const ProductCard({
     super.key,
     required this.image,
     required this.pname,

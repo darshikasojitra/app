@@ -1,46 +1,30 @@
-import 'package:demo_splash_screen/resources/all_style.dart';
-import 'package:demo_splash_screen/ui/screens/list/bottomnavigationbar_textfield.dart';
-import 'package:demo_splash_screen/ui/screens/product/product_screen.dart';
-import 'package:demo_splash_screen/resources/all_colors.dart';
-import 'package:demo_splash_screen/resources/string_manager.dart';
+import 'package:demo_splash_screen/l10n/localization.dart';
+import 'package:demo_splash_screen/ui/screens/list_dashboardscreen/bottomnavigationbar_textfield.dart';
+import 'package:demo_splash_screen/resources/resources.dart';
 import 'package:demo_splash_screen/ui/screens/dashboard/dashboard_screen.dart';
+import 'package:demo_splash_screen/ui/screens/product_screen/product_screen.dart';
+import 'package:demo_splash_screen/ui/screens/product_screen/productcard/appbars.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-// ignore: camel_case_types
-class List_Screen extends StatefulWidget {
-  const List_Screen({super.key});
-static const String id = 'List_Screen';
+class ListScreen extends StatefulWidget {
+  const ListScreen({super.key});
+  static const String id = 'List_Screen';
   @override
-  State<List_Screen> createState() => _List_ScreenState();
+  State<ListScreen> createState() => _ListScreenState();
 }
 
-// ignore: camel_case_types
-class _List_ScreenState extends State<List_Screen> {
+class _ListScreenState extends State<ListScreen> {
   DatabaseReference pref = FirebaseDatabase.instance.ref("wishlist");
   final ScrollController _scrollcontroller = ScrollController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          leading: InkWell(
-              onTap: () {
-                Navigator.pushNamed(
-                    context,
-                   dashboard_screen.id);
-              },
-              child: Icon(
-                Icons.arrow_back,
-                color: AllColors.black,
-              )),
-          backgroundColor: AllColors.maincolor,
-          title: Text(
-            StringManager.title,
-            style: regularTextStyle(color: AllColors.black, fontSize: 17.sp),
-          ),
-        ),
+        appBar: appbar(context, () {
+          Navigator.pushNamed(context, DashboardScreen.id);
+        }, AppLocalizations.of(context)!.title, AllColors.maincolor),
         body: SingleChildScrollView(
             controller: _scrollcontroller,
             child: StreamBuilder(
@@ -59,14 +43,15 @@ class _List_ScreenState extends State<List_Screen> {
                       itemCount: list.length,
                       itemBuilder: ((context, index) {
                         return GestureDetector(
-                          onTap: () => Navigator.pushNamed(
-                              context,
-                              Product_Page.id),
+                          onTap: () =>
+                              Navigator.pushNamed(context, ProductPage.id),
                           child: Card(
                             elevation: 0,
-                            shape:  RoundedRectangleBorder(side: BorderSide(color: AllColors.grey),
-                              borderRadius:
-                                   BorderRadius.all(Radius.circular(10.r),),
+                            shape: RoundedRectangleBorder(
+                              side: BorderSide(color: AllColors.grey),
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(10.r),
+                              ),
                             ),
                             child: Container(
                               height: 70.h,
@@ -89,11 +74,10 @@ class _List_ScreenState extends State<List_Screen> {
                                           padding: const EdgeInsets.all(8.0),
                                           child: Text(
                                             '${list[index]['name']}',
-                                            style:  boldTextStyle(
-                                                color: AllColors.totals,
-                                                
-                                                fontSize: 15.sp,
-                                                ),
+                                            style: boldTextStyle(
+                                              color: AllColors.totals,
+                                              fontSize: 15.sp,
+                                            ),
                                           ),
                                         ),
                                       ],
@@ -104,14 +88,19 @@ class _List_ScreenState extends State<List_Screen> {
                                     width: 73.w,
                                     decoration: BoxDecoration(
                                         color: AllColors.slidable,
-                                        borderRadius:
-                                            BorderRadius.only(topRight: Radius.circular(10.r),bottomRight: Radius.circular(10.r))),
+                                        borderRadius: BorderRadius.only(
+                                            topRight: Radius.circular(10.r),
+                                            bottomRight:
+                                                Radius.circular(10.r))),
                                     child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: [
-                                        Row(mainAxisAlignment: MainAxisAlignment.center,
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
                                           children: [
                                             Text(
                                               StringManager.total,
@@ -128,15 +117,14 @@ class _List_ScreenState extends State<List_Screen> {
                                                   fontSize: 12.sp,
                                                   color: AllColors.prize),
                                             ),
-                                            
                                           ],
                                         ),
                                         Text(
                                           StringManager.text2000,
                                           style: boldTextStyle(
-                                              fontSize: 15.sp,
-                                              color: AllColors.maincolor,
-                                             ),
+                                            fontSize: 15.sp,
+                                            color: AllColors.maincolor,
+                                          ),
                                         )
                                       ],
                                     ),
@@ -154,5 +142,3 @@ class _List_ScreenState extends State<List_Screen> {
         bottomNavigationBar: const BottomnavigationbarTextfield());
   }
 }
-
-

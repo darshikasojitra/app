@@ -1,26 +1,33 @@
 import 'package:demo_splash_screen/l10n/localization.dart';
 import 'package:demo_splash_screen/model/auth_service.dart';
-import 'package:demo_splash_screen/resources/all_colors.dart';
-import 'package:demo_splash_screen/resources/all_style.dart';
-import 'package:demo_splash_screen/resources/string_manager.dart';
+import 'package:demo_splash_screen/resources/resources.dart';
 import 'package:demo_splash_screen/ui/screens/dashboard/change_language.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:demo_splash_screen/ui/screens/login/login_screen.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-// ignore: camel_case_types
-class Home_Screen extends StatefulWidget {
-  const Home_Screen({super.key});
+
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
 
   @override
-  State<Home_Screen> createState() => _Home_ScreenState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-// ignore: camel_case_types
-class _Home_ScreenState extends State<Home_Screen> {
+class _HomeScreenState extends State<HomeScreen> {
   User? user;
   final AuthService _auth = AuthService();
+  
+  Future _signout() async {
+    if (FirebaseAuth.instance.currentUser != null) {
+      await FirebaseAuth.instance.signOut();
+    }
+    if (mounted) {
+      Navigator.pushNamedAndRemoveUntil(
+          context, LoginScreen.id, (route) => false);
+    }
+  }
   @override
   void dispose() {
     super.dispose();
@@ -81,15 +88,7 @@ class _Home_ScreenState extends State<Home_Screen> {
               title: Text(AppLocalizations.of(context)!.household),
             ),
             ListTile(
-              onTap: () async {
-                if (FirebaseAuth.instance.currentUser != null) {
-                  await FirebaseAuth.instance.signOut();
-                }
-                if (mounted) {
-                  Navigator.pushNamedAndRemoveUntil(
-                      context, Login_screen.id, (route) => false);
-                }
-              },
+              onTap: () => _signout(),
               leading: const Icon(Icons.logout),
               title: Text(AppLocalizations.of(context)!.logout),
             ),

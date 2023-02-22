@@ -3,7 +3,7 @@ import 'package:demo_splash_screen/ui/dialog/dialog_error_message.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:demo_splash_screen/model/error/error_body.dart';
+import 'package:demo_splash_screen/model/error_body.dart';
 import 'network_services.dart';
 import 'package:http/http.dart' as http;
 

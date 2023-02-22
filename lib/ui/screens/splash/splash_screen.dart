@@ -1,20 +1,18 @@
 import 'dart:async';
-import 'package:demo_splash_screen/resources/all_images.dart';
+import 'package:demo_splash_screen/resources/resources.dart';
 import 'package:demo_splash_screen/ui/screens/login/login_screen.dart';
 import 'package:demo_splash_screen/ui/screens/dashboard/dashboard_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-// ignore: camel_case_types
-class splashScreen extends StatefulWidget {
-  const splashScreen({super.key});
+class SplashScreen extends StatefulWidget {
+  const SplashScreen({super.key});
   static const String id = 'splashScreen';
   @override
-  State<splashScreen> createState() => _splashScreenState();
+  State<SplashScreen> createState() => _SplashScreenState();
 }
 
-// ignore: camel_case_types
-class _splashScreenState extends State<splashScreen> {
+class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
@@ -25,13 +23,13 @@ class _splashScreenState extends State<splashScreen> {
           if (mounted) {
             Navigator.pushReplacementNamed(
               context,
-              dashboard_screen.id,
+              DashboardScreen.id,
             );
           }
         } else {
           if (mounted) {
             Navigator.pushNamedAndRemoveUntil(
-                context, Login_screen.id, (route) => false);
+                context, LoginScreen.id, (route) => false);
           }
         }
       });

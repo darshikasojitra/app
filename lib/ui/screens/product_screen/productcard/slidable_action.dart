@@ -1,4 +1,4 @@
-import 'package:demo_splash_screen/resources/all_colors.dart';
+import 'package:demo_splash_screen/resources/resources.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 

@@ -1,27 +1,25 @@
-import 'package:demo_splash_screen/resources/all_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:demo_splash_screen/resources/resources.dart';
 
 // ignore: must_be_immutable
-class TextFormFeild1 extends StatefulWidget {
+class CustomTextFields extends StatefulWidget {
   TextEditingController? controller;
   String? labelText;
   String? hintText;
   final bool obscureText;
   String? Function(dynamic value) validator;
-  TextFormFeild1({
-    super.key,
-    this.controller,
-    this.labelText,
-    this.hintText,
-    required this.obscureText,
-    required this.validator,
-  });
-
+  CustomTextFields(
+      {super.key,
+      this.controller,
+      this.hintText,
+      this.labelText,
+      required this.obscureText,
+      required this.validator});
   @override
-  State<TextFormFeild1> createState() => _TextFormFeild1State();
+  State<CustomTextFields> createState() => _CustomTextFieldsState();
 }
 
-class _TextFormFeild1State extends State<TextFormFeild1> {
+class _CustomTextFieldsState extends State<CustomTextFields> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(

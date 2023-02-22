@@ -1,7 +1,7 @@
 import 'package:demo_splash_screen/controller/local_provider.dart';
 import 'package:demo_splash_screen/l10n/localization.dart';
 import 'package:demo_splash_screen/model/language.dart';
-import 'package:demo_splash_screen/resources/all_colors.dart';
+import 'package:demo_splash_screen/resources/resources.dart';
 import 'package:demo_splash_screen/ui/screens/dashboard/dashboard_screen.dart';
 import 'package:demo_splash_screen/user_preferences/user_preferences.dart';
 import 'package:demo_splash_screen/utils/services_utils.dart';
@@ -111,7 +111,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
                             ServiceUtils.languageList[selectedIndex].langCode);
                   });
                   Navigator.pushNamedAndRemoveUntil(
-                      context, dashboard_screen.id, (route) => false);
+                      context, DashboardScreen.id, (route) => false);
                 }),
               ),
               buildSizedBoxSpacer()
@@ -123,7 +123,6 @@ class _LanguageScreenState extends State<LanguageScreen> {
   }
 }
 
-// ignore: must_be_immutable
 class LanguageItem extends StatelessWidget {
   Language language;
   Function onClick;

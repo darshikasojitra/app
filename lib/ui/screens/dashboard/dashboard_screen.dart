@@ -1,30 +1,29 @@
 import 'package:demo_splash_screen/l10n/localization.dart';
 import 'package:demo_splash_screen/ui/screens/dashboard/home_dashboardscreen.dart';
-import 'package:demo_splash_screen/ui/screens/list/list_screen.dart';
-import 'package:demo_splash_screen/resources/all_colors.dart';
+import 'package:demo_splash_screen/ui/screens/list_dashboardscreen/list_screen.dart';
+import 'package:demo_splash_screen/resources/resources.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-// ignore: camel_case_types
-class dashboard_screen extends StatefulWidget {
+class DashboardScreen extends StatefulWidget {
   static const String id = 'dashboard_screen';
-  const dashboard_screen({super.key});
+  const DashboardScreen({super.key});
 
   @override
-  State<dashboard_screen> createState() => _dashboard_screenState();
+  State<DashboardScreen> createState() => _DashboardScreenState();
 }
 
-class _dashboard_screenState extends State<dashboard_screen> {
+class _DashboardScreenState extends State<DashboardScreen> {
   int myIndex = 0;
   static TextStyle optionStyle = TextStyle(
       fontSize: 30.sp, fontWeight: FontWeight.bold, color: AllColors.fontcolor);
   static List<Widget> widgetList = [
-    const Home_Screen(),
+    const HomeScreen(),
     Text(
       'Vendor',
       style: optionStyle,
     ),
-    const List_Screen(),
+    const ListScreen(),
     Text(
       'Category',
       style: optionStyle,

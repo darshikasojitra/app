@@ -65,7 +65,7 @@ class _MyAppState extends State<MyApp> {
                     GlobalCupertinoLocalizations.delegate,
                   ],
                   supportedLocales: L10n.all,
-                  initialRoute: splashScreen.id,
+                  initialRoute: SplashScreen.id,
                         routes: routes,
                 );
               });

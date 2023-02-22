@@ -1,5 +1,5 @@
-export 'all_colors.dart';
-export 'all_images.dart';
-export 'all_style.dart';
+export 'color_manager.dart';
+export 'assets_manager.dart';
+export 'style_manager.dart';
 export 'string_manager.dart';
 export 'route_manager.dart';
