@@ -1,12 +1,11 @@
 import 'package:demo_splash_screen/l10n/localization.dart';
-import 'package:demo_splash_screen/model/auth_service.dart';
+import 'package:demo_splash_screen/services/auth_service.dart';
 import 'package:demo_splash_screen/resources/resources.dart';
 import 'package:demo_splash_screen/ui/screens/dashboard/change_language.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:demo_splash_screen/ui/screens/login/login_screen.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -18,7 +17,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   User? user;
   final AuthService _auth = AuthService();
-  
+
   Future _signout() async {
     if (FirebaseAuth.instance.currentUser != null) {
       await FirebaseAuth.instance.signOut();
@@ -28,6 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
           context, LoginScreen.id, (route) => false);
     }
   }
+
   @override
   void dispose() {
     super.dispose();

@@ -22,7 +22,7 @@ class Validator {
       return StringManager.entercpassword;
     }
     if (val != password) {
-      return StringManager.entercpassword;
+      return StringManager.validcpassword;
     }
     return null;
   }

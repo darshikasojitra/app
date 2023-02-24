@@ -1,6 +1,6 @@
+import 'package:demo_splash_screen/resources/resources.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../../resources/resources.dart';
 
 class DropDownBar extends StatelessWidget {
   const DropDownBar({super.key});
@@ -31,8 +31,8 @@ class DropDownBar extends StatelessWidget {
           width: 12.w,
         ),
         Padding(
-          padding: EdgeInsets.only(
-              left: 5.w, top: 17.h, bottom: 17.h, right: 20.w),
+          padding:
+              EdgeInsets.only(left: 5.w, top: 17.h, bottom: 17.h, right: 20.w),
           child: Icon(
             Icons.share,
             color: AllColors.maincolor,

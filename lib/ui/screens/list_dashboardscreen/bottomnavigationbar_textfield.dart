@@ -1,6 +1,6 @@
-import 'package:demo_splash_screen/model/auth_service.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:demo_splash_screen/services/auth_service.dart';
 import 'package:demo_splash_screen/resources/resources.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -9,40 +9,38 @@ class BottomnavigationbarTextfield extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final AuthService auth = AuthService();
+  final AuthService auth = AuthService();
     TextEditingController textcontroller = TextEditingController();
-    var pref = FirebaseDatabase.instance.ref("wishlist");
-    Future addData() async{
-      await pref.push().set({
-                      'uid': auth.getUser()!.uid,
-                      'uname': auth.getUser()!.displayName,
-                      'name': textcontroller.text,
-                      'total_prize': 0,
-                      'total_quantity': 0,
-                    });
+     var wishlist = FirebaseFirestore.instance.collection('wishlist');
+    Future addData() async {
+      await wishlist.doc(auth.getUser()!.uid).collection("userwishlist").add({
+        'uid': auth.getUser()!.uid,
+        'uname': auth.getUser()!.displayName,
+        'name': textcontroller.text,
+        'total_prize': 0,
+        'total_quantity': 0,
+      });
     }
-    
+  
     return Padding(
-        padding: EdgeInsets.only(left: 20.h, right: 20.h, bottom: 8.h),
-        child: SizedBox(
-          height: 35.h,
-          width: 340.w,
-          child: TextField(
-            textAlign: TextAlign.center,
-            controller: textcontroller,
-            autofocus: true,
-            decoration: InputDecoration(
-              hintText: StringManager.newlist,
-              suffixIcon: IconButton(
-                  onPressed: () =>  addData(),
-                  icon: Icon(Icons.add_circle, color: AllColors.maincolor)),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(30.r),
-                borderSide: BorderSide(color: AllColors.maincolor),
-              ),
+        padding: EdgeInsets.only(left: 20.h, right: 20.h,bottom: 10.h),
+        child: TextFormField(
+          textAlign: TextAlign.center,
+          controller: textcontroller,
+          decoration: InputDecoration(
+            hintText: StringManager.newlist,
+            contentPadding: EdgeInsets.symmetric(vertical: 5.h),
+            suffixIcon: IconButton(
+                onPressed: () =>addData(),
+                icon: Icon(Icons.add_circle, color: AllColors.maincolor)),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(20.r),
+              borderSide: BorderSide(color: AllColors.maincolor),
             ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(20.r),
+              borderSide: BorderSide(color: AllColors.maincolor)),
           ),
         ));
   }
 }
-

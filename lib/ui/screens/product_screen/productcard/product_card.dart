@@ -1,28 +1,28 @@
-
 import 'package:demo_splash_screen/l10n/localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:demo_splash_screen/resources/resources.dart';
 
+// ignore: must_be_immutable
 class ProductCard extends StatefulWidget {
   final String image;
   final String pname;
   final String pid;
   final String desc;
-  final int? prize;
-   final int? quantity;
-  final Function()? onTapminus;
-  final Function()? onTapplus;
-  const ProductCard({
+  final int prize;
+  int quantity = 0;
+  final Function() onTapminus;
+  final Function() onTapplus;
+  ProductCard({
     super.key,
     required this.image,
     required this.pname,
     required this.pid,
-    this.prize,
+    required this.prize,
     required this.desc,
-    this.onTapminus,
-    this.onTapplus,
-    this.quantity,
+    required this.onTapminus,
+    required this.onTapplus,
+    required this.quantity,
   });
 
   @override
@@ -141,7 +141,7 @@ class _ProductCardState extends State<ProductCard> {
                       SizedBox(
                         width: 165.w,
                       ),
-                       Text(AppLocalizations.of(context)!.kg)
+                      Text(AppLocalizations.of(context)!.kg)
                     ],
                   ),
                   SizedBox(
@@ -189,15 +189,21 @@ class _ProductCardState extends State<ProductCard> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               GestureDetector(
-                                onTap: widget.onTapminus,
+                                onTap: () {
+                                  widget.onTapminus();
+                                },
                                 child: Icon(
                                   Icons.remove_circle_outline,
                                   color: AllColors.maincolor,
                                 ),
                               ),
-                              Text(widget.quantity.toString()),
+                              Text(widget.quantity >= 0
+                                  ? widget.quantity.toString()
+                                  : "0"),
                               GestureDetector(
-                                onTap: widget.onTapplus,
+                                onTap: () {
+                                  widget.onTapplus();
+                                },
                                 child: Icon(
                                   Icons.add_circle_outline,
                                   color: AllColors.maincolor,

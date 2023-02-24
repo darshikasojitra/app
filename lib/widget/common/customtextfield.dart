@@ -34,6 +34,8 @@ class _CustomTextFieldsState extends State<CustomTextFields> {
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(color: AllColors.maincolor),
         ),
+        enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: AllColors.maincolor)),
       ),
       validator: widget.validator,
     );

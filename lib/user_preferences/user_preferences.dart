@@ -15,4 +15,5 @@ static Future<void> setLocaleLanguageCode(
     return prefs.getString(selectedLocaleLanguageCodePref) ??
         LanguageCode.languageCodeEnglish;
   }
+  
 }

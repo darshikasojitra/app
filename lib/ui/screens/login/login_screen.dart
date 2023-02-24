@@ -1,13 +1,10 @@
-import 'package:demo_splash_screen/model/auth_service.dart';
-import 'package:demo_splash_screen/resources/validator.dart';
+import 'package:demo_splash_screen/services/auth_service.dart';
 import 'package:demo_splash_screen/ui/screens/dashboard/dashboard_screen.dart';
-import 'package:demo_splash_screen/ui/screens/signup/signup_screen.dart';
-import 'package:demo_splash_screen/ui/screens/signup/customtextfield.dart';
+import 'package:demo_splash_screen/ui/screens/signup/signup.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:demo_splash_screen/resources/resources.dart';
-import 'package:demo_splash_screen/model/model.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});

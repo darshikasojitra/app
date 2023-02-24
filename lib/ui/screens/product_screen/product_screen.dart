@@ -2,14 +2,13 @@ import 'dart:convert';
 import 'package:demo_splash_screen/resources/resources.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:demo_splash_screen/l10n/localization.dart';
-import 'package:demo_splash_screen/ui/screens/list_dashboardscreen/list_screen.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:http/http.dart' as http;
 import 'package:demo_splash_screen/ui/screens/product_screen/productcard/product.dart';
 import 'package:demo_splash_screen/model/model.dart';
+import 'package:demo_splash_screen/services/product_service.dart';
 
 class ProductPage extends StatefulWidget {
   const ProductPage({super.key});
@@ -19,7 +18,6 @@ class ProductPage extends StatefulWidget {
 }
 
 class _ProductPageState extends State<ProductPage> {
-  var documentID = '';
   var _total = 0;
   Future addData() async {}
   Future<String> getdata() async {
@@ -40,78 +38,16 @@ class _ProductPageState extends State<ProductPage> {
     return _productlist;
   }
 
-  final AuthService _auth = AuthService();
-  var cart = FirebaseFirestore.instance.collection('cart');
-  DatabaseReference pref = FirebaseDatabase.instance.ref("wishlist");
-  
   final ScrollController _controller = ScrollController();
   void initstate() {
     loaddata();
-  }
-
-  void addcart(int quantity, int prize, String pid ,String pname) {
-    if (quantity == 0) {
-      cart.add({
-        'pname':pname,
-        'pid': pid,
-        'prize': prize,
-        'quantity': ++quantity,
-        'uid': _auth.getUser()!.uid
-      });
-    } else {
-      FirebaseFirestore.instance
-          .collection("cart")
-          .where("pid", isEqualTo: pid)
-          .where("uid", isEqualTo: _auth.getUser()!.uid)
-          .get()
-          .then((QuerySnapshot snapshot) => {
-                snapshot.docs.forEach((element) {
-                  documentID = element.reference.id;
-                }),
-                cart.doc(documentID).update({
-                  'quantity': ++quantity,
-                  'prize': quantity * prize,
-                }),
-              });
-    }
-    setState(() {
-      _total = _total + prize;
-      pref.child('-NO9A2WrPD86gpOYUwFy').update({
-        'total_prize': _total,
-      });
-    });
-  }
-
-  void removecart(int quantity, int prize, String pid) {
-    if (quantity > 0) {
-      FirebaseFirestore.instance
-          .collection("cart")
-          .where("pid", isEqualTo: pid)
-          .where("uid", isEqualTo: _auth.getUser()!.uid)
-          .get()
-          .then((QuerySnapshot snapshot) => {
-                snapshot.docs.forEach((element) {
-                  documentID = element.reference.id;
-                }),
-                cart.doc(documentID).update({
-                  'quantity': --quantity,
-                  'prize': quantity * prize,
-                }),
-              });
-    }
-    setState(() {
-      if (_total > 0) {
-        _total = _total - prize;
-      }
-      pref.child('-NO9A2WrPD86gpOYUwFy').update({'total_prize': _total});
-    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appbar(context, () {
-        Navigator.pushNamed(context, ListScreen.id);
+        Navigator.pop(context);
       }, AppLocalizations.of(context)!.home, AllColors.white),
       body: Stack(
         children: [
@@ -149,7 +85,7 @@ class _ProductPageState extends State<ProductPage> {
                             padding: EdgeInsets.only(top: 10.h),
                             itemCount: 5,
                             itemBuilder: ((context, int index) {
-                             var  pindex = _productlist[index];
+                              var pindex = _productlist[index];
                               return Slidable(
                                 startActionPane: (ActionPane(
                                     motion: const DrawerMotion(),
@@ -192,49 +128,26 @@ class _ProductPageState extends State<ProductPage> {
                                     quantity: pindex.quantity,
                                     desc: pindex.desc,
                                     onTapminus: () {
-                                      removecart(pindex.quantity,pindex.prize,pindex.pid);
+                                      Servives.removecart(--pindex.quantity,
+                                          pindex.prize, pindex.pid);
+                                      setState(() {
+                                        if (_total > 0) {
+                                          _total = _total - pindex.prize;
+                                          Servives.updateprize(total: _total);
+                                        }
+                                      });
                                     },
                                     onTapplus: () {
-                                      addcart(pindex.quantity,pindex.prize,pindex.pid,pindex.pname);
-                                      // if (pindex.quantity == 0) {
-                                      //   cart.add({
-                                      //     'pname': pindex.pname,
-                                      //     'pid': pindex.pid,
-                                      //     'prize': pindex.prize,
-                                      //     'quantity': ++pindex.quantity,
-                                      //     'uid': _auth.getUser()!.uid
-                                      //   });
-                                      // } else {
-                                      //   FirebaseFirestore.instance
-                                      //       .collection("cart")
-                                      //       .where("pid", isEqualTo: pindex.pid)
-                                      //       .where("uid",
-                                      //           isEqualTo: _auth.getUser()!.uid)
-                                      //       .get()
-                                      //       .then((QuerySnapshot snapshot) => {
-                                      //             snapshot.docs
-                                      //                 .forEach((element) {
-                                      //               documentID =
-                                      //                   element.reference.id;
-                                      //                    //print("my docid:"+documentID);
-                                      //             }),
-                                      //             cart.doc(documentID).update({
-                                      //               'quantity':
-                                      //                   ++pindex.quantity,
-                                      //               'prize': pindex.quantity *
-                                      //                   pindex.prize,
-                                      //             }),
-                                      //           });
-                                      // }
-                                      // setState(() {
-                                      //   _total = _total + pindex.prize;
-                                      //   pref
-                                      //       .child('-NO9A2WrPD86gpOYUwFy')
-                                      //       .update({
-                                      //     'total_prize': _total,
-                                      //   });
-                                      // });
-
+                                      Servives.addcart(
+                                        quantity: ++pindex.quantity,
+                                        prize: pindex.prize,
+                                        pid: pindex.pid,
+                                        pname: pindex.pname,
+                                      );
+                                      setState(() {
+                                        _total = _total + pindex.prize;
+                                        Servives.updateprize(total: _total);
+                                      });
                                     }),
                               );
                             }),

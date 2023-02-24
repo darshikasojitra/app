@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
 
 class AlertErrorMessage extends StatefulWidget {
@@ -17,7 +19,7 @@ class _AlertErrorMessageState extends State<AlertErrorMessage> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      insetPadding: EdgeInsets.all(18),
+      insetPadding: const EdgeInsets.all(18),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
       ),

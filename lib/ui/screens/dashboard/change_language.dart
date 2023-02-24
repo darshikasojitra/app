@@ -123,6 +123,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
   }
 }
 
+// ignore: must_be_immutable
 class LanguageItem extends StatelessWidget {
   Language language;
   Function onClick;

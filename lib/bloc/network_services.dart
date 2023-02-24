@@ -1,4 +1,6 @@
+// ignore_for_file: unnecessary_null_comparison
 import 'dart:convert';
+import 'dart:developer';
 import 'package:http/http.dart' as http;
 
 class NetworkService {
@@ -105,7 +107,7 @@ class NetworkService {
     if (authToken != null && authToken.isNotEmpty) {
       map['Authorization'] = authToken;
     } else {
-      print('Authorization is failed');
+      log('Authorization is failed');
     }
     return map;
   }

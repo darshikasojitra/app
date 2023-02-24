@@ -1,9 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:demo_splash_screen/l10n/localization.dart';
-import 'package:demo_splash_screen/model/auth_service.dart';
-import 'package:demo_splash_screen/resources/validator.dart';
+import 'package:demo_splash_screen/services/auth_service.dart';
 import 'package:demo_splash_screen/ui/screens/login/login_screen.dart';
-import 'package:demo_splash_screen/ui/screens/signup/customtextfield.dart';
+import 'package:demo_splash_screen/ui/screens/signup/signup.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -39,6 +38,7 @@ class _SignupScreenState extends State<SignupScreen> {
       isprocessing = true;
     });
     if (formKey.currentState!.validate()) {
+      // ignore: unused_local_variable
       Future<User?> user = auth.registerUsingEmailPassword(
           name: nameController.text.trim(),
           email: emailController.text,
@@ -118,7 +118,9 @@ class _SignupScreenState extends State<SignupScreen> {
                           minWidth: double.infinity,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(40.r)),
-                          onPressed: () => addData(),
+                          onPressed: () {
+                            addData();
+                          },
                           color: AllColors.maincolor,
                           child: Text(AppLocalizations.of(context)!.signup,
                               style: regularTextStyle(
