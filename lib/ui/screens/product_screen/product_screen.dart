@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:demo_splash_screen/resources/resources.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:demo_splash_screen/l10n/localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
