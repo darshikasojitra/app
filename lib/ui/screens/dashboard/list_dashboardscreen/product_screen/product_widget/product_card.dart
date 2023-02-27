@@ -2,7 +2,7 @@ import 'package:demo_splash_screen/l10n/localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:demo_splash_screen/resources/resources.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
 // ignore: must_be_immutable
 class ProductCard extends StatefulWidget {
   final String image;
@@ -30,27 +30,6 @@ class ProductCard extends StatefulWidget {
 }
 
 class _ProductCardState extends State<ProductCard> {
-  int newquantity =0;
-  void setquantity() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-      prefs.setInt('getquantity', widget.quantity);
-    });
-  }
-  void getquantity() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(() {
-       String? savedvalue = prefs.getString("getquantity");
-       if(savedvalue!=null){
-    widget.quantity = savedvalue as int;
-  }
-    });
-  }
-  @override
-  void initState(){
-    super.initState();
-    getquantity();
-  }
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -219,7 +198,7 @@ class _ProductCardState extends State<ProductCard> {
                                 ),
                               ),
                               Text(widget.quantity >= 0
-                                  ?widget.quantity.toString()
+                                  ? widget.quantity.toString()
                                   : "0"),
                               GestureDetector(
                                 onTap: () {

@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:demo_splash_screen/resources/resources.dart';
-import 'package:demo_splash_screen/ui/screens/screen.dart'; 
+import 'package:demo_splash_screen/ui/screens/screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -68,9 +68,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           labelText: AppLocalizations.of(context)!.email,
                           hintText: AppLocalizations.of(context)!.enteremail,
                           validator: Validator.emailValidator),
-                      SizedBox(
-                        height: 20.h,
-                      ),
+                      buildSizedBoxSpacer(),
                       CustomTextFields(
                           obscureText: true,
                           controller: passwordController,
@@ -88,9 +86,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     color: AllColors.maincolor,
                                     fontSize: 11.sp)),
                           )),
-                      SizedBox(
-                        height: 5.h,
-                      ),
+                      SizedBoxSpacer(),
                       MaterialButton(
                         height: 40.h,
                         minWidth: double.infinity,
@@ -104,9 +100,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               color: AllColors.white, fontSize: 23.sp),
                         ),
                       ),
-                      SizedBox(
-                        height: 5.h,
-                      ),
+                      SizedBoxSpacer(),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -128,6 +122,12 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ]),
       ),
+    );
+  }
+
+  SizedBox SizedBoxSpacer() {
+    return SizedBox(
+      height: 5.h,
     );
   }
 }
