@@ -1,5 +1,4 @@
-import 'package:demo_splash_screen/bloc/network_cubit.dart';
-import 'package:demo_splash_screen/bloc/network_services.dart';
+import 'package:demo_splash_screen/bloc/block.dart';
 import 'package:demo_splash_screen/controller/local_provider.dart';
 import 'package:demo_splash_screen/ui/screens/splash/splash_screen.dart';
 import 'package:demo_splash_screen/user_preferences/user_preferences.dart';

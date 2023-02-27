@@ -1,13 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:demo_splash_screen/l10n/localization.dart';
+import 'package:demo_splash_screen/model/wishlist_data.dart';
 import 'package:demo_splash_screen/services/auth_service.dart';
-import 'package:demo_splash_screen/ui/screens/list_dashboardscreen/bottomnavigationbar_textfield.dart';
 import 'package:demo_splash_screen/resources/resources.dart';
-import 'package:demo_splash_screen/ui/screens/dashboard/dashboard_screen.dart';
-import 'package:demo_splash_screen/ui/screens/product_screen/product_screen.dart';
-import 'package:demo_splash_screen/widget/common/appbars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:demo_splash_screen/ui/screens/dashboard/dashboard.dart';
+import 'package:demo_splash_screen/ui/screens/screen.dart';
 
 class ListScreen extends StatefulWidget {
   const ListScreen({super.key});
@@ -19,7 +18,7 @@ class ListScreen extends StatefulWidget {
 class _ListScreenState extends State<ListScreen> {
   final ScrollController _scrollcontroller = ScrollController();
   final AuthService auth = AuthService();
-
+  WishlistData? wishlistData;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,8 +62,14 @@ class _ListScreenState extends State<ListScreen> {
                                 snapshot.data!.docs.elementAt(index);
                             doc.id;
                             return GestureDetector(
-                              onTap: () =>
-                                  Navigator.pushNamed(context, ProductPage.id),
+                              onTap: () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => ProductPage(
+                                      wishlist: WishlistData(id: doc.id),
+                                    ),
+                                  )),
+                              // Navigator.pushNamed(context, ProductPage.id),
                               child: Card(
                                 elevation: 0,
                                 shape: RoundedRectangleBorder(
@@ -142,9 +147,9 @@ class _ListScreenState extends State<ListScreen> {
                                               ],
                                             ),
                                             Text(
-                                              StringManager.text2000,
+                                              'Quantity :${doc['total_quantity']}',
                                               style: boldTextStyle(
-                                                fontSize: 15.sp,
+                                                fontSize: 11.sp,
                                                 color: AllColors.maincolor,
                                               ),
                                             )

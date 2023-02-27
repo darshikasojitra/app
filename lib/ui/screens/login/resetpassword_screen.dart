@@ -1,10 +1,9 @@
 import 'package:demo_splash_screen/l10n/localization.dart';
 import 'package:demo_splash_screen/services/auth_service.dart';
-import 'package:demo_splash_screen/widget/common/appbars.dart';
-import 'package:demo_splash_screen/widget/common/customtextfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../resources/resources.dart';
+import 'package:demo_splash_screen/widget/widget.dart';
+import 'package:demo_splash_screen/resources/resources.dart';
 
 class ResetPasswordScreen extends StatefulWidget {
   static const String id = 'ResetPasswordScreen';
@@ -29,11 +28,11 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
     return Scaffold(
       appBar: appbar(context, () {
         Navigator.pop(context);
-      },  AppLocalizations.of(context)!.resetpassword, AllColors.maincolor),
+      }, AppLocalizations.of(context)!.resetpassword, AllColors.maincolor),
       body: Form(
         key: fromKey,
         child: Padding(
-          padding:  EdgeInsets.symmetric(vertical: 20.h,horizontal: 20.w),
+          padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 20.w),
           child: Column(
             children: [
               CustomTextFields(
@@ -42,7 +41,9 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                   labelText: AppLocalizations.of(context)!.email,
                   hintText: AppLocalizations.of(context)!.enteremail,
                   validator: Validator.emailValidator),
-                  SizedBox(height: 20.h,),
+              SizedBox(
+                height: 20.h,
+              ),
               MaterialButton(
                 height: 40.h,
                 minWidth: double.infinity,
@@ -51,7 +52,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                 onPressed: () {
                   if (fromKey.currentState!.validate()) {
                     auth.resetpassword(email: emailController.text);
-                   Navigator.pop(context);
+                    Navigator.pop(context);
                   }
                 },
                 color: AllColors.maincolor,

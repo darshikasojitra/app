@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../resources/resources.dart';
+import 'package:demo_splash_screen/resources/resources.dart';
 
 AppBar appbar(BuildContext context, Function() onTap, String text,
     Color backgroundcolor) {

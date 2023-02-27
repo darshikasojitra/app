@@ -1,11 +1,12 @@
 import 'package:demo_splash_screen/l10n/localization.dart';
 import 'package:demo_splash_screen/services/auth_service.dart';
 import 'package:demo_splash_screen/resources/resources.dart';
-import 'package:demo_splash_screen/ui/screens/dashboard/change_language.dart';
+import 'package:demo_splash_screen/ui/screens/dashboard/home_dashboardscreen/change_language.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:demo_splash_screen/ui/screens/login/login_screen.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:demo_splash_screen/ui/screens/dashboard/dashboard.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

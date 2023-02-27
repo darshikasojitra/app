@@ -3,4 +3,4 @@ export'bottomnavigationbar_container.dart';
 export 'dropdownbar_screen.dart';
 export 'material_button.dart';
 export 'slidable_action.dart';
-export 'package:demo_splash_screen/widget/common/appbars.dart';
+export 'package:demo_splash_screen/widget/common_widget/appbars.dart';

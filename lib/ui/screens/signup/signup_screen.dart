@@ -1,13 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:demo_splash_screen/l10n/localization.dart';
 import 'package:demo_splash_screen/services/auth_service.dart';
-import 'package:demo_splash_screen/ui/screens/login/login_screen.dart';
-import 'package:demo_splash_screen/ui/screens/signup/signup.dart';
+import 'package:demo_splash_screen/widget/common_widget/customtextfield.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:demo_splash_screen/resources/resources.dart';
+import 'package:demo_splash_screen/ui/screens/screen.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});

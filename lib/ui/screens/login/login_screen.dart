@@ -1,11 +1,10 @@
 import 'package:demo_splash_screen/services/auth_service.dart';
-import 'package:demo_splash_screen/ui/screens/dashboard/dashboard_screen.dart';
-import 'package:demo_splash_screen/ui/screens/login/resetpassword_screen.dart';
-import 'package:demo_splash_screen/ui/screens/signup/signup.dart';
+import 'package:demo_splash_screen/widget/common_widget/customtextfield.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:demo_splash_screen/resources/resources.dart';
+import 'package:demo_splash_screen/ui/screens/screen.dart'; 
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -86,7 +85,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             child: Text(
                                 AppLocalizations.of(context)!.forgotpassword,
                                 style: regularTextStyle(
-                              color: AllColors.maincolor,fontSize: 11.sp)),
+                                    color: AllColors.maincolor,
+                                    fontSize: 11.sp)),
                           )),
                       SizedBox(
                         height: 5.h,
