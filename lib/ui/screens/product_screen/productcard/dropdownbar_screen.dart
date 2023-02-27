@@ -32,7 +32,7 @@ class DropDownBar extends StatelessWidget {
         ),
         Padding(
           padding:
-              EdgeInsets.only(left: 5.w, top: 17.h, bottom: 17.h, right: 20.w),
+              EdgeInsets.only(left: 5.w, top: 17.h, bottom: 17.h, right: 17.w),
           child: Icon(
             Icons.share,
             color: AllColors.maincolor,

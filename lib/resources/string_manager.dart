@@ -16,6 +16,8 @@ class StringManager {
   static const String alreadyaccount = "Already have an account?";
   static const String title = 'Your shopping List';
   static const String logout = "Logout";
+  static const String resetpassword = "Reset Password";
+  static const String forgotpassword = "Forgot Password?";
   static const String newlist = "New List";
   static const String home = "Home";
   static const String gotostore = "Go to Store";

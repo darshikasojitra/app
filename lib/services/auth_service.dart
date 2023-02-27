@@ -52,4 +52,11 @@ class AuthService {
     }
     return user;
   }
+
+  Future<User?> resetpassword({required String email}) async{
+    FirebaseAuth auth = FirebaseAuth.instance;
+    User? user;
+      await auth.sendPasswordResetEmail(email: email);
+      return user;
+  }
 }

@@ -147,7 +147,7 @@ class _ProductPageState extends State<ProductPage> {
                                         _total = _total + pindex.prize;
                                         Servives.updateprize(total: _total);
                                       });
-                                    }),
+                                    })
                               );
                             }),
                             separatorBuilder: ((context, index) {

@@ -19,6 +19,8 @@
   "alreadyaccount" : "Already have an account?",
   "title" : "Your shopping List",
   "logout" : "Logout",
+  "resetpassword" : "Reset Password",
+  "forgotpassword" : "Forgot Password?",
   "newlist" : "New List",
   "home" : "Home",
   "gotostore" : "Go to Store",

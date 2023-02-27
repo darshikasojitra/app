@@ -8,6 +8,7 @@ var refid = '';
 var cart = FirebaseFirestore.instance.collection('cart');
 final AuthService _auth = AuthService();
 var wishlist = FirebaseFirestore.instance.collection('wishlist');
+
 class Servives {
   static addcart(
       {required int quantity,
@@ -19,7 +20,7 @@ class Servives {
         'pname': pname,
         'pid': pid,
         'prize': prize,
-        'quantity': quantity++,
+        'quantity': quantity,
         'uid': _auth.getUser()!.uid
       });
     } else {
@@ -40,7 +41,7 @@ class Servives {
   }
 
   static removecart(int quantity, int prize, String pid) {
-    if (++quantity!=0) {
+    if (++quantity != 0) {
       cart
           .where("pid", isEqualTo: pid)
           .where("uid", isEqualTo: _auth.getUser()!.uid)
@@ -51,10 +52,9 @@ class Servives {
                 }),
                 cart.doc(documentID).update({
                   'quantity': --quantity,
-                  'prize': quantity * prize,
+                  'prize': (quantity) * prize,
                 }),
               });
-    
     }
   }
 

@@ -23,7 +23,6 @@ class _CustomTextFieldsState extends State<CustomTextFields> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      autofocus: true,
       obscureText: widget.obscureText,
       controller: widget.controller,
       decoration: InputDecoration(

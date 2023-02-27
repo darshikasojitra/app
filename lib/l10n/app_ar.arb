@@ -19,6 +19,8 @@
   "alreadyaccount" : "هل لديك حساب؟",
   "title" : "قائمة التسوق الخاصة بك",
   "logout" : "تسجيل خروج",
+  "resetpassword" : "إعادة تعيين كلمة المرور",
+  "forgotpassword" : "هل نسيت كلمة السر؟",
   "newlist" : "قائمة جديدة",
   "home" : "بيت",
   "gotostore" : "اذهب إلى المتجر",

@@ -1,5 +1,6 @@
 import 'package:demo_splash_screen/services/auth_service.dart';
 import 'package:demo_splash_screen/ui/screens/dashboard/dashboard_screen.dart';
+import 'package:demo_splash_screen/ui/screens/login/resetpassword_screen.dart';
 import 'package:demo_splash_screen/ui/screens/signup/signup.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
@@ -77,15 +78,25 @@ class _LoginScreenState extends State<LoginScreen> {
                           labelText: AppLocalizations.of(context)!.password,
                           hintText: AppLocalizations.of(context)!.enterpassword,
                           validator: Validator.passValidator),
+                      Align(
+                          alignment: Alignment.centerRight,
+                          child: TextButton(
+                            onPressed: (() => Navigator.pushNamed(
+                                context, ResetPasswordScreen.id)),
+                            child: Text(
+                                AppLocalizations.of(context)!.forgotpassword,
+                                style: regularTextStyle(
+                              color: AllColors.maincolor,fontSize: 11.sp)),
+                          )),
                       SizedBox(
-                        height: 20.h,
+                        height: 5.h,
                       ),
                       MaterialButton(
                         height: 40.h,
                         minWidth: double.infinity,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(40.r)),
-                        onPressed: () =>addAllData(),
+                        onPressed: () => addAllData(),
                         color: AllColors.maincolor,
                         child: Text(
                           AppLocalizations.of(context)!.login,
@@ -101,7 +112,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         children: [
                           Text(AppLocalizations.of(context)!.account),
                           TextButton(
-                              onPressed: () => Navigator.pushNamed(context, SignupScreen.id),
+                              onPressed: () =>
+                                  Navigator.pushNamed(context, SignupScreen.id),
                               child: Text(
                                 AppLocalizations.of(context)!.signup,
                                 style: boldTextStyle(
@@ -109,7 +121,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     color: AllColors.maincolor),
                               ))
                         ],
-                      )
+                      ),
                     ],
                   ),
                 ),
