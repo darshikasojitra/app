@@ -33,7 +33,7 @@ class _SignupScreenState extends State<SignupScreen> {
     });
   }
 
-  Future addData() async {
+  Future<void> addData() async {
     setState(() {
       isprocessing = true;
     });
@@ -118,9 +118,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           minWidth: double.infinity,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(40.r)),
-                          onPressed: () {
-                            addData();
-                          },
+                          onPressed: () => addData(),
                           color: AllColors.maincolor,
                           child: Text(AppLocalizations.of(context)!.signup,
                               style: regularTextStyle(

@@ -199,7 +199,7 @@ class _ProductCardState extends State<ProductCard> {
                               ),
                               Text(widget.quantity >= 0
                                   ? widget.quantity.toString()
-                                  : "0"),
+                                  : '0'),
                               GestureDetector(
                                 onTap: () {
                                   widget.onTapplus();

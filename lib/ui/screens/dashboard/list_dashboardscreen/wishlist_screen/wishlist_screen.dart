@@ -31,13 +31,13 @@ class _ListScreenState extends State<ListScreen> {
                 stream: FirebaseFirestore.instance
                     .collection('wishlist')
                     .doc(auth.getUser()!.uid)
-                    .collection("userwishlist")
+                    .collection('userwishlist')
                     .snapshots(),
                 builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                   if (snapshot.hasData) {
                     // ignore: unrelated_type_equality_checks
                     if (snapshot.hasError == ConnectionState.waiting) {
-                      return const Text("Loadinf");
+                      return const Text('Loadinf');
                     }
                     if (snapshot.data!.docs.isEmpty) {
                       return Card(

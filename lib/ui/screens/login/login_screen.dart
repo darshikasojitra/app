@@ -19,7 +19,7 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController passwordController = TextEditingController();
   bool isprocessing = false;
   final fromKey = GlobalKey<FormState>();
-  Future addAllData() async {
+  Future<void> addAllData() async {
     if (fromKey.currentState!.validate()) {
       setState(() {
         isprocessing = true;

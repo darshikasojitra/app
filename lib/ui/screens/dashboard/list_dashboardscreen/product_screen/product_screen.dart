@@ -9,6 +9,7 @@ import 'package:http/http.dart' as http;
 import 'package:demo_splash_screen/model/model.dart';
 import 'package:demo_splash_screen/services/product_service.dart';
 import 'package:demo_splash_screen/ui/screens/dashboard/dashboard.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProductPage extends StatefulWidget {
   ProductPage({super.key, required this.wishlist});
@@ -19,30 +20,42 @@ class ProductPage extends StatefulWidget {
 }
 
 class _ProductPageState extends State<ProductPage> {
+  final ScrollController _controller = ScrollController();
+   final List<ProductData> _productlist = [];
   var _total = 0;
   var _totalquantity = 0;
-  Future addData() async {}
-  Future<String> getdata() async {
-    http.Response response = await http.get(Uri.parse(
-        "https://flutter-authentication-8b2ee-default-rtdb.firebaseio.com/product.json"));
-    return response.body;
-  }
-
-  final List<ProductData> _productlist = [];
-  Future loaddata() async {
-    String pdata = await getdata();
-    final jsonResponse = json.decode(pdata);
+  late int savedtotal;
+  Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+  late SharedPreferences prefs;
+  Future<void> gettotal() async {
+    prefs = await _prefs;
+    savedtotal = (prefs.containsKey('saved') ? prefs.getInt('saved') : 0)!;
     setState(() {
-      for (Map<dynamic, dynamic> i in jsonResponse) {
-        _productlist.add(ProductData.fromJson(i));
-      }
+      _total = savedtotal;
     });
-    return _productlist;
   }
 
-  final ScrollController _controller = ScrollController();
-  void initstate() {
-    loaddata();
+  // Future<String> getdata() async {
+  //   http.Response response = await http.get(Uri.parse(
+  //       'https://flutter-authentication-8b2ee-default-rtdb.firebaseio.com/product.json'));
+  //   return response.body;
+  // }
+
+  // Future<List<ProductData>> loaddata() async {
+  //   String data = await getdata();
+  //   final jsonResponse = json.decode(data);
+  //   setState(() {
+  //     for (Map<dynamic, dynamic> i in jsonResponse) {
+  //       _productlist.add(ProductData.fromJson(i));
+  //     }
+  //   });
+  //   return _productlist;
+  // }
+
+  @override
+  void initState() {
+    //gettotal();
+    super.initState();
   }
 
   @override
@@ -78,7 +91,7 @@ class _ProductPageState extends State<ProductPage> {
                     ],
                   ),
                   StreamBuilder(
-                      stream: loaddata().asStream(),
+                      stream:Servives.loaddata(list: _productlist).asStream(),
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
                           return ListView.separated(
@@ -158,6 +171,7 @@ class _ProductPageState extends State<ProductPage> {
                                               id: widget.wishlist.id!,
                                               quantity: _totalquantity);
                                         });
+                                        //prefs.setInt("saved", _total);
                                       }));
                             }),
                             separatorBuilder: ((context, index) {
@@ -178,7 +192,7 @@ class _ProductPageState extends State<ProductPage> {
             child: BottomnavigationbarContaineer(
               total: _total,
             ),
-          )
+          ),
         ],
       ),
     );
