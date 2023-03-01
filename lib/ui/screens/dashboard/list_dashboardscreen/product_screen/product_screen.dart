@@ -1,16 +1,15 @@
-import 'dart:convert';
 import 'package:demo_splash_screen/model/wishlist_data.dart';
 import 'package:demo_splash_screen/resources/resources.dart';
 import 'package:demo_splash_screen/l10n/localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:http/http.dart' as http;
 import 'package:demo_splash_screen/model/model.dart';
 import 'package:demo_splash_screen/services/product_service.dart';
 import 'package:demo_splash_screen/ui/screens/dashboard/dashboard.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+// ignore: must_be_immutable
 class ProductPage extends StatefulWidget {
   ProductPage({super.key, required this.wishlist});
   WishlistData wishlist;
@@ -21,11 +20,11 @@ class ProductPage extends StatefulWidget {
 
 class _ProductPageState extends State<ProductPage> {
   final ScrollController _controller = ScrollController();
-   final List<ProductData> _productlist = [];
+  final List<ProductData> _productlist = [];
   var _total = 0;
   var _totalquantity = 0;
   late int savedtotal;
-  Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   late SharedPreferences prefs;
   Future<void> gettotal() async {
     prefs = await _prefs;
@@ -34,24 +33,6 @@ class _ProductPageState extends State<ProductPage> {
       _total = savedtotal;
     });
   }
-
-  // Future<String> getdata() async {
-  //   http.Response response = await http.get(Uri.parse(
-  //       'https://flutter-authentication-8b2ee-default-rtdb.firebaseio.com/product.json'));
-  //   return response.body;
-  // }
-
-  // Future<List<ProductData>> loaddata() async {
-  //   String data = await getdata();
-  //   final jsonResponse = json.decode(data);
-  //   setState(() {
-  //     for (Map<dynamic, dynamic> i in jsonResponse) {
-  //       _productlist.add(ProductData.fromJson(i));
-  //     }
-  //   });
-  //   return _productlist;
-  // }
-
   @override
   void initState() {
     //gettotal();
@@ -91,7 +72,7 @@ class _ProductPageState extends State<ProductPage> {
                     ],
                   ),
                   StreamBuilder(
-                      stream:Servives.loaddata(list: _productlist).asStream(),
+                      stream: Servives.loaddata(list: _productlist).asStream(),
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
                           return ListView.separated(

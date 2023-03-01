@@ -37,7 +37,7 @@ class _ListScreenState extends State<ListScreen> {
                   if (snapshot.hasData) {
                     // ignore: unrelated_type_equality_checks
                     if (snapshot.hasError == ConnectionState.waiting) {
-                      return const Text('Loadinf');
+                      return const CircularProgressIndicator();
                     }
                     if (snapshot.data!.docs.isEmpty) {
                       return Card(
@@ -69,7 +69,6 @@ class _ListScreenState extends State<ListScreen> {
                                       wishlist: WishlistData(id: doc.id),
                                     ),
                                   )),
-                              // Navigator.pushNamed(context, ProductPage.id),
                               child: Card(
                                 elevation: 0,
                                 shape: RoundedRectangleBorder(

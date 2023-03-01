@@ -1,6 +1,5 @@
 import 'package:demo_splash_screen/l10n/localization.dart';
 import 'package:demo_splash_screen/services/auth_service.dart';
-import 'package:demo_splash_screen/ui/screens/screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:demo_splash_screen/widget/widget.dart';
@@ -49,7 +48,9 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                   labelText: AppLocalizations.of(context)!.email,
                   hintText: AppLocalizations.of(context)!.enteremail,
                   validator: Validator.emailValidator),
-              buildSizedBoxSpacer(),
+              SizedBox(
+                height: 20.h,
+              ),
               MaterialButton(
                 height: 40.h,
                 minWidth: double.infinity,

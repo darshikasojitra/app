@@ -87,14 +87,14 @@ class _SignupScreenState extends State<SignupScreen> {
                             labelText: AppLocalizations.of(context)!.name,
                             hintText: AppLocalizations.of(context)!.entername,
                             validator: Validator.nameValidator),
-                        buildSizedBoxSpacer(),
+                        buildSizedBoxSpacer(height: 20.h),
                         CustomTextFields(
                             obscureText: false,
                             controller: emailController,
                             labelText: AppLocalizations.of(context)!.email,
                             hintText: AppLocalizations.of(context)!.enteremail,
                             validator: Validator.emailValidator),
-                        buildSizedBoxSpacer(),
+                        buildSizedBoxSpacer(height: 20.h),
                         CustomTextFields(
                             obscureText: true,
                             controller: passwordController,
@@ -102,7 +102,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             hintText:
                                 AppLocalizations.of(context)!.enterpassword,
                             validator: Validator.passValidator),
-                        buildSizedBoxSpacer(),
+                        buildSizedBoxSpacer(height: 20.h),
                         CustomTextFields(
                           obscureText: true,
                           controller: cpasswordController,
@@ -112,7 +112,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           validator: (value) => Validator.confirmpassworrd(
                               value, passwordController.text),
                         ),
-                        buildSizedBoxSpacer(),
+                        buildSizedBoxSpacer(height: 20.h),
                         MaterialButton(
                           height: 40.h,
                           minWidth: double.infinity,
@@ -148,8 +148,8 @@ class _SignupScreenState extends State<SignupScreen> {
   }
 }
 
-SizedBox buildSizedBoxSpacer() {
+SizedBox buildSizedBoxSpacer({required double height}) {
   return SizedBox(
-    height: 20.h,
+    height: height,
   );
 }

@@ -12,20 +12,21 @@ var _cart = FirebaseFirestore.instance.collection('cart');
 final AuthService _auth = AuthService();
 var _wishlist = FirebaseFirestore.instance.collection('wishlist');
 WishlistData? wishlistdata;
- 
+
 class Servives {
- static Future<String> getdata() async {
+  static Future<String> getdata() async {
     http.Response response = await http.get(Uri.parse(
         'https://flutter-authentication-8b2ee-default-rtdb.firebaseio.com/product.json'));
     return response.body;
   }
 
- static Future<List<ProductData>> loaddata({required List<ProductData> list }) async {
+  static Future<List<ProductData>> loaddata(
+      {required List<ProductData> list}) async {
     String data = await getdata();
     final jsonResponse = json.decode(data);
-      for (Map<dynamic, dynamic> i in jsonResponse) {
-        list.add(ProductData.fromJson(i));
-      }
+    for (Map<dynamic, dynamic> i in jsonResponse) {
+      list.add(ProductData.fromJson(i));
+    }
     return list;
   }
 
@@ -34,7 +35,7 @@ class Servives {
       required int prize,
       required String pid,
       required String pname}) async {
-    if ((quantity -1)  == 0) {
+    if ((quantity - 1) == 0) {
       _cart.add({
         'pname': pname,
         'pid': pid,

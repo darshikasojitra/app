@@ -68,7 +68,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           labelText: AppLocalizations.of(context)!.email,
                           hintText: AppLocalizations.of(context)!.enteremail,
                           validator: Validator.emailValidator),
-                      buildSizedBoxSpacer(),
+                      buildSizedBoxSpacer(height: 20.h),
                       CustomTextFields(
                           obscureText: true,
                           controller: passwordController,
@@ -86,7 +86,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     color: AllColors.maincolor,
                                     fontSize: 11.sp)),
                           )),
-                      SizedBoxSpacer(),
+                      buildSizedBoxSpacer(height: 5.h),
                       MaterialButton(
                         height: 40.h,
                         minWidth: double.infinity,
@@ -100,7 +100,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               color: AllColors.white, fontSize: 23.sp),
                         ),
                       ),
-                      SizedBoxSpacer(),
+                      buildSizedBoxSpacer(height: 5.h),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -125,9 +125,4 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  SizedBox SizedBoxSpacer() {
-    return SizedBox(
-      height: 5.h,
-    );
-  }
 }
