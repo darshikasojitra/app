@@ -42,6 +42,9 @@ class _LoginScreenState extends State<LoginScreen> {
 Future<void> _signuppage() async {
      Navigator.pushNamed(context, SignupScreen.id);
   }
+  Future<void> _resetpasswordpage() async {
+    Navigator.pushNamed(context, ResetPasswordScreen.id);
+  }
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -78,8 +81,7 @@ Future<void> _signuppage() async {
                       Align(
                           alignment: Alignment.centerRight,
                           child: TextButton(
-                            onPressed: (() => Navigator.pushNamed(
-                                context, ResetPasswordScreen.id)),
+                            onPressed: () => _resetpasswordpage(),
                             child: Text(
                                 AppLocalizations.of(context)!.forgotpassword,
                                 style: regularTextStyle(

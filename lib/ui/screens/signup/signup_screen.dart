@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:demo_splash_screen/l10n/localization.dart';
 import 'package:demo_splash_screen/services/auth_service.dart';
@@ -22,17 +20,17 @@ class _SignupScreenState extends State<SignupScreen> {
   DatabaseReference uref = FirebaseDatabase.instance.ref("user");
   final AuthService auth = AuthService();
   late Future<User?> _user;
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-  TextEditingController nameController = TextEditingController();
-  TextEditingController cpasswordController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _cpasswordController = TextEditingController();
   bool isprocessing = false;
   final formKey = GlobalKey<FormState>();
   Future userdetail() async {
     await FirebaseFirestore.instance.collection("user").add({
       'uid': auth.getUser()!.uid,
-      'name': nameController.text,
-      'email': emailController.text
+      'name': _nameController.text,
+      'email': _emailController.text
     });
   }
 
@@ -42,9 +40,9 @@ class _SignupScreenState extends State<SignupScreen> {
     });
     if (formKey.currentState!.validate()) {
       _user = auth.registerUsingEmailPassword(
-          name: nameController.text.trim(),
-          email: emailController.text,
-          password: passwordController.text);
+          name: _nameController.text.trim(),
+          email: _emailController.text,
+          password: _passwordController.text);
       setState(() {
         isprocessing = false;
       });
@@ -57,7 +55,7 @@ class _SignupScreenState extends State<SignupScreen> {
   }
 
   Future<void> _loginpage() async {
-     Navigator.pushNamed(context, LoginScreen.id);
+    Navigator.pushNamed(context, LoginScreen.id);
   }
 
   @override
@@ -77,9 +75,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       color: AllColors.maincolor, fontSize: 35.sp),
                 ),
               ),
-              SizedBox(
-                height: 10.h,
-              ),
+              buildSizedBoxSpacer(height: 10.h),
               Padding(
                 padding: EdgeInsets.symmetric(vertical: 20.h, horizontal: 20.w),
                 child: Form(
@@ -89,21 +85,21 @@ class _SignupScreenState extends State<SignupScreen> {
                       children: [
                         CustomTextFields(
                             obscureText: false,
-                            controller: nameController,
+                            controller: _nameController,
                             labelText: AppLocalizations.of(context)!.name,
                             hintText: AppLocalizations.of(context)!.entername,
                             validator: Validator.nameValidator),
                         buildSizedBoxSpacer(height: 20.h),
                         CustomTextFields(
                             obscureText: false,
-                            controller: emailController,
+                            controller: _emailController,
                             labelText: AppLocalizations.of(context)!.email,
                             hintText: AppLocalizations.of(context)!.enteremail,
                             validator: Validator.emailValidator),
                         buildSizedBoxSpacer(height: 20.h),
                         CustomTextFields(
                             obscureText: true,
-                            controller: passwordController,
+                            controller: _passwordController,
                             labelText: AppLocalizations.of(context)!.password,
                             hintText:
                                 AppLocalizations.of(context)!.enterpassword,
@@ -111,12 +107,12 @@ class _SignupScreenState extends State<SignupScreen> {
                         buildSizedBoxSpacer(height: 20.h),
                         CustomTextFields(
                           obscureText: true,
-                          controller: cpasswordController,
+                          controller: _cpasswordController,
                           labelText: AppLocalizations.of(context)!.cpassword,
                           hintText:
                               AppLocalizations.of(context)!.entercpassword,
                           validator: (value) => Validator.confirmpassworrd(
-                              value, passwordController.text),
+                              value, _passwordController.text),
                         ),
                         buildSizedBoxSpacer(height: 20.h),
                         MaterialButton(
