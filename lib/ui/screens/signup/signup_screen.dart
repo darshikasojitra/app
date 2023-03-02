@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:demo_splash_screen/l10n/localization.dart';
 import 'package:demo_splash_screen/services/auth_service.dart';
@@ -19,6 +21,7 @@ class SignupScreen extends StatefulWidget {
 class _SignupScreenState extends State<SignupScreen> {
   DatabaseReference uref = FirebaseDatabase.instance.ref("user");
   final AuthService auth = AuthService();
+  late Future<User?> _user;
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController nameController = TextEditingController();
@@ -33,13 +36,12 @@ class _SignupScreenState extends State<SignupScreen> {
     });
   }
 
-  Future<void> addData() async {
+  Future<void> _addData() async {
     setState(() {
       isprocessing = true;
     });
     if (formKey.currentState!.validate()) {
-      // ignore: unused_local_variable
-      Future<User?> user = auth.registerUsingEmailPassword(
+      _user = auth.registerUsingEmailPassword(
           name: nameController.text.trim(),
           email: emailController.text,
           password: passwordController.text);
@@ -52,6 +54,10 @@ class _SignupScreenState extends State<SignupScreen> {
         (route) => false,
       );
     }
+  }
+
+  Future<void> _loginpage() async {
+     Navigator.pushNamed(context, LoginScreen.id);
   }
 
   @override
@@ -118,7 +124,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           minWidth: double.infinity,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(40.r)),
-                          onPressed: () => addData(),
+                          onPressed: () => _addData(),
                           color: AllColors.maincolor,
                           child: Text(AppLocalizations.of(context)!.signup,
                               style: regularTextStyle(
@@ -129,8 +135,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           children: [
                             Text(AppLocalizations.of(context)!.alreadyaccount),
                             TextButton(
-                                onPressed: () => Navigator.pushNamed(
-                                    context, LoginScreen.id),
+                                onPressed: () => _loginpage(),
                                 child: Text(AppLocalizations.of(context)!.login,
                                     style: boldTextStyle(
                                         color: AllColors.maincolor,

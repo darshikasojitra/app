@@ -1,8 +1,10 @@
+import 'dart:ffi';
+
 import 'package:demo_splash_screen/user_preferences/global_preferences.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 const String selectedLocaleLanguageCodePref = "selectLocaleLanguageCodePref";
-
+const String totalstring = "total";
 class UserPreferences{
 static Future<void> setLocaleLanguageCode(
       {required String languageCode}) async {
@@ -15,4 +17,6 @@ static Future<void> setLocaleLanguageCode(
     return prefs.getString(selectedLocaleLanguageCodePref) ??
         LanguageCode.languageCodeEnglish;
   }
+
+  
 }

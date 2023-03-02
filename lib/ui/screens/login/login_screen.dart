@@ -19,15 +19,13 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController passwordController = TextEditingController();
   bool isprocessing = false;
   final fromKey = GlobalKey<FormState>();
-  Future<void> addAllData() async {
+  Future<void> _addAllData() async {
     if (fromKey.currentState!.validate()) {
       setState(() {
         isprocessing = true;
       });
-
       final user = await auth.signInUsingEmailPassword(
           email: emailController.text, password: passwordController.text);
-
       if (user != null) {
         // ignore: use_build_context_synchronously
         Navigator.pushNamedAndRemoveUntil(
@@ -41,7 +39,9 @@ class _LoginScreenState extends State<LoginScreen> {
       }
     }
   }
-
+Future<void> _signuppage() async {
+     Navigator.pushNamed(context, SignupScreen.id);
+  }
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -92,7 +92,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         minWidth: double.infinity,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(40.r)),
-                        onPressed: () => addAllData(),
+                        onPressed: () => _addAllData(),
                         color: AllColors.maincolor,
                         child: Text(
                           AppLocalizations.of(context)!.login,
@@ -106,8 +106,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         children: [
                           Text(AppLocalizations.of(context)!.account),
                           TextButton(
-                              onPressed: () =>
-                                  Navigator.pushNamed(context, SignupScreen.id),
+                              onPressed: () =>_signuppage(),
                               child: Text(
                                 AppLocalizations.of(context)!.signup,
                                 style: boldTextStyle(
@@ -124,5 +123,4 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
-
 }

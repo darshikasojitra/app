@@ -7,7 +7,6 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:demo_splash_screen/model/model.dart';
 import 'package:demo_splash_screen/services/product_service.dart';
 import 'package:demo_splash_screen/ui/screens/dashboard/dashboard.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore: must_be_immutable
 class ProductPage extends StatefulWidget {
@@ -23,20 +22,16 @@ class _ProductPageState extends State<ProductPage> {
   final List<ProductData> _productlist = [];
   var _total = 0;
   var _totalquantity = 0;
-  late int savedtotal;
-  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
-  late SharedPreferences prefs;
-  Future<void> gettotal() async {
-    prefs = await _prefs;
-    savedtotal = (prefs.containsKey('saved') ? prefs.getInt('saved') : 0)!;
-    setState(() {
-      _total = savedtotal;
-    });
+  Future<void> _addtotal(int prize) async {
+    _total = _total + prize;
+    _totalquantity = _totalquantity + 1;
   }
-  @override
-  void initState() {
-    //gettotal();
-    super.initState();
+
+  Future<void> _removetotal(int prize) async {
+    if (_total > 0 && _totalquantity >= 1) {
+      _total = _total - prize;
+      _totalquantity = _totalquantity - 1;
+    }
   }
 
   @override
@@ -61,9 +56,7 @@ class _ProductPageState extends State<ProductPage> {
                         buttontext: AppLocalizations.of(context)!.gotostore,
                         icon: Icons.store,
                       ),
-                      SizedBox(
-                        width: 20.w,
-                      ),
+                      sizedBoxSpacer(width: 20.w),
                       CustomMaterialButtons(
                         buttontext: AppLocalizations.of(context)!.newidea,
                         color: AllColors.buttoncolor,
@@ -127,14 +120,12 @@ class _ProductPageState extends State<ProductPage> {
                                         Servives.removecart(--pindex.quantity,
                                             pindex.prize, pindex.pid);
                                         setState(() {
-                                          if (_total > 0) {
-                                            _total = _total - pindex.prize;
-                                            _totalquantity = _totalquantity - 1;
-                                            Servives.updateprize(
-                                                total: _total,
-                                                id: widget.wishlist.id!,
-                                                quantity: _totalquantity);
-                                          }
+                                          _removetotal(pindex.prize);
+
+                                          Servives.updateprize(
+                                              total: _total,
+                                              id: widget.wishlist.id!,
+                                              quantity: _totalquantity);
                                         });
                                       },
                                       onTapplus: () {
@@ -145,14 +136,13 @@ class _ProductPageState extends State<ProductPage> {
                                           pname: pindex.pname,
                                         );
                                         setState(() {
-                                          _total = _total + pindex.prize;
-                                          _totalquantity = _totalquantity + 1;
+                                          _addtotal(pindex.prize);
+                                          
                                           Servives.updateprize(
                                               total: _total,
                                               id: widget.wishlist.id!,
                                               quantity: _totalquantity);
                                         });
-                                        //prefs.setInt("saved", _total);
                                       }));
                             }),
                             separatorBuilder: ((context, index) {

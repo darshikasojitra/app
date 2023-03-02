@@ -23,7 +23,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
     super.dispose();
   }
 
-  Future<void> resetPassword() async {
+  Future<void> _resetPassword() async {
     if (fromKey.currentState!.validate()) {
       auth.resetpassword(email: emailController.text);
       Navigator.pop(context);
@@ -56,7 +56,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                 minWidth: double.infinity,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(40.r)),
-                onPressed: () => resetPassword(),
+                onPressed: () => _resetPassword(),
                 color: AllColors.maincolor,
                 child: Text(
                   AppLocalizations.of(context)!.resetpassword,

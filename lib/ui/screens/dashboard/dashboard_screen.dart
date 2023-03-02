@@ -13,7 +13,7 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
-  int myIndex = 0;
+  int _myIndex = 0;
   static TextStyle optionStyle = TextStyle(
       fontSize: 30.sp, fontWeight: FontWeight.bold, color: AllColors.fontcolor);
   static List<Widget> widgetList = [
@@ -32,19 +32,21 @@ class _DashboardScreenState extends State<DashboardScreen> {
       style: optionStyle,
     ),
   ];
+  Future<void> _selectIndex(int index) async {
+    setState(() {
+      _myIndex=index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(child: widgetList[myIndex]),
+      body: Center(child: widgetList[_myIndex]),
       bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           backgroundColor: AllColors.white,
-          onTap: (index) {
-            setState(() {
-              myIndex = index;
-            });
-          },
-          currentIndex: myIndex,
+          onTap: (index) => _selectIndex(index),
+          currentIndex: _myIndex,
           unselectedItemColor: AllColors.maincolor,
           selectedItemColor: AllColors.fontcolor,
           items: [

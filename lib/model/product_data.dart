@@ -23,4 +23,8 @@ class ProductData {
         quantity: parsedjson['quantity']);
   }
 
+  Object? toMap() {}
+
+  static fromMap(jsonDecode) {}
+
 }

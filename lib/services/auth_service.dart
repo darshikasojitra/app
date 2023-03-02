@@ -23,7 +23,7 @@ class AuthService {
       user = auth.currentUser;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
-    log('password provided is too weak.');
+        log('password provided is too weak.');
       } else if (e.code == 'email-already in use.') {
         log('the account already exists for that email.');
       }
@@ -53,10 +53,10 @@ class AuthService {
     return user;
   }
 
-  Future<User?> resetpassword({required String email}) async{
+  Future<User?> resetpassword({required String email}) async {
     FirebaseAuth auth = FirebaseAuth.instance;
     User? user;
-      await auth.sendPasswordResetEmail(email: email);
-      return user;
+    await auth.sendPasswordResetEmail(email: email);
+    return user;
   }
 }

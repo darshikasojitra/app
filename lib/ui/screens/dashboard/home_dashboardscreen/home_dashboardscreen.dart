@@ -16,10 +16,10 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  User? user;
+  User? _user;
   final AuthService _auth = AuthService();
 
-  Future _signout() async {
+  Future<void> _signout() async {
     if (FirebaseAuth.instance.currentUser != null) {
       await FirebaseAuth.instance.signOut();
     }
@@ -30,16 +30,14 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
   void initState() {
-    user = _auth.getUser();
+    _user = _auth.getUser();
     super.initState();
   }
 
+  Future<void> _languagepage() async {
+     Navigator.pushNamed(context, LanguageScreen.id);
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,14 +56,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 radius: 50,
                 backgroundColor: AllColors.white,
                 child: Text(
-                    '${user?.displayName}'.substring(0, 1).toUpperCase(),
+                    '${_user?.displayName}'.substring(0, 1).toUpperCase(),
                     style: regularTextStyle(
                         color: AllColors.maincolor, fontSize: 36.sp)),
               ),
-              accountName: Text("${user?.displayName}",
+              accountName: Text("${_user?.displayName}",
                   style: regularTextStyle(
                       color: AllColors.white, fontSize: 17.sp)),
-              accountEmail: Text("${user?.email}",
+              accountEmail: Text("${_user?.email}",
                   style: regularTextStyle(
                       color: AllColors.white, fontSize: 17.sp)),
             ),
@@ -78,9 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
               title: Text(AppLocalizations.of(context)!.address),
             ),
             ListTile(
-              onTap: () {
-                Navigator.pushNamed(context, LanguageScreen.id);
-              },
+              onTap: () => _languagepage(),
               leading: const Icon(Icons.language),
               title: Text(AppLocalizations.of(context)!.changelanguage),
             ),

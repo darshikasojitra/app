@@ -17,8 +17,18 @@ class ListScreen extends StatefulWidget {
 
 class _ListScreenState extends State<ListScreen> {
   final ScrollController _scrollcontroller = ScrollController();
-  final AuthService auth = AuthService();
+  final AuthService _auth = AuthService();
   WishlistData? wishlistData;
+  Future<void> _productspage(String id) async {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ProductPage(
+            wishlist: WishlistData(id: id),
+          ),
+        ));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,7 +40,7 @@ class _ListScreenState extends State<ListScreen> {
             child: StreamBuilder(
                 stream: FirebaseFirestore.instance
                     .collection('wishlist')
-                    .doc(auth.getUser()!.uid)
+                    .doc(_auth.getUser()!.uid)
                     .collection('userwishlist')
                     .snapshots(),
                 builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -62,13 +72,7 @@ class _ListScreenState extends State<ListScreen> {
                                 snapshot.data!.docs.elementAt(index);
                             doc.id;
                             return GestureDetector(
-                              onTap: () => Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => ProductPage(
-                                      wishlist: WishlistData(id: doc.id),
-                                    ),
-                                  )),
+                              onTap: () => _productspage(doc.id),
                               child: Card(
                                 elevation: 0,
                                 shape: RoundedRectangleBorder(

@@ -1,4 +1,5 @@
 import 'package:demo_splash_screen/l10n/localization.dart';
+import 'package:demo_splash_screen/ui/screens/dashboard/dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:demo_splash_screen/resources/resources.dart';
@@ -56,9 +57,7 @@ class BottomnavigationbarContaineer extends StatelessWidget {
                                     color: AllColors.prize,
                                     fontSize: 11.sp,
                                   )),
-                              SizedBox(
-                                width: 2.w,
-                              ),
+                              sizedBoxSpacer(width: 2.w),
                               Text(
                                 '$total₹',
                                 style: regularTextStyle(
