@@ -21,9 +21,7 @@ class DropDownBar extends StatelessWidget {
           color: AllColors.maincolor,
           size: 17.sp,
         ),
-        sizedBoxSpacer(
-          width: 175.w,
-        ),
+        sizedBoxSpacer(width: 175.w,),
         Icon(
           Icons.people,
           color: AllColors.maincolor,

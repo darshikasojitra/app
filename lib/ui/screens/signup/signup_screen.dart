@@ -26,7 +26,7 @@ class _SignupScreenState extends State<SignupScreen> {
   final TextEditingController _cpasswordController = TextEditingController();
   bool isprocessing = false;
   final formKey = GlobalKey<FormState>();
-  Future userdetail() async {
+  Future<void> _userdetail() async {
     await FirebaseFirestore.instance.collection("user").add({
       'uid': auth.getUser()!.uid,
       'name': _nameController.text,
@@ -120,7 +120,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           minWidth: double.infinity,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(40.r)),
-                          onPressed: () => _addData(),
+                          onPressed: () =>_addData(),
                           color: AllColors.maincolor,
                           child: Text(AppLocalizations.of(context)!.signup,
                               style: regularTextStyle(

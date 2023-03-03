@@ -15,8 +15,8 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final AuthService auth = AuthService();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
   bool isprocessing = false;
   final fromKey = GlobalKey<FormState>();
   Future<void> _addAllData() async {
@@ -25,7 +25,7 @@ class _LoginScreenState extends State<LoginScreen> {
         isprocessing = true;
       });
       final user = await auth.signInUsingEmailPassword(
-          email: emailController.text, password: passwordController.text);
+          email: _emailController.text, password: _passwordController.text);
       if (user != null) {
         // ignore: use_build_context_synchronously
         Navigator.pushNamedAndRemoveUntil(
@@ -39,12 +39,15 @@ class _LoginScreenState extends State<LoginScreen> {
       }
     }
   }
-Future<void> _signuppage() async {
-     Navigator.pushNamed(context, SignupScreen.id);
+
+  Future<void> _signuppage() async {
+    Navigator.pushNamed(context, SignupScreen.id);
   }
+
   Future<void> _resetpasswordpage() async {
     Navigator.pushNamed(context, ResetPasswordScreen.id);
   }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -67,14 +70,14 @@ Future<void> _signuppage() async {
                     children: [
                       CustomTextFields(
                           obscureText: false,
-                          controller: emailController,
+                          controller: _emailController,
                           labelText: AppLocalizations.of(context)!.email,
                           hintText: AppLocalizations.of(context)!.enteremail,
                           validator: Validator.emailValidator),
                       buildSizedBoxSpacer(height: 20.h),
                       CustomTextFields(
                           obscureText: true,
-                          controller: passwordController,
+                          controller: _passwordController,
                           labelText: AppLocalizations.of(context)!.password,
                           hintText: AppLocalizations.of(context)!.enterpassword,
                           validator: Validator.passValidator),
@@ -108,7 +111,7 @@ Future<void> _signuppage() async {
                         children: [
                           Text(AppLocalizations.of(context)!.account),
                           TextButton(
-                              onPressed: () =>_signuppage(),
+                              onPressed: () => _signuppage(),
                               child: Text(
                                 AppLocalizations.of(context)!.signup,
                                 style: boldTextStyle(

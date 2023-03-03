@@ -9,6 +9,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:demo_splash_screen/l10n/localization.dart';
 import 'package:provider/provider.dart' as prov;
+import 'package:provider/provider.dart';
+import 'controller/usdata_provider.dart';
 import 'resources/route_manager.dart';
 
 Future main() async {
@@ -46,6 +48,10 @@ class _MyAppState extends State<MyApp> {
               NetworkCubit(networkService: networkService, context: context),
         ),
       ],
+      child: MultiProvider(
+          providers: [
+            ChangeNotifierProvider<UsDataProvider>(create: (_) => UsDataProvider()),
+          ],
       child: prov.ChangeNotifierProvider(
         create: (_) => LocaleProvider(),
         child: prov.Consumer<LocaleProvider>(builder: (context, model, child) {
@@ -70,6 +76,7 @@ class _MyAppState extends State<MyApp> {
               });
         }),
       ),
+    ),
     );
   }
 }

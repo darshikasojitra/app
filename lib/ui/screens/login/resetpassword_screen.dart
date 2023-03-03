@@ -14,18 +14,18 @@ class ResetPasswordScreen extends StatefulWidget {
 }
 
 class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
-  TextEditingController emailController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
   final fromKey = GlobalKey<FormState>();
   final AuthService auth = AuthService();
   @override
   void dispose() {
-    emailController.dispose();
+    _emailController.dispose();
     super.dispose();
   }
 
   Future<void> _resetPassword() async {
     if (fromKey.currentState!.validate()) {
-      auth.resetpassword(email: emailController.text);
+      auth.resetpassword(email: _emailController.text);
       Navigator.pop(context);
     }
   }
@@ -44,7 +44,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
             children: [
               CustomTextFields(
                   obscureText: false,
-                  controller: emailController,
+                  controller: _emailController,
                   labelText: AppLocalizations.of(context)!.email,
                   hintText: AppLocalizations.of(context)!.enteremail,
                   validator: Validator.emailValidator),

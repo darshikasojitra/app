@@ -121,7 +121,6 @@ class _ProductPageState extends State<ProductPage> {
                                             pindex.prize, pindex.pid);
                                         setState(() {
                                           _removetotal(pindex.prize);
-
                                           Servives.updateprize(
                                               total: _total,
                                               id: widget.wishlist.id!,
@@ -137,7 +136,6 @@ class _ProductPageState extends State<ProductPage> {
                                         );
                                         setState(() {
                                           _addtotal(pindex.prize);
-                                          
                                           Servives.updateprize(
                                               total: _total,
                                               id: widget.wishlist.id!,
