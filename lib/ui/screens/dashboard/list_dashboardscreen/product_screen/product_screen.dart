@@ -43,6 +43,7 @@ class _ProductPageState extends State<ProductPage> {
       body: Stack(
         children: [
           SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
             child: Padding(
               padding: EdgeInsets.only(
                   top: 5.w, left: 8.h, right: 8.h, bottom: 50.w),

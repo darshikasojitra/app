@@ -26,14 +26,16 @@ class _CategoryPageState extends State<CategoryPage> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       controller: _scrollcontroller,
-      child: Column(
-        children: [
-          SizedBox(
-            child: StreamBuilder(
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 10.w),
+        child: Column(
+          children: [
+            StreamBuilder(
               stream: _usDataProvider.getUsData().asStream(),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   return ListView.builder(
+                    physics: const BouncingScrollPhysics(),
                     shrinkWrap: true,
                     itemCount: snapshot.data!.source!.length,
                     itemBuilder: (context, index) {
@@ -44,13 +46,13 @@ class _CategoryPageState extends State<CategoryPage> {
                         child: Card(
                             color: AllColors.white,
                             shape: RoundedRectangleBorder(
-                              side: BorderSide(color: AllColors.grey),
+                              side: BorderSide(color: AllColors.maincolor),
                               borderRadius: BorderRadius.all(
                                 Radius.circular(10.r),
                               ),
                             ),
                             child: SizedBox(
-                              height: 82.h,
+                              height: 80.h,
                               child: Padding(
                                 padding: EdgeInsets.only(
                                     left: 10.w, top: 20, right: 10.w),
@@ -60,8 +62,8 @@ class _CategoryPageState extends State<CategoryPage> {
                                     Text((sourcedata?.measures).toString()),
                                     Text((sourcedata?.annotations?.sourceName)
                                         .toString()),
-                                    Padding(
-                                      padding: EdgeInsets.only(left: 190.w),
+                                    Align(
+                                      alignment: Alignment.bottomRight,
                                       child: TextButton(
                                           onPressed: () => _getinfo(sourcedata),
                                           child: Text(
@@ -84,51 +86,54 @@ class _CategoryPageState extends State<CategoryPage> {
                 return const CircularProgressIndicator();
               },
             ),
-          ),
-          SizedBox(
-              height: 680,
-              child: StreamBuilder(
-                stream: _usDataProvider.getUsData().asStream(),
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    return ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: snapshot.data?.udata?.length,
-                        itemBuilder: ((context, index) {
-                          final uslocaldata =
-                              snapshot.data?.udata?.elementAt(index);
-                          return Card(
-                            elevation: 0,
-                            shape: RoundedRectangleBorder(
-                              side: BorderSide(color: AllColors.grey),
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(10.r),
-                              ),
-                            ),
-                            child: SizedBox(
-                              height: 70.h,
-                              child: Padding(
-                                padding: EdgeInsets.only(
-                                    left: 10.w, top: 20, right: 10.w),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                        'ID Nation: ${uslocaldata?.slugNation ?? ''}'),
-                                    Text(
-                                        'Population : ${(uslocaldata?.population).toString()}'),
-                                    Text('Year : ${uslocaldata?.year ?? ''}'),
-                                  ],
+            SizedBox(
+                height: 530.h,
+                child: StreamBuilder(
+                  stream: _usDataProvider.getUsData().asStream(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return ListView.builder(
+                         physics: const BouncingScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: snapshot.data?.udata?.length,
+                          itemBuilder: ((context, index) {
+                            final uslocaldata =
+                                snapshot.data?.udata?.elementAt(index);
+                            return Card(
+                              elevation: 0,
+                              shape: RoundedRectangleBorder(
+                                side: BorderSide(color: AllColors.grey),
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(10.r),
                                 ),
                               ),
-                            ),
-                          );
-                        }));
-                  }
-                  return const Center(child: CircularProgressIndicator());
-                },
-              ))
-        ],
+                              child: SizedBox(
+                                height: 70.h,
+                                child: Padding(
+                                  padding: EdgeInsets.only(
+                                      left: 10.w, top: 20, right: 10.w),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                          'ID Nation: ${uslocaldata?.slugNation ?? ''}'),
+                                      Text(
+                                          'Population : ${(uslocaldata?.population).toString()}'),
+                                      Text(
+                                          'Year : ${uslocaldata?.year ?? ''}'),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            );
+                          }));
+                    }
+                    return const Center(child: CircularProgressIndicator());
+                  },
+                ))
+          ],
+        ),
       ),
     );
   }
