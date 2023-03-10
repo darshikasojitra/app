@@ -42,4 +42,5 @@ class StringManager {
   static const String address = "Addresses";
   static const String changelanguage = "Change Language";
   static const String household = "Household";
+  static const String getmoreinfo = "Get More Informations";
 }

@@ -8,17 +8,17 @@ class BottomnavigationbarTextfield extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController textcontroller = TextEditingController();
+    TextEditingController _textcontroller = TextEditingController();
     return Padding(
         padding: EdgeInsets.only(left: 20.h, right: 20.h, bottom: 10.h),
         child: TextFormField(
           textAlign: TextAlign.center,
-          controller: textcontroller,
+          controller: _textcontroller,
           decoration: InputDecoration(
             hintText: StringManager.newlist,
             contentPadding: EdgeInsets.symmetric(vertical: 5.h),
             suffixIcon: IconButton(
-                onPressed: () => Servives.addData(textcontroller),
+                onPressed: () => Servives.addData(_textcontroller),
                 icon: Icon(Icons.add_circle, color: AllColors.maincolor)),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(20.r),

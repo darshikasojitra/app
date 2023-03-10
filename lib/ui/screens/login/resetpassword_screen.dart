@@ -2,7 +2,7 @@ import 'package:demo_splash_screen/l10n/localization.dart';
 import 'package:demo_splash_screen/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:demo_splash_screen/widget/widget.dart';
+import 'package:demo_splash_screen/widgets/widget.dart';
 import 'package:demo_splash_screen/resources/resources.dart';
 
 class ResetPasswordScreen extends StatefulWidget {
