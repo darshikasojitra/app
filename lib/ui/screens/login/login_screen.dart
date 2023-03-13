@@ -14,7 +14,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final AuthService auth = AuthService();
+  final AuthService _auth = AuthService();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   bool isprocessing = false;
@@ -24,7 +24,7 @@ class _LoginScreenState extends State<LoginScreen> {
       setState(() {
         isprocessing = true;
       });
-      final user = await auth.signInUsingEmailPassword(
+      final user = await _auth.signInUsingEmailPassword(
           email: _emailController.text, password: _passwordController.text);
       if (user != null) {
         // ignore: use_build_context_synchronously
@@ -120,6 +120,32 @@ class _LoginScreenState extends State<LoginScreen> {
                               ))
                         ],
                       ),
+                      buildSizedBoxSpacer(height: 10),
+                   MaterialButton(
+                     height: 40.h,
+                        minWidth: double.infinity,
+                        color: AllColors.white,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(40.r),),
+                    onPressed: (){
+                   _auth.signup(context);
+                   },
+                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        height: 30,
+                        width: 30,
+                        child: Image.asset(
+                      AllImages.googleimage,
+                      fit: BoxFit.cover,
+                    ),
+                      ),
+                      buildSizedBoxSpacer(width: 30),
+                     const Text("Sign In with Google")
+                    ],
+                   ),
+                   )
                     ],
                   ),
                 ),

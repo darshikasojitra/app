@@ -10,4 +10,5 @@ class AllImages {
   static const String english = "$imagepath/english.png";
   static const String arabic = "$imagepath/arabic.png";
   static const String backarrow = "$imagepath/back_arrow.png";
+  static const String googleimage = "$imagepath/google.png";
 }

@@ -93,7 +93,7 @@ class _CategoryPageState extends State<CategoryPage> {
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
                       return ListView.builder(
-                         physics: const BouncingScrollPhysics(),
+                          physics: const BouncingScrollPhysics(),
                           shrinkWrap: true,
                           itemCount: snapshot.data?.udata?.length,
                           itemBuilder: ((context, index) {
@@ -120,8 +120,7 @@ class _CategoryPageState extends State<CategoryPage> {
                                           'ID Nation: ${uslocaldata?.slugNation ?? ''}'),
                                       Text(
                                           'Population : ${(uslocaldata?.population).toString()}'),
-                                      Text(
-                                          'Year : ${uslocaldata?.year ?? ''}'),
+                                      Text('Year : ${uslocaldata?.year ?? ''}'),
                                     ],
                                   ),
                                 ),

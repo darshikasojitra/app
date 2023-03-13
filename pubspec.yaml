@@ -30,6 +30,7 @@ dependencies:
   flutter_bloc: ^8.1.2
   equatable: ^2.0.5
   url_launcher: ^6.1.10
+  google_sign_in: ^6.0.2
     
 
 dev_dependencies:

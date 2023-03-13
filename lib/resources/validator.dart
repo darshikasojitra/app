@@ -30,4 +30,7 @@ class Validator {
   static final nameValidator = MultiValidator([
     RequiredValidator(errorText: StringManager.entername),
   ]);
+  static final newlistValidator = MultiValidator([
+    RequiredValidator(errorText: "enter list name"),
+  ]);
 }
