@@ -120,32 +120,6 @@ class _LoginScreenState extends State<LoginScreen> {
                               ))
                         ],
                       ),
-                      buildSizedBoxSpacer(height: 10),
-                   MaterialButton(
-                     height: 40.h,
-                        minWidth: double.infinity,
-                        color: AllColors.white,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(40.r),),
-                    onPressed: (){
-                   _auth.signup(context);
-                   },
-                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        height: 30,
-                        width: 30,
-                        child: Image.asset(
-                      AllImages.googleimage,
-                      fit: BoxFit.cover,
-                    ),
-                      ),
-                      buildSizedBoxSpacer(width: 30),
-                     const Text("Sign In with Google")
-                    ],
-                   ),
-                   )
                     ],
                   ),
                 ),
