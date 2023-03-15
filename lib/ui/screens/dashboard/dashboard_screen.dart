@@ -18,16 +18,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
       fontSize: 30.sp, fontWeight: FontWeight.bold, color: AllColors.fontcolor);
   static List<Widget> widgetList = [
     const HomeScreen(),
-   Text(
+    Text(
       'Vendor',
       style: optionStyle,
     ),
     const ListScreen(),
     const CategoryPage(),
-    Text(
-      'More',
-      style: optionStyle,
-    ),
+    const MoreScreen(),
   ];
   Future<void> _selectIndex(int index) async {
     setState(() {

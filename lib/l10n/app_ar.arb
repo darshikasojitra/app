@@ -42,5 +42,11 @@
   "paymentmethod" :"طريقة الدفع او السداد",
   "address" : "عناوين",
   "changelanguage" : " تغيير اللغة",
-  "household" : "أُسرَة"
+  "household" : "أُسرَة",
+  "signingoogle" : "الدخول مع جوجل",
+  "or" : "أو",
+  "drink" : "مشروبات",
+  "ok" : "نعم",
+  "cancle" : "إلغاء",
+  "wanttologout" : "هل أنت متأكد أنك تريد تسجيل الخروج؟"
 }

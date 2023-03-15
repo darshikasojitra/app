@@ -10,6 +10,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:demo_splash_screen/l10n/localization.dart';
 import 'package:provider/provider.dart' as prov;
 import 'package:provider/provider.dart';
+import 'controller/cocktail_provider.dart';
 import 'controller/usdata_provider.dart';
 import 'resources/route_manager.dart';
 
@@ -51,6 +52,7 @@ class _MyAppState extends State<MyApp> {
       child: MultiProvider(
           providers: [
             ChangeNotifierProvider<UsDataProvider>(create: (_) => UsDataProvider()),
+            ChangeNotifierProvider<CocktailProvider>(create: (_) => CocktailProvider()),
           ],
       child: prov.ChangeNotifierProvider(
         create: (_) => LocaleProvider(),

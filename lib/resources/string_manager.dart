@@ -15,7 +15,7 @@ class StringManager {
   static const String account = "Dont have an account?";
   static const String alreadyaccount = "Already have an account?";
   static const String title = 'Your shopping List';
-  static const String logout = "Logout";
+  static const String logout = "Log out";
   static const String resetpassword = "Reset Password";
   static const String forgotpassword = "Forgot Password?";
   static const String newlist = "New List";
@@ -43,4 +43,10 @@ class StringManager {
   static const String changelanguage = "Change Language";
   static const String household = "Household";
   static const String getmoreinfo = "Get More Informations";
+  static const String signingoogle = "Sign In with Google";
+  static const String or = "OR";
+  static const String drink = "Drinks";
+  static const String ok = "OK";
+  static const String cancle = "Cancle";
+  static const String wanttologout = "Are you sure you want to log out?";
 }

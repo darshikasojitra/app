@@ -52,10 +52,10 @@ class _CategoryPageState extends State<CategoryPage> {
                               ),
                             ),
                             child: SizedBox(
-                              height: 80.h,
+                              height: 82.h,
                               child: Padding(
                                 padding: EdgeInsets.only(
-                                    left: 10.w, top: 20, right: 10.w),
+                                    left: 10.w, top: 10.h, right: 10.w,),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -69,8 +69,6 @@ class _CategoryPageState extends State<CategoryPage> {
                                           child: Text(
                                             StringManager.getmoreinfo,
                                             style: TextStyle(
-                                                decoration:
-                                                    TextDecoration.underline,
                                                 fontSize: 12.sp,
                                                 color: AllColors.maincolor),
                                           )),

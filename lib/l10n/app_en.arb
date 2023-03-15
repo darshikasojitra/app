@@ -18,7 +18,7 @@
   "account" : "Dont have an account?",
   "alreadyaccount" : "Already have an account?",
   "title" : "Your shopping List",
-  "logout" : "Logout",
+  "logout" : "Log out",
   "resetpassword" : "Reset Password",
   "forgotpassword" : "Forgot Password?",
   "newlist" : "New List",
@@ -43,5 +43,11 @@
   "paymentmethod" :"Payment Method",
   "address" : "Addresses",
   "changelanguage" : "Change Language",
-  "household" : "Household"
+  "household" : "Household",
+  "signingoogle" : "Sign In with Google",
+  "or" : "OR",
+  "drink" : "Drinks",
+  "ok" : "OK",
+  "cancle" : "Cancle",
+  "wanttologout" : "Are you sure you want to log out?"
 }

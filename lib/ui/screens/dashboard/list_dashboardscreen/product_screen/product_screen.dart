@@ -49,22 +49,8 @@ class _ProductPageState extends State<ProductPage> {
                   top: 5.w, left: 8.h, right: 8.h, bottom: 50.w),
               child: Column(
                 children: [
-                  const DropDownBar(),
-                  Row(
-                    children: [
-                      CustomMaterialButtons(
-                        color: AllColors.white,
-                        buttontext: AppLocalizations.of(context)!.gotostore,
-                        icon: Icons.store,
-                      ),
-                      sizedBoxSpacer(width: 20.w),
-                      CustomMaterialButtons(
-                        buttontext: AppLocalizations.of(context)!.newidea,
-                        color: AllColors.buttoncolor,
-                        icon: Icons.add_circle,
-                      ),
-                    ],
-                  ),
+                  _dropdownbar,
+                  bouttons(context),
                   StreamBuilder(
                       stream: Servives.loaddata(list: _productlist).asStream(),
                       builder: (context, snapshot) {
@@ -168,3 +154,49 @@ class _ProductPageState extends State<ProductPage> {
     );
   }
 }
+
+Widget bouttons(BuildContext context) => Row(
+      children: [
+        CustomMaterialButtons(
+          color: AllColors.white,
+          buttontext: AppLocalizations.of(context)!.gotostore,
+          icon: Icons.store,
+        ),
+        sizedBoxSpacer(width: 20.w),
+        CustomMaterialButtons(
+          buttontext: AppLocalizations.of(context)!.newidea,
+          color: AllColors.buttoncolor,
+          icon: Icons.add_circle,
+        ),
+      ],
+    );
+Widget _dropdownbar = Row(
+  children: [
+    Image.asset(
+      AllImages.tesco,
+      fit: BoxFit.cover,
+      height: 17.h,
+      width: 70.w,
+    ),
+    Icon(
+      Icons.arrow_drop_down,
+      color: AllColors.maincolor,
+      size: 17.sp,
+    ),
+    sizedBoxSpacer(
+      width: 175.w,
+    ),
+    Icon(
+      Icons.people,
+      color: AllColors.maincolor,
+    ),
+    sizedBoxSpacer(width: 12.w),
+    Padding(
+      padding: EdgeInsets.only(left: 5.w, top: 17.h, bottom: 17.h, right: 17.w),
+      child: Icon(
+        Icons.share,
+        color: AllColors.maincolor,
+      ),
+    )
+  ],
+);

@@ -36,8 +36,9 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _languagepage() async {
-     Navigator.pushNamed(context, LanguageScreen.id);
+    Navigator.pushNamed(context, LanguageScreen.id);
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -85,7 +86,34 @@ class _HomeScreenState extends State<HomeScreen> {
               title: Text(AppLocalizations.of(context)!.household),
             ),
             ListTile(
-              onTap: () => _signout(),
+              onTap: () => showDialog<String>(
+                context: context,
+                builder: (BuildContext context) => AlertDialog(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0)),
+                  title: Text(
+                    AppLocalizations.of(context)!.logout,
+                    style: TextStyle(color: AllColors.maincolor),
+                  ),
+                  content: Text(AppLocalizations.of(context)!.wanttologout),
+                  actions: <Widget>[
+                    TextButton(
+                      onPressed: () => Navigator.pop(context, 'Cancel'),
+                      child: Text(
+                        AppLocalizations.of(context)!.cancle,
+                        style: TextStyle(color: AllColors.maincolor),
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () => _signout(),
+                      child: Text(
+                        AppLocalizations.of(context)!.ok,
+                        style: TextStyle(color: AllColors.maincolor),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
               leading: const Icon(Icons.logout),
               title: Text(AppLocalizations.of(context)!.logout),
             ),

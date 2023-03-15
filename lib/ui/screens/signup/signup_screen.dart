@@ -58,6 +58,7 @@ class _SignupScreenState extends State<SignupScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -141,7 +142,7 @@ class _SignupScreenState extends State<SignupScreen> {
   }
 }
 
-SizedBox buildSizedBoxSpacer({ double? height,double? width}) {
+SizedBox buildSizedBoxSpacer({double? height, double? width}) {
   return SizedBox(
     height: height,
     width: width,

@@ -7,6 +7,7 @@ class CustomTextFields extends StatefulWidget {
   String? labelText;
   String? hintText;
   final bool obscureText;
+  Widget? suffixIcon;
   String? Function(dynamic value) validator;
   CustomTextFields(
       {super.key,
@@ -14,12 +15,14 @@ class CustomTextFields extends StatefulWidget {
       this.hintText,
       this.labelText,
       required this.obscureText,
+      this.suffixIcon,
       required this.validator});
   @override
   State<CustomTextFields> createState() => _CustomTextFieldsState();
 }
 
 class _CustomTextFieldsState extends State<CustomTextFields> {
+  bool _passwordVisible = false;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -35,6 +38,7 @@ class _CustomTextFieldsState extends State<CustomTextFields> {
         ),
         enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(color: AllColors.maincolor)),
+            suffixIcon: widget.suffixIcon,
       ),
       validator: widget.validator,
     );

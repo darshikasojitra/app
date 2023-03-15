@@ -14,13 +14,27 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final ScrollController _scrollcontroller = ScrollController();
   final AuthService _auth = AuthService();
+  final _fromKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   bool isprocessing = false;
-  final fromKey = GlobalKey<FormState>();
+  bool _passwordVisible = false;
+  @override
+  void initState() {
+    _passwordVisible = false;
+    super.initState();
+  }
+
+  Future<void> _showpassword() async {
+    setState(() {
+      _passwordVisible = !_passwordVisible;
+    });
+  }
+
   Future<void> _addAllData() async {
-    if (fromKey.currentState!.validate()) {
+    if (_fromKey.currentState!.validate()) {
       setState(() {
         isprocessing = true;
       });
@@ -52,21 +66,24 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        body: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
+        body: SingleChildScrollView(
+          controller: _scrollcontroller,
+          physics: const BouncingScrollPhysics(),
+          child: Padding(
+            padding: EdgeInsets.only(top: 150.h),
+            child: Column(children: [
               Text(
                 AppLocalizations.of(context)!.login,
                 style:
                     boldTextStyle(color: AllColors.maincolor, fontSize: 35.sp),
               ),
               Padding(
-                padding: EdgeInsets.symmetric(vertical: 30.h, horizontal: 30.w),
+                padding: EdgeInsets.symmetric(horizontal: 30.w),
                 child: Form(
-                  key: fromKey,
+                  key: _fromKey,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       CustomTextFields(
                           obscureText: false,
@@ -76,11 +93,20 @@ class _LoginScreenState extends State<LoginScreen> {
                           validator: Validator.emailValidator),
                       buildSizedBoxSpacer(height: 20.h),
                       CustomTextFields(
-                          obscureText: true,
+                          obscureText: !_passwordVisible,
                           controller: _passwordController,
                           labelText: AppLocalizations.of(context)!.password,
                           hintText: AppLocalizations.of(context)!.enterpassword,
-                          validator: Validator.passValidator),
+                          validator: Validator.passValidator,
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              _passwordVisible
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                              color: AllColors.maincolor,
+                            ),
+                            onPressed: () => _showpassword(),
+                          )),
                       Align(
                           alignment: Alignment.centerRight,
                           child: TextButton(
@@ -120,12 +146,58 @@ class _LoginScreenState extends State<LoginScreen> {
                               ))
                         ],
                       ),
+                      _divider,
+                      buildSizedBoxSpacer(height: 10.h),
+                      _googlesignin(context, _auth),
                     ],
                   ),
                 ),
               ),
             ]),
+          ),
+        ),
       ),
     );
   }
 }
+
+Widget _googlesignin(BuildContext context, AuthService auth) => MaterialButton(
+      height: 40.h,
+      minWidth: double.infinity,
+      color: AllColors.white,
+      shape: RoundedRectangleBorder(
+        side: BorderSide(color: AllColors.maincolor, width: 1.w),
+        borderRadius: BorderRadius.circular(40.r),
+      ),
+      onPressed: () => auth.signup(context),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            height: 30,
+            width: 30,
+            child: Image.asset(
+              AllImages.googleimage,
+              fit: BoxFit.cover,
+            ),
+          ),
+          buildSizedBoxSpacer(width: 30),
+          Text(AppLocalizations.of(context)!.signingoogle)
+        ],
+      ),
+    );
+
+Widget _divider = Row(children: const [
+  Expanded(
+      child: Divider(
+    thickness: 1,
+  )),
+  Text(
+    "OR",
+    style: TextStyle(color: Colors.grey),
+  ),
+  Expanded(
+      child: Divider(
+    thickness: 1,
+  )),
+]);
