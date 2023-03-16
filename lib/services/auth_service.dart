@@ -77,7 +77,7 @@ class AuthService {
       UserCredential result = await auth.signInWithCredential(authCredential);
       User? user = result.user;
 
-      if (result != null) {
+    if (result != null) {
         Navigator.pushReplacement(context,
             MaterialPageRoute(builder: (context) => const DashboardScreen()));
       }

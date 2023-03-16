@@ -49,4 +49,5 @@ class StringManager {
   static const String ok = "OK";
   static const String cancle = "Cancle";
   static const String wanttologout = "Are you sure you want to log out?";
+  static const String enterlistname = "Enter List Name";
 }

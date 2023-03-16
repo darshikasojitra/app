@@ -49,5 +49,6 @@
   "drink" : "Drinks",
   "ok" : "OK",
   "cancle" : "Cancle",
-  "wanttologout" : "Are you sure you want to log out?"
+  "wanttologout" : "Are you sure you want to log out?",
+  "enterlistname" : "Enter List Name"
 }
