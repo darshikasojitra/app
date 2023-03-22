@@ -8,6 +8,8 @@ class CustomTextFields extends StatefulWidget {
   String? hintText;
   final bool obscureText;
   Widget? suffixIcon;
+  EdgeInsets? contentPadding;
+  int? maxLines;
   String? Function(dynamic value) validator;
   CustomTextFields(
       {super.key,
@@ -16,7 +18,7 @@ class CustomTextFields extends StatefulWidget {
       this.labelText,
       required this.obscureText,
       this.suffixIcon,
-      required this.validator});
+      required this.validator, EdgeInsets? contentPadding, int? maxLines,});
   @override
   State<CustomTextFields> createState() => _CustomTextFieldsState();
 }
@@ -26,9 +28,11 @@ class _CustomTextFieldsState extends State<CustomTextFields> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      maxLines: widget.maxLines,
       obscureText: widget.obscureText,
       controller: widget.controller,
       decoration: InputDecoration(
+        contentPadding: widget.contentPadding,
         labelText: widget.labelText,
         floatingLabelStyle: TextStyle(color: AllColors.maincolor),
         hintText: widget.hintText,

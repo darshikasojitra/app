@@ -32,15 +32,15 @@ class _BottomnavigationbarTextfieldState
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController _textcontroller = TextEditingController();
-    GlobalKey<FormFieldState> _fromKey = GlobalKey<FormFieldState>();
+  final  TextEditingController _textcontroller = TextEditingController();
+    final GlobalKey<FormFieldState> _fromKey = GlobalKey<FormFieldState>();
     return Padding(
         padding: EdgeInsets.only(left: 20.h, right: 20.h, bottom: 10.h),
         child: Container(
           height: 40,
           width: 335,
           child: TextFormField(
-              autofocus: false,
+            autofocus: false,
               key: _fromKey,
               focusNode: focusNode,
               style: TextStyle(color: AllColors.maincolor),

@@ -46,8 +46,10 @@
   "signingoogle" : "الدخول مع جوجل",
   "or" : "أو",
   "drink" : "مشروبات",
-  "ok" : "نعم",
-  "cancle" : "إلغاء",
+  "yes" : "نعم",
+  "no" : "لا",
   "wanttologout" : "هل أنت متأكد أنك تريد تسجيل الخروج؟",
-  "enterlistname" : "أدخل اسم القائمة"
+  "enterlistname" : "أدخل اسم القائمة",
+  "welcome" : "مرحباً",
+  "createyouraccount" : "أنشئ حسابك."
 }

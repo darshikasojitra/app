@@ -33,18 +33,16 @@ class _MoreScreenState extends State<MoreScreen> {
             controller: _scrollcontroller,
             child: Padding(
               padding: EdgeInsets.only(
-                right: 10.w,
-                left: 10.w,
-              ),
+                  right: 10.w, left: 10.w, top: 20.h, bottom: 20.h),
               child: Column(
                 children: [
                   Container(
-                    height: 100,
+                    // height: 100.h,
                     child: Row(
                       children: [
                         Container(
-                            height: 40,
-                            width: 290,
+                            height: 30.h,
+                            width: 250.w,
                             child: TextFormField(
                               controller: textcontroller,
                               decoration: InputDecoration(
@@ -60,8 +58,8 @@ class _MoreScreenState extends State<MoreScreen> {
                                         BorderSide(color: AllColors.maincolor)),
                               ),
                             )),
-                        const SizedBox(
-                          width: 10,
+                        SizedBox(
+                          width: 10.w,
                         ),
                         MaterialButton(
                             color: AllColors.maincolor,
@@ -93,77 +91,81 @@ class _MoreScreenState extends State<MoreScreen> {
 }
 
 Widget apicocktaildata(CocktailProvider cocktailprovider, String controller) =>
-    StreamBuilder(
-      stream: cocktailprovider.getcoctailData(controller).asStream(),
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          if (snapshot.data?.drinks != null) {
-            return ListView.builder(
-                physics: const BouncingScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: snapshot.data?.drinks?.length,
-                itemBuilder: (context, index) {
-                  final coctaildrinkdata =
-                      snapshot.data?.drinks?.elementAt(index);
-                  return Card(
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(10.r),
+    Padding(
+      padding: EdgeInsets.only(top: 20.h),
+      child: StreamBuilder(
+        stream: cocktailprovider.getcoctailData(controller).asStream(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            if (snapshot.data?.drinks != null) {
+              return ListView.builder(
+                  physics: const BouncingScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: snapshot.data?.drinks?.length,
+                  itemBuilder: (context, index) {
+                    final coctaildrinkdata =
+                        snapshot.data?.drinks?.elementAt(index);
+                    return Card(
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(10.r),
+                        ),
                       ),
-                    ),
-                    child: SizedBox(
-                      height: 100.h,
-                      width: 400.w,
-                      child: Row(
-                        children: [
-                          Container(
-                            height: 100.h,
-                            width: 95.w,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.only(
-                                  bottomLeft: Radius.circular(10.r),
-                                  topLeft: Radius.circular(10.r)),
-                              image: DecorationImage(
-                                image: NetworkImage(
-                                  (coctaildrinkdata?.strDrinkThumb).toString(),
+                      child: SizedBox(
+                        height: 100.h,
+                        width: 400.w,
+                        child: Row(
+                          children: [
+                            Container(
+                              height: 100.h,
+                              width: 95.w,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.only(
+                                    bottomLeft: Radius.circular(10.r),
+                                    topLeft: Radius.circular(10.r)),
+                                image: DecorationImage(
+                                  image: NetworkImage(
+                                    (coctaildrinkdata?.strDrinkThumb)
+                                        .toString(),
+                                  ),
+                                  fit: BoxFit.cover,
                                 ),
-                                fit: BoxFit.cover,
                               ),
                             ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(left: 8.w, top: 15.h),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                    'Drinkid : ${(coctaildrinkdata?.idDrink).toString()}'),
-                                Text(
-                                    'Drink : ${(coctaildrinkdata?.strDrink).toString()}'),
-                                Text(
-                                    'DrinkCategory : ${coctaildrinkdata?.strCategory}'),
-                                Text('Glass : ${coctaildrinkdata?.strGlass}'),
-                              ],
+                            Padding(
+                              padding: EdgeInsets.only(left: 8.w, top: 15.h),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                      'Drinkid : ${(coctaildrinkdata?.idDrink).toString()}'),
+                                  Text(
+                                      'Drink : ${(coctaildrinkdata?.strDrink).toString()}'),
+                                  Text(
+                                      'DrinkCategory : ${coctaildrinkdata?.strCategory}'),
+                                  Text('Glass : ${coctaildrinkdata?.strGlass}'),
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                  );
-                });
-          } else {
-            return Text('No Data');
+                    );
+                  });
+            } else {
+              return Text('No Data');
+            }
           }
-        }
-        return Center(
-            child: Padding(
-          padding: EdgeInsets.only(top: 230.h),
-          child: Text(
-            'Search Your Favorite Drinks',
-            style:
-                regularTextStyle(color: AllColors.maincolor, fontSize: 17.sp),
-          ),
-        ));
-      },
+          return Center(
+              child: Padding(
+            padding: EdgeInsets.only(top: 230.h),
+            child: Text(
+              'Search Your Favorite Drinks',
+              style:
+                  regularTextStyle(color: AllColors.maincolor, fontSize: 17.sp),
+            ),
+          ));
+        },
+      ),
     );

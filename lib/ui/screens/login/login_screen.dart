@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:demo_splash_screen/services/auth_service.dart';
 import 'package:demo_splash_screen/widgets/common_widget/customtextfield.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -26,7 +27,13 @@ class _LoginScreenState extends State<LoginScreen> {
     _passwordVisible = false;
     super.initState();
   }
-
+    Future<void> _userdetail() async {
+    await FirebaseFirestore.instance.collection("user").add({
+      'uid': _auth.getUser()!.uid,
+      //'name': _nameController.text,
+      'email': _emailController.text
+    });
+  }
   Future<void> _showpassword() async {
     setState(() {
       _passwordVisible = !_passwordVisible;
@@ -70,7 +77,7 @@ class _LoginScreenState extends State<LoginScreen> {
           controller: _scrollcontroller,
           physics: const BouncingScrollPhysics(),
           child: Padding(
-            padding: EdgeInsets.only(top: 150.h),
+            padding: EdgeInsets.only(top: 150.h,),
             child: Column(children: [
               Text(
                 AppLocalizations.of(context)!.login,
@@ -78,7 +85,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     boldTextStyle(color: AllColors.maincolor, fontSize: 35.sp),
               ),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 30.w),
+                padding: EdgeInsets.symmetric(horizontal: 30.w,vertical: 20.h),
                 child: Form(
                   key: _fromKey,
                   autovalidateMode: AutovalidateMode.onUserInteraction,

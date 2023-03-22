@@ -1,4 +1,5 @@
 class StringManager {
+  //login&signup
   static const String login = 'Login';
   static const String signup = 'Sign Up';
   static const String name = 'Name';
@@ -18,7 +19,15 @@ class StringManager {
   static const String logout = "Log out";
   static const String resetpassword = "Reset Password";
   static const String forgotpassword = "Forgot Password?";
+  static const String signingoogle = "Sign In with Google";
+  static const String or = "OR";
+  static const String wanttologout = "Are you sure you want to log out?";
+  static const String welcome = "Welcome";
+  static const String createyouraccount = "Create Your Account.";
+
+  //lists
   static const String newlist = "New List";
+  static const String enterlistname = "Enter List Name";
   static const String home = "Home";
   static const String gotostore = "Go to Store";
   static const String newidea = "New Idea";
@@ -43,11 +52,8 @@ class StringManager {
   static const String changelanguage = "Change Language";
   static const String household = "Household";
   static const String getmoreinfo = "Get More Informations";
-  static const String signingoogle = "Sign In with Google";
-  static const String or = "OR";
   static const String drink = "Drinks";
-  static const String ok = "OK";
-  static const String cancle = "Cancle";
-  static const String wanttologout = "Are you sure you want to log out?";
-  static const String enterlistname = "Enter List Name";
+  static const String yes = "Yes";
+  static const String no = "No";
+  
 }

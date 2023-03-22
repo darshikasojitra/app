@@ -1,5 +1,6 @@
 import 'package:demo_splash_screen/l10n/localization.dart';
 import 'package:demo_splash_screen/resources/resources.dart';
+import 'package:demo_splash_screen/ui/screens/dashboard/vendor_dashboardscreen/vendor_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:demo_splash_screen/ui/screens/dashboard/dashboard.dart';
@@ -18,10 +19,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
       fontSize: 30.sp, fontWeight: FontWeight.bold, color: AllColors.fontcolor);
   static List<Widget> widgetList = [
     const HomeScreen(),
-    Text(
-      'Vendor',
-      style: optionStyle,
-    ),
+    const VendorScreen(),
+    // Text(
+    //   'Vendor',
+    //   style: optionStyle,
+    // ),
     const ListScreen(),
     const CategoryPage(),
     const MoreScreen(),

@@ -1,14 +1,15 @@
 import 'package:demo_splash_screen/l10n/localization.dart';
 import 'package:demo_splash_screen/services/auth_service.dart';
 import 'package:demo_splash_screen/resources/resources.dart';
-import 'package:demo_splash_screen/ui/screens/dashboard/home_dashboardscreen/change_language.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:demo_splash_screen/ui/screens/login/login_screen.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:demo_splash_screen/ui/screens/dashboard/dashboard.dart';
+import 'package:demo_splash_screen/ui/screens/dashboard/home_dashboardscreen/side_drawer/side_drawer.dart';
 
 class HomeScreen extends StatefulWidget {
+  static const String id = 'HomeScreen';
   const HomeScreen({super.key});
 
   @override
@@ -18,7 +19,9 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   User? _user;
   final AuthService _auth = AuthService();
-
+  String? url;
+  String? _imageurl;
+  String? _userId;
   Future<void> _signout() async {
     if (FirebaseAuth.instance.currentUser != null) {
       await FirebaseAuth.instance.signOut();
@@ -29,9 +32,19 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  Future<void> downloadURLExample() async {
+    _userId = _user!.uid;
+    final ref = FirebaseStorage.instance.ref().child('path');
+    url = await ref.getDownloadURL();
+    setState(() {
+      _imageurl = url;
+    });
+  }
+
   @override
   void initState() {
     _user = _auth.getUser();
+     //downloadURLExample();
     super.initState();
   }
 
@@ -54,8 +67,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 color: AllColors.maincolor,
               ),
               currentAccountPicture: CircleAvatar(
-                radius: 50,
+                radius: 40.r,
                 backgroundColor: AllColors.white,
+                // backgroundImage: (_imageurl) == null
+                //     ? const ExactAssetImage('assets/images/addphoto.png')
+                //     : NetworkImage((_imageurl!).toString()) as ImageProvider,
                 child: Text(
                     '${_user?.displayName}'.substring(0, 1).toUpperCase(),
                     style: regularTextStyle(
@@ -69,10 +85,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       color: AllColors.white, fontSize: 17.sp)),
             ),
             ListTile(
+              onTap: () => Navigator.pushNamed(context, PaymentMethodScreen.id),
               leading: const Icon(Icons.payment),
               title: Text(AppLocalizations.of(context)!.paymentmethod),
             ),
             ListTile(
+             onTap: () =>  Navigator.pushNamed(context, AddressScreen.id),
               leading: const Icon(Icons.house),
               title: Text(AppLocalizations.of(context)!.address),
             ),
@@ -98,16 +116,16 @@ class _HomeScreenState extends State<HomeScreen> {
                   content: Text(AppLocalizations.of(context)!.wanttologout),
                   actions: <Widget>[
                     TextButton(
-                      onPressed: () => Navigator.pop(context, 'Cancel'),
+                      onPressed: () => Navigator.pop(context, 'No'),
                       child: Text(
-                        AppLocalizations.of(context)!.cancle,
+                        AppLocalizations.of(context)!.no,
                         style: TextStyle(color: AllColors.maincolor),
                       ),
                     ),
                     TextButton(
                       onPressed: () => _signout(),
                       child: Text(
-                        AppLocalizations.of(context)!.ok,
+                        AppLocalizations.of(context)!.yes,
                         style: TextStyle(color: AllColors.maincolor),
                       ),
                     ),

@@ -15,7 +15,7 @@ class AuthService {
   Future<User?> registerUsingEmailPassword(
       {required String name,
       required String email,
-      required String password}) async {
+      required String password,String? image}) async {
     User? user;
     try {
       UserCredential userCredential = await auth.createUserWithEmailAndPassword(
@@ -24,6 +24,7 @@ class AuthService {
       await user?.updateDisplayName(name);
       await user?.reload();
       user = auth.currentUser;
+      //image = user?.photoURL;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         log('password provided is too weak.');

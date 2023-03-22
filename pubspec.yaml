@@ -31,6 +31,9 @@ dependencies:
   equatable: ^2.0.5
   url_launcher: ^6.1.10
   google_sign_in: ^6.0.2
+  image_picker: ^0.8.7
+  firebase_storage: ^11.0.16
+  google_maps_flutter: ^2.2.5
     
 
 dev_dependencies:

@@ -47,8 +47,10 @@
   "signingoogle" : "Sign In with Google",
   "or" : "OR",
   "drink" : "Drinks",
-  "ok" : "OK",
-  "cancle" : "Cancle",
+  "yes" : "Yes",
+  "no" : "No",
   "wanttologout" : "Are you sure you want to log out?",
-  "enterlistname" : "Enter List Name"
+  "enterlistname" : "Enter List Name",
+  "welcome" : "Welcome",
+  "createyouraccount" : "Create Your Account."
 }
