@@ -32,20 +32,20 @@ class _BottomnavigationbarTextfieldState
 
   @override
   Widget build(BuildContext context) {
-  final  TextEditingController _textcontroller = TextEditingController();
-    final GlobalKey<FormFieldState> _fromKey = GlobalKey<FormFieldState>();
+  final  TextEditingController textcontroller = TextEditingController();
+    final GlobalKey<FormFieldState> fromKey = GlobalKey<FormFieldState>();
     return Padding(
         padding: EdgeInsets.only(left: 20.h, right: 20.h, bottom: 10.h),
-        child: Container(
+        child: SizedBox(
           height: 40,
           width: 335,
           child: TextFormField(
             autofocus: false,
-              key: _fromKey,
+              key: fromKey,
               focusNode: focusNode,
               style: TextStyle(color: AllColors.maincolor),
               textAlign: TextAlign.center,
-              controller: _textcontroller,
+              controller: textcontroller,
               decoration: InputDecoration(
                 filled: true,
                 fillColor: focusNode.hasFocus
@@ -61,8 +61,8 @@ class _BottomnavigationbarTextfieldState
                 suffixIcon: IconButton(
                     onPressed: () {
                       focusNode.requestFocus();
-                      if (_fromKey.currentState!.validate()) {
-                        Servives.addData(_textcontroller);
+                      if (fromKey.currentState!.validate()) {
+                        Servives.addData(textcontroller);
                       }
                     },
                     icon: Icon(Icons.add_circle, color: AllColors.maincolor)),

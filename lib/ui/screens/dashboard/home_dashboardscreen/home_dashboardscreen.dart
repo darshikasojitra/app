@@ -100,8 +100,9 @@ class _HomeScreenState extends State<HomeScreen> {
               title: Text(AppLocalizations.of(context)!.changelanguage),
             ),
             ListTile(
-              leading: const Icon(Icons.home_filled),
-              title: Text(AppLocalizations.of(context)!.household),
+              onTap: () => Navigator.pushNamed(context, ChangePassword.id),
+              leading: const Icon(Icons.lock),
+              title: Text(AppLocalizations.of(context)!.password),
             ),
             ListTile(
               onTap: () => showDialog<String>(

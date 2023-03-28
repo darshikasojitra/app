@@ -1,8 +1,10 @@
+import 'dart:async';
 import 'package:demo_splash_screen/resources/resources.dart';
 import 'package:demo_splash_screen/ui/screens/dashboard/list_dashboardscreen/product_screen/product_widget/product_widget.dart';
 import 'package:demo_splash_screen/ui/screens/screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class AddressScreen extends StatefulWidget {
@@ -14,7 +16,8 @@ class AddressScreen extends StatefulWidget {
 
 class _AddressScreenState extends State<AddressScreen> {
   late GoogleMapController myController;
-  static final LatLng _center = const LatLng(27.7089427, 85.3086209);
+  final Completer<GoogleMapController> _controller = Completer();
+  static const LatLng _center = LatLng(23.0225, 72.5714);
   final Set<Marker> _markers = {};
   LatLng _currentMapPosition = _center;
   void _addMarker() {
@@ -22,8 +25,7 @@ class _AddressScreenState extends State<AddressScreen> {
       _markers.add(Marker(
         markerId: MarkerId(_currentMapPosition.toString()),
         position: _currentMapPosition,
-        infoWindow:
-            InfoWindow(title: 'Nice Place', snippet: 'Welcome!'),
+        infoWindow: const InfoWindow(title: 'Nice Place', snippet: 'Welcome!'),
         icon: BitmapDescriptor.defaultMarker,
       ));
     });
@@ -34,7 +36,32 @@ class _AddressScreenState extends State<AddressScreen> {
   }
 
   void _onMapCreated(GoogleMapController controller) {
-    myController = controller;
+    //myController = controller;
+    _controller.complete(controller);
+  }
+
+  Future<Position> getUsercurrentLocation() async {
+    await Geolocator.requestPermission()
+        .then((value) {})
+        .onError((error, stackTrace) {
+      print("error" + error.toString());
+    });
+    return await Geolocator.getCurrentPosition();
+  }
+
+  Future<void> _userlocation() async {
+    getUsercurrentLocation().then((value) async {
+      _markers.add(Marker(
+          markerId: const MarkerId('2'),
+          position: LatLng(value.latitude, value.longitude),
+          infoWindow: const InfoWindow(title: 'current location')));
+      CameraPosition cameraPosition = CameraPosition(
+          zoom: 14, target: LatLng(value.latitude, value.longitude));
+
+      final GoogleMapController controller = await _controller.future;
+      controller.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
+      setState(() {});
+    });
   }
 
   @override
@@ -48,7 +75,7 @@ class _AddressScreenState extends State<AddressScreen> {
           GoogleMap(
               mapType: MapType.normal,
               onMapCreated: _onMapCreated,
-              initialCameraPosition: CameraPosition(
+              initialCameraPosition: const CameraPosition(
                 target: _center,
                 zoom: 10.0,
               ),
@@ -60,7 +87,10 @@ class _AddressScreenState extends State<AddressScreen> {
             child: Align(
               alignment: Alignment.topRight,
               child: FloatingActionButton(
-                onPressed: () => _addMarker(),
+                onPressed: () {
+                  _addMarker();
+                  _userlocation();
+                },
                 materialTapTargetSize: MaterialTapTargetSize.padded,
                 backgroundColor: Colors.green,
                 child: const Icon(Icons.map, size: 30.0),

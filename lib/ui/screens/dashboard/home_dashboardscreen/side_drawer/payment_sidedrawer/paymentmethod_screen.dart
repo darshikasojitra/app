@@ -1,8 +1,8 @@
 import 'package:demo_splash_screen/resources/resources.dart';
-import 'package:demo_splash_screen/ui/screens/dashboard/home_dashboardscreen/home_dashboardscreen.dart';
 import 'package:demo_splash_screen/ui/screens/dashboard/list_dashboardscreen/product_screen/product_widget/product_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:demo_splash_screen/ui/screens/screen.dart';
 import 'newpayment_page.dart';
 
 class PaymentMethodScreen extends StatelessWidget {
@@ -14,7 +14,7 @@ class PaymentMethodScreen extends StatelessWidget {
     final ScrollController _controller = ScrollController();
     return Scaffold(
       appBar: appbar(context, () {
-        Navigator.pushNamed(context, HomeScreen.id);
+        Navigator.pushNamed(context, DashboardScreen.id);
       }, "Payment Methods", AllColors.white),
       body: SingleChildScrollView(
           controller: _controller,

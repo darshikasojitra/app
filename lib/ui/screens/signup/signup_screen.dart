@@ -66,7 +66,7 @@ class _SignupScreenState extends State<SignupScreen> {
   }
 
   Future<void> _loginpage() async {
-    _getuserid();
+    //_getuserid();
     Navigator.pushNamed(context, LoginScreen.id);
   }
 
@@ -119,21 +119,21 @@ class _SignupScreenState extends State<SignupScreen> {
                           controller: _nameController,
                           labelText: AppLocalizations.of(context)!.name,
                           hintText: AppLocalizations.of(context)!.entername,
-                          validator: Validator.nameValidator),
+                          validator: Validator.nameValidator,),
                       buildSizedBoxSpacer(height: 20.h),
                       CustomTextFields(
                           obscureText: false,
                           controller: _emailController,
                           labelText: AppLocalizations.of(context)!.email,
                           hintText: AppLocalizations.of(context)!.enteremail,
-                          validator: Validator.emailValidator),
+                          validator: Validator.emailValidator,),
                       buildSizedBoxSpacer(height: 20.h),
                       CustomTextFields(
                           obscureText: true,
                           controller: _passwordController,
                           labelText: AppLocalizations.of(context)!.password,
                           hintText: AppLocalizations.of(context)!.enterpassword,
-                          validator: Validator.passValidator),
+                          validator: Validator.passValidator,),
                       buildSizedBoxSpacer(height: 20.h),
                       CustomTextFields(
                         obscureText: true,

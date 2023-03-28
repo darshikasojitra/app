@@ -37,7 +37,6 @@ class _MoreScreenState extends State<MoreScreen> {
               child: Column(
                 children: [
                   Container(
-                    // height: 100.h,
                     child: Row(
                       children: [
                         Container(
@@ -59,7 +58,7 @@ class _MoreScreenState extends State<MoreScreen> {
                               ),
                             )),
                         SizedBox(
-                          width: 10.w,
+                          width: 8.w,
                         ),
                         MaterialButton(
                             color: AllColors.maincolor,

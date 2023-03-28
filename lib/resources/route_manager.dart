@@ -18,6 +18,7 @@ final Map<String, WidgetBuilder> routes = {
   AddNewUserScreen.id: (context) => const AddNewUserScreen(),
    AddressScreen.id: (context) => const AddressScreen(),
    PaymentMethodScreen.id:(context) => const PaymentMethodScreen(),
+   ChangePassword.id: (context) => const ChangePassword(),
 };
 
 class NavigationService {

@@ -47,7 +47,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                   controller: _emailController,
                   labelText: AppLocalizations.of(context)!.email,
                   hintText: AppLocalizations.of(context)!.enteremail,
-                  validator: Validator.emailValidator),
+                  validator: Validator.emailValidator,),
               SizedBox(
                 height: 20.h,
               ),

@@ -97,7 +97,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           controller: _emailController,
                           labelText: AppLocalizations.of(context)!.email,
                           hintText: AppLocalizations.of(context)!.enteremail,
-                          validator: Validator.emailValidator),
+                          validator: Validator.emailValidator, ),
                       buildSizedBoxSpacer(height: 20.h),
                       CustomTextFields(
                           obscureText: !_passwordVisible,
@@ -113,7 +113,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               color: AllColors.maincolor,
                             ),
                             onPressed: () => _showpassword(),
-                          )),
+                          ),),
                       Align(
                           alignment: Alignment.centerRight,
                           child: TextButton(
