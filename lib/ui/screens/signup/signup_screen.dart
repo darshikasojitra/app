@@ -42,7 +42,8 @@ class _SignupScreenState extends State<SignupScreen> {
   }
   Future<void> _getuserid()async{
     setState(() {
-      _userId = _auth.getUser()!.uid;
+    var user =  FirebaseAuth.instance.currentUser;
+    String? uid =user?.uid;
     });
   }
   Future<void> _addData() async {
@@ -66,7 +67,7 @@ class _SignupScreenState extends State<SignupScreen> {
   }
 
   Future<void> _loginpage() async {
-    //_getuserid();
+    _getuserid();
     Navigator.pushNamed(context, LoginScreen.id);
   }
 
@@ -131,6 +132,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       CustomTextFields(
                           obscureText: true,
                           controller: _passwordController,
+                          maxLines: 1,
                           labelText: AppLocalizations.of(context)!.password,
                           hintText: AppLocalizations.of(context)!.enterpassword,
                           validator: Validator.passValidator,),
@@ -138,6 +140,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       CustomTextFields(
                         obscureText: true,
                         controller: _cpasswordController,
+                        maxLines: 1,
                         labelText: AppLocalizations.of(context)!.cpassword,
                         hintText: AppLocalizations.of(context)!.entercpassword,
                         validator: (value) => Validator.confirmpassworrd(

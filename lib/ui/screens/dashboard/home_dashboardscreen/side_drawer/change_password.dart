@@ -85,6 +85,7 @@ class _ChangePasswordState extends State<ChangePassword> {
               children: [
                 CustomTextFields(
                   obscureText: true,
+                  maxLines: 1,
                   controller: __currentPassword,
                   validator: Validator.passValidator,
                   hintText: 'Current Password',
@@ -93,6 +94,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                 sizedBoxSpacer(height: 15.h),
                 CustomTextFields(
                   obscureText: true,
+                  maxLines: 1,
                   controller: _newPassword,
                   validator: Validator.passValidator,
                   hintText: 'New Password',

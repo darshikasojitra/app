@@ -70,7 +70,7 @@ class _ProductCardState extends State<ProductCard> {
                   Row(
                     children: [
                       Text(widget.pid),
-                      sizedBoxSpacer(width: 165.w),
+                      sizedBoxSpacer(width: 160.w),
                       Text(AppLocalizations.of(context)!.kg)
                     ],
                   ),

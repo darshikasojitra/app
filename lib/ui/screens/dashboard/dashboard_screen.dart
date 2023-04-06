@@ -1,6 +1,5 @@
 import 'package:demo_splash_screen/l10n/localization.dart';
 import 'package:demo_splash_screen/resources/resources.dart';
-import 'package:demo_splash_screen/ui/screens/dashboard/vendor_dashboardscreen/vendor_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:demo_splash_screen/ui/screens/dashboard/dashboard.dart';

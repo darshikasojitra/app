@@ -36,6 +36,7 @@ dependencies:
   google_maps_flutter: ^2.2.5
   location: ^4.4.0
   geolocator: ^9.0.2
+  flutterme_credit_card: ^1.0.2
     
 
 dev_dependencies:

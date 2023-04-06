@@ -52,7 +52,7 @@ class _CategoryPageState extends State<CategoryPage> {
                               ),
                             ),
                             child: SizedBox(
-                              height: 82.h,
+                              height: 85.h,
                               child: Padding(
                                 padding: EdgeInsets.only(
                                     left: 10.w, top: 10.h, right: 10.w,),

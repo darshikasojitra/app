@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:demo_splash_screen/resources/resources.dart';
+import 'package:flutter/services.dart';
 
 // ignore: must_be_immutable
 class CustomTextFields extends StatefulWidget {
   TextEditingController? controller;
+  int? maxLines;
+  Color? cursorColor;
+  TextInputType? keyboardType;
+  TextAlign? textAlign;
+  String? initialValue;
   String? labelText;
+  FocusNode? focusNode;
+  List<TextInputFormatter>? inputFormatters;
   String? hintText;
   TextStyle? hintStyle;
   final bool obscureText;
@@ -15,6 +23,13 @@ class CustomTextFields extends StatefulWidget {
   CustomTextFields(
       {super.key,
       this.controller,
+      this.maxLines,
+      this.keyboardType,
+      this.cursorColor,
+      this.textAlign,
+      this.inputFormatters,
+      this.initialValue,
+     this.focusNode,
       this.hintText,
       this.hintStyle,
       this.labelText,
@@ -27,12 +42,19 @@ class CustomTextFields extends StatefulWidget {
 }
 
 class _CustomTextFieldsState extends State<CustomTextFields> {
-  bool _passwordVisible = false;
+  final bool _passwordVisible = false;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       obscureText: widget.obscureText,
+      keyboardType: widget.keyboardType,
       controller: widget.controller,
+      focusNode: widget.focusNode,
+      maxLines: widget.maxLines,
+      inputFormatters: widget.inputFormatters,
+      initialValue: widget.initialValue,
+      //textAlign: widget.textAlign,
+      cursorColor: AllColors.maincolor,
       decoration: InputDecoration(
         contentPadding: widget.contentPadding,
         labelText: widget.labelText,
@@ -40,7 +62,6 @@ class _CustomTextFieldsState extends State<CustomTextFields> {
         hintText: widget.hintText,
         hintStyle: widget.hintStyle,
         border: const OutlineInputBorder(),
-        //focusedBorder: widget.focusedBorder,
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(color: AllColors.maincolor),
         ),

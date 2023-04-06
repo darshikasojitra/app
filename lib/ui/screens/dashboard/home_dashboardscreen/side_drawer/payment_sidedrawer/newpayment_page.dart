@@ -1,8 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:demo_splash_screen/ui/screens/dashboard/dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:demo_splash_screen/resources/resources.dart';
 import 'package:demo_splash_screen/widgets/widget.dart';
+import 'package:demo_splash_screen/services/auth_service.dart';
 
 class NewPaymentPage extends StatefulWidget {
   const NewPaymentPage({super.key});
@@ -12,9 +14,18 @@ class NewPaymentPage extends StatefulWidget {
 }
 
 class _NewPaymentPageState extends State<NewPaymentPage> {
+  final AuthService _auth = AuthService();
   String? selectedImage;
+  final _fromKey = GlobalKey<FormState>();
+  FocusNode cardnamefocusnode = FocusNode();
+  FocusNode cardnofocusnode = FocusNode();
+  FocusNode expdatefocusnode = FocusNode();
+  FocusNode cvvnofocusnode = FocusNode();
   final ScrollController _scrollcontroller = ScrollController();
-  TextEditingController cntrl = TextEditingController();
+  TextEditingController cardname = TextEditingController();
+  TextEditingController cardnumber = TextEditingController();
+  TextEditingController expdate = TextEditingController();
+  TextEditingController cvvnumber = TextEditingController();
   static bool? checkval = false;
   static bool? chechboxval = false;
   final List _images = [AllImages.mastercard, AllImages.visa, AllImages.paypal];
@@ -22,6 +33,58 @@ class _NewPaymentPageState extends State<NewPaymentPage> {
     setState(() {
       selectedImage = _images[index];
     });
+  }
+
+  Future<void> _savedata() async {
+    if (_fromKey.currentState!.validate()) {
+      _addcardinfo();
+      Navigator.pushNamed(context, PaymentMethodScreen.id);
+    }
+  }
+
+  Future<void> _addcardinfo() async {
+    FirebaseFirestore.instance.collection('cardinfo').add({
+      'cardname': cardname.text,
+      'cardno': cardnumber.text,
+      'expdate': expdate.text,
+      'cvvno': cvvnumber.text,
+      'image': selectedImage.toString(),
+      'uid': _auth.getUser()!.uid,
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    cardnamefocusnode = FocusNode();
+    cardnamefocusnode.addListener(() {
+      setState(() {});
+    });
+    cardnofocusnode = FocusNode();
+    cardnofocusnode.addListener(() {
+      setState(() {});
+    });
+    cardnamefocusnode = FocusNode();
+    cardnamefocusnode.addListener(() {
+      setState(() {});
+    });
+    expdatefocusnode = FocusNode();
+    expdatefocusnode.addListener(() {
+      setState(() {});
+    });
+    cvvnofocusnode = FocusNode();
+    cvvnofocusnode.addListener(() {
+      setState(() {});
+    });
+  }
+
+  @override
+  void dispose() {
+    cardnamefocusnode.dispose();
+    cardnofocusnode.dispose();
+    expdatefocusnode.dispose();
+    cvvnofocusnode.dispose();
+    super.dispose();
   }
 
   @override
@@ -52,7 +115,7 @@ class _NewPaymentPageState extends State<NewPaymentPage> {
                       ),
                     ),
                     SizedBox(
-                      height: 300.h,
+                      height: 320.h,
                       width: 300.w,
                       child: ListView.builder(
                         physics: const BouncingScrollPhysics(),
@@ -69,8 +132,8 @@ class _NewPaymentPageState extends State<NewPaymentPage> {
                   ],
                 ),
               ),
-              sizebox(height: 150.h),
-              saveButton
+              sizebox(height: 130.h),
+              saveButton(),
             ],
           ),
         ),
@@ -145,105 +208,129 @@ class _NewPaymentPageState extends State<NewPaymentPage> {
         child: selectedImage == _images[index]
             ? Padding(
                 padding: EdgeInsets.only(top: 40.h),
-                child: Column(
-                  children: [
-                    CustomTextFields(
-                      obscureText: false,
-                      validator: Validator.nameValidator,
-                      hintText: 'Card holder name',
-                      labelText: 'Card holder name',
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: AllColors.buttoncolor),
-                      ),
-                    ),
-                    Row(
-                      children: [
-                        Checkbox(
-                          activeColor: AllColors.maincolor,
-                          value: checkval,
-                          onChanged: (value) {
-                            setState(() {
-                              checkval = value;
-                            });
-                          },
+                child: Form(
+                  key: _fromKey,
+                  child: Column(
+                    children: [
+                      CustomTextFields(
+                        obscureText: false,
+                        controller: cardname,
+                        validator: Validator.cardnamevalidator,
+                        focusNode: cardnamefocusnode,
+                        hintText: cardnamefocusnode.hasFocus
+                            ? 'abcdefgh1234'
+                            : 'Card holder name',
+                        labelText: 'Card holder name',
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: AllColors.buttoncolor),
                         ),
-                        const Text('Use name on account'),
-                      ],
-                    ),
-                    CustomTextFields(
-                      obscureText: false,
-                      validator: Validator.nameValidator,
-                      hintText: 'Card number',
-                      labelText: 'Card number',
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: AllColors.buttoncolor),
                       ),
-                    ),
-                    selectedImage == _images[2]
-                        ? sizebox(height: 0)
-                        : sizebox(height: 17.h),
-                    selectedImage == _images[2]
-                        ? const Text('')
-                        : Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Flexible(
-                                child: CustomTextFields(
-                                  obscureText: false,
-                                  hintText: 'Expiry date',
-                                  labelText: 'Expiry date',
-                                  validator: Validator.nameValidator,
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: AllColors.buttoncolor),
-                                  ),
-                                ),
-                              ),
-                              sizebox(width: 8.w),
-                              Flexible(
-                                child: CustomTextFields(
-                                  obscureText: false,
-                                  hintText: 'CCV',
-                                  labelText: 'CCV',
-                                  validator: Validator.nameValidator,
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: AllColors.buttoncolor),
-                                  ),
-                                ),
-                              ),
-                            ],
+                      Row(
+                        children: [
+                          Checkbox(
+                            activeColor: AllColors.maincolor,
+                            value: checkval,
+                            onChanged: (value) {
+                              setState(() {
+                                checkval = value;
+                              });
+                            },
                           ),
-                    Row(
-                      children: [
-                        Checkbox(
-                          activeColor: AllColors.maincolor,
-                          value: chechboxval,
-                          onChanged: (value) {
-                            setState(() {
-                              chechboxval = value;
-                            });
-                          },
+                          const Text('Use name on account'),
+                        ],
+                      ),
+                      CustomTextFields(
+                        obscureText: false,
+                        keyboardType: TextInputType.number,
+                        controller: cardnumber,
+                        focusNode: cardnofocusnode,
+                        validator: Validator.cardnovalidator,
+                        hintText: cardnofocusnode.hasFocus
+                            ? 'XXXX XXXX XXXX XXXX'
+                            : 'Card number',
+                        labelText: 'Card number',
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(color: AllColors.buttoncolor),
                         ),
-                        const Text('Set as default payment method'),
-                      ],
-                    ),
-                  ],
+                      ),
+                      selectedImage == _images[2]
+                          ? sizebox(height: 0)
+                          : sizebox(height: 17.h),
+                      selectedImage == _images[2]
+                          ? const Text('')
+                          : Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Flexible(
+                                  child: CustomTextFields(
+                                    keyboardType: TextInputType.number,
+                                    obscureText: false,
+                                    controller: expdate,
+                                    focusNode: expdatefocusnode,
+                                    hintText: expdatefocusnode.hasFocus
+                                        ? "10/29"
+                                        : 'Expiry date',
+                                    labelText: 'Expiry date',
+                                    validator: Validator.expdatevalidator,
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: AllColors.buttoncolor),
+                                    ),
+                                  ),
+                                ),
+                                sizebox(width: 8.w),
+                                Flexible(
+                                  child: CustomTextFields(
+                                    keyboardType: TextInputType.number,
+                                    obscureText: false,
+                                    controller: cvvnumber,
+                                    focusNode: cvvnofocusnode,
+                                    hintText:
+                                        cvvnofocusnode.hasFocus ? '477' : 'CCV',
+                                    labelText: 'CCV',
+                                    validator: Validator.cvvnovalidator,
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: AllColors.buttoncolor),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                      Row(
+                        children: [
+                          Checkbox(
+                            activeColor: AllColors.maincolor,
+                            value: chechboxval,
+                            onChanged: (value) {
+                              setState(() {
+                                chechboxval = value;
+                              });
+                            },
+                          ),
+                          const Text('Set as default payment method'),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               )
             : const Text(''),
       );
 
-  Widget saveButton = Padding(
-    padding: EdgeInsets.all(30.h),
-    child: MaterialButton(
-      height: 35.h,
-      minWidth: double.infinity,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.r)),
-      onPressed: () {},
-      color: AllColors.maincolor,
-      child: Text('Save',
-          style: regularTextStyle(fontSize: 16.sp, color: AllColors.white)),
-    ),
-  );
+  Widget saveButton() => Padding(
+        padding: EdgeInsets.all(30.h),
+        child: MaterialButton(
+          height: 35.h,
+          minWidth: double.infinity,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.r)),
+          onPressed: () {
+            _savedata();
+          },
+          color: AllColors.maincolor,
+          child: Text('Save',
+              style: regularTextStyle(fontSize: 16.sp, color: AllColors.white)),
+        ),
+      );
 }

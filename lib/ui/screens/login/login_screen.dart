@@ -102,6 +102,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       CustomTextFields(
                           obscureText: !_passwordVisible,
                           controller: _passwordController,
+                          maxLines: 1,
                           labelText: AppLocalizations.of(context)!.password,
                           hintText: AppLocalizations.of(context)!.enterpassword,
                           validator: Validator.passValidator,

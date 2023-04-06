@@ -11,8 +11,6 @@ class VendorScreen extends StatefulWidget {
 }
 
 class _VendorScreenState extends State<VendorScreen> {
-  final TextEditingController _textcontroller = TextEditingController();
-  final GlobalKey<FormFieldState> _fromKey = GlobalKey<FormFieldState>();
   Icon customIcon = const Icon(Icons.search);
   Widget customSearchBar = const Text('Vendors');
   @override
@@ -58,12 +56,11 @@ class _VendorScreenState extends State<VendorScreen> {
           ]),
       body: Stack(children: [
         Positioned(
-          top: 520.h,
+          top: 510.h,
           left: 10.w,
           right: 10.w,
           child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               child: MaterialButton(
                 height: 40.h,
                 color: AllColors.buttoncolor,

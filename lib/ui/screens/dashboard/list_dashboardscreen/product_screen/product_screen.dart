@@ -143,7 +143,7 @@ class _ProductPageState extends State<ProductPage> {
           ),
           Positioned(
             left: 3.w,
-            top: 590.h,
+            top: 580.h,
             right: 3.w,
             child: BottomnavigationbarContaineer(
               total: _total,
@@ -192,7 +192,7 @@ Widget _dropdownbar = Row(
     ),
     sizedBoxSpacer(width: 12.w),
     Padding(
-      padding: EdgeInsets.only(left: 5.w, top: 17.h, bottom: 17.h, right: 17.w),
+      padding: EdgeInsets.only(left: 5.w, top: 17.h, bottom: 17.h, right: 10.w),
       child: Icon(
         Icons.share,
         color: AllColors.maincolor,

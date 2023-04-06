@@ -19,10 +19,11 @@ class AddNewUserScreen extends StatelessWidget {
       appBar: (appbar(context, () {
         Navigator.pushNamed(context, DashboardScreen.id);
       }, 'Add new vendor', AllColors.white)),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 20.h),
-        child: SingleChildScrollView(
-          controller: _scrollcontroller,
+      body: SingleChildScrollView(
+        physics:const  BouncingScrollPhysics(),
+        controller: _scrollcontroller,
+        child: Padding(
+          padding: EdgeInsets.only(left: 20.w, right: 20.h, top: 30.h),
           child: Column(
             children: [
               CustomTextFields(
@@ -32,7 +33,7 @@ class AddNewUserScreen extends StatelessWidget {
                 hintText: ' Vendor Name',
                 validator: Validator.nameValidator,
               ),
-              sizebox(height: 10.h),
+              sizebox(height: 30.h),
               CustomTextFields(
                 obscureText: false,
                 controller: websiteaddress,
@@ -40,26 +41,34 @@ class AddNewUserScreen extends StatelessWidget {
                 hintText: 'Website Address',
                 validator: Validator.nameValidator,
               ),
-              sizebox(height: 10.h),
-              CustomTextFields(
-                obscureText: false,
-                controller: address,
-                labelText: ' Address',
-                hintText: 'Address',
-                validator: Validator.nameValidator,
+              sizebox(height: 30.h),
+              SizedBox(
+                height: 90.h,
+                child: CustomTextFields(
+                  obscureText: false,
+                  maxLines: 6,
+                  controller: address,
+                  labelText: ' Address',
+                  hintText: 'Address',
+                  validator: Validator.nameValidator,
+                ),
               ),
-              sizebox(height: 10.h),
-              CustomTextFields(
-                //maxLines: 50,
-                obscureText: false,
-                controller: notes,
-                labelText: ' Notes',
-                hintText: 'Notes',
-                contentPadding: const EdgeInsets.symmetric(
-                    vertical: 100.0, horizontal: 10.0),
-                validator: Validator.nameValidator,
+              sizebox(height: 30.h),
+              SizedBox(
+                height: 150.h,
+                child: CustomTextFields(
+                  obscureText: false,
+                  controller: notes,
+                  maxLines: 8,
+                  labelText: ' Notes',
+                  hintText: 'Notes',
+                  contentPadding: const EdgeInsets.only(
+                    top: 10.0,
+                  ),
+                  validator: Validator.nameValidator,
+                ),
               ),
-              sizebox(height: 340.h),
+              sizebox(height: 100.h),
               MaterialButton(
                 height: 40.h,
                 minWidth: double.infinity,

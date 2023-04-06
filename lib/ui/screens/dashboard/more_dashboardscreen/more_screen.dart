@@ -36,43 +36,42 @@ class _MoreScreenState extends State<MoreScreen> {
                   right: 10.w, left: 10.w, top: 20.h, bottom: 20.h),
               child: Column(
                 children: [
-                  Container(
-                    child: Row(
-                      children: [
-                        Container(
-                            height: 30.h,
-                            width: 250.w,
-                            child: TextFormField(
-                              controller: textcontroller,
-                              decoration: InputDecoration(
-                                hintText: 'Search here drinks',
-                                contentPadding: EdgeInsets.only(left: 8.w),
-                                border: const OutlineInputBorder(),
-                                focusedBorder: OutlineInputBorder(
-                                  borderSide:
-                                      BorderSide(color: AllColors.maincolor),
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: AllColors.maincolor)),
+                  Row(
+                    children: [
+                      SizedBox(
+                          height: 30.h,
+                          width: 230.w,
+                          child: TextFormField(
+                            controller: textcontroller,
+                            decoration: InputDecoration(
+                              hintText: 'Search here drinks',
+                              contentPadding: EdgeInsets.only(left: 8.w),
+                              border: const OutlineInputBorder(),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: AllColors.maincolor),
                               ),
-                            )),
-                        SizedBox(
-                          width: 8.w,
-                        ),
-                        MaterialButton(
-                            color: AllColors.maincolor,
-                            onPressed: () async {
-                              await _cocktailprovider
-                                  .getcoctailData(textcontroller.text);
-                              setState(() {});
-                            },
-                            child: Text(
-                              'Search',
-                              style: TextStyle(color: AllColors.white),
-                            )),
-                      ],
-                    ),
+                              enabledBorder: OutlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: AllColors.maincolor)),
+                            ),
+                          )),
+                      SizedBox(
+                        width: 5.w,
+                      ),
+                      MaterialButton(
+                        height: 30.w,
+                          color: AllColors.maincolor,
+                          onPressed: () async {
+                            await _cocktailprovider
+                                .getcoctailData(textcontroller.text);
+                            setState(() {});
+                          },
+                          child: Text(
+                            'Search',
+                            style: TextStyle(color: AllColors.white),
+                          )),
+                    ],
                   ),
                   Column(
                     children: [
