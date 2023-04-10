@@ -13,5 +13,6 @@ class AllColors {
   static Color checkbox = const Color(0xff707070);
   static Color prize = const Color(0xff8D8D8D);
   static Color desc = const Color(0xffB11F1F);
+  static Color chat = const Color(0xff8BCC28);
   static Color grey = Colors.grey.shade200;
 }

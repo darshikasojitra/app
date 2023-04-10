@@ -16,7 +16,15 @@ class PaymentMethodScreen extends StatefulWidget {
 
 class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
   bool? checkval = false;
-  String? lastno = '';
+  Future<void> _removecard(
+      AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot,
+      int index) async {
+    FirebaseFirestore.instance
+        .collection('cardinfo')
+        .doc(snapshot.data?.docs[index].id)
+        .delete();
+  }
+
   @override
   Widget build(BuildContext context) {
     bool? selectedCard = false;
@@ -57,7 +65,7 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
                               ),
                               child: Container(
                                   height: 120.h,
-                                  width: 330.w,
+                                  width: 335.w,
                                   decoration: BoxDecoration(
                                     color: AllColors.white,
                                     borderRadius: BorderRadius.circular(20.r),
@@ -95,7 +103,7 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
                                                     fontSize: 14.sp,
                                                   ),
                                                 ),
-                                                sizedBoxSpacer(width: 75.w),
+                                                sizedBoxSpacer(width: 72.w),
                                                 PopupMenuButton(
                                                   iconSize: 20,
                                                   position:
@@ -108,14 +116,21 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
                                                     setState(() {});
                                                   },
                                                   itemBuilder: (context) {
-                                                    return const [
+                                                    return [
                                                       PopupMenuItem(
+                                                        onTap: () {},
                                                         value: '/edit',
-                                                        child: Text('Edit'),
+                                                        child:
+                                                            const Text('Edit'),
                                                       ),
                                                       PopupMenuItem(
+                                                        onTap: () =>
+                                                            _removecard(
+                                                                snapshot,
+                                                                index),
                                                         value: '/remove',
-                                                        child: Text('Remove'),
+                                                        child: const Text(
+                                                            'Remove'),
                                                       )
                                                     ];
                                                   },

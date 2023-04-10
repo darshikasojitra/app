@@ -15,4 +15,5 @@ class AllImages {
   static const String paypal = "$imagepath/paypal.png";
   static const String mastercard = "$imagepath/mastercard.png";
   static const String gpay = "$imagepath/Gpay.png";
+   static const String chatimage = "$imagepath/chat.png";
 }
